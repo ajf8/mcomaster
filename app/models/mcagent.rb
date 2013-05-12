@@ -23,16 +23,7 @@ class Mcagent
   attr_accessor :id, :actions, :ddl, :meta
   
   def self.all
-    #inv = get_inventory()
     agents = Array.new
-    #for inv_item in inv
-    #  for agent in inv_item["data"]["agents"]
-    #    if !agents.has_key?(agent)
-    #      agents[agent] = Mcagent.new(:id => agent)
-    #    end
-    #  end
-    #end
-    #agents.values.sort
     results = $redis.keys("mcollective::agent::*")
     for e in results
       e.gsub!(/^mcollective\:\:agent\:\:/, "")

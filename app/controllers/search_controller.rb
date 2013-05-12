@@ -20,11 +20,13 @@ class SearchController < ApplicationController
     
     nodes = $redis.keys("mcollective::facts::*#{term}*")
     agents = $redis.keys("mcollective::agent::*#{term}*")
+    collectives = $redis.keys("mcollective::collective::*#{term}*")
     
     nodes.map { |n| n.gsub!(/mcollective\:\:facts\:\:/, "") }
     agents.map { |a| a.gsub!(/mcollective\:\:agent\:\:/, "") }
+    collectives.map { |a| a.gsub!(/mcollective\:\:collective\:\:/, "") }
     
-    result = { :node => nodes.sort, :agent => agents.sort }
+    result = { :node => nodes.sort, :agent => agents.sort, :collective => collectives.sort }
     
     render json: result
   end
