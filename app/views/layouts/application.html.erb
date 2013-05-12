@@ -48,7 +48,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="brand" href="#">MCollective</a>
+					<% if signed_in? -%>
+					<a class="brand" href="/#/">MCollective</a>
+					<% else -%>
+					<a class="brand" href="/">MCollective</a>
+					<% end -%>
+					
 					<div id="agentsToolbar"></div>
 					<div id="collectivesToolbar"></div>
 					<div id="loggedInBar"></div>
