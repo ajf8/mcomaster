@@ -1,0 +1,36 @@
+{{! Copyright 2013 ajf http://github.com/ajf8 }} 
+{{! }} 
+{{! Licensed under the Apache License, Version 2.0 (the "License"); }} 
+{{! you may not use this file except in compliance with the License. }} 
+{{! You may obtain a copy of the License at }} 
+{{! }} 
+{{!     http://www.apache.org/licenses/LICENSE-2.0 }} 
+{{! }} 
+{{! Unless required by applicable law or agreed to in writing, software }} 
+{{! distributed under the License is distributed on an "AS IS" BASIS, }} 
+{{! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. }} 
+{{! See the License for the specific language governing permissions and }} 
+{{! limitations under the License. }} 
+{{! }}
+<div class="btn-toolbar filterAddBar">
+<div class="btn-group">
+<a id="addFactFilterBtn" class="btn"><i class="icon-search"></i> Add fact filter</a>
+<a id="addIdentityFilterBtn" class="btn"><i class="icon-search"></i> Add identity filter</a>
+<a id="addAgentFilterBtn" class="btn"><i class="icon-search"></i> Add agent filter</a>
+<a id="addClassFilterBtn" class="btn"><i class="icon-search"></i> Add class filter</a>
+</div>
+</div>
+{{#if hasFilters}}
+<div id="filterFormContainer" class="well">
+<form>
+<fieldset>
+<div id="filterContainer">
+</div>
+</fieldset>
+<button class="btn btn-inverse filter-discover-button"><i class="icon-question-sign icon-white"></i> Discover</button>
+</form>
+</div>
+{{else}}
+<div id="filterContainer">
+</div>
+{{/if}}

@@ -1,0 +1,49 @@
+{{! Copyright 2013 ajf http://github.com/ajf8 }} 
+{{! }} 
+{{! Licensed under the Apache License, Version 2.0 (the "License"); }} 
+{{! you may not use this file except in compliance with the License. }} 
+{{! You may obtain a copy of the License at }} 
+{{! }} 
+{{!     http://www.apache.org/licenses/LICENSE-2.0 }} 
+{{! }} 
+{{! Unless required by applicable law or agreed to in writing, software }} 
+{{! distributed under the License is distributed on an "AS IS" BASIS, }} 
+{{! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. }} 
+{{! See the License for the specific language governing permissions and }} 
+{{! limitations under the License. }} 
+{{! }} 
+<ul class="breadcrumb">
+	<li class="active">
+		node :: {{id}}
+	</li>
+</ul>
+
+<ul class="nav nav-tabs" id="nodeTabs">
+	<!--<li>
+		<a href="#nodeSummary" data-toggle="tab" id="nodeSummaryTab">Summary</a>
+	</li>-->
+	<li>
+		<a href="#nodeRun" data-toggle="tab" id="nodeRunTab">Detail</a>
+	</li>
+	<li>
+		<a href="#nodeFactsOuter" data-toggle="tab" id="nodeFactsTab">Facts</a>
+	</li>
+</ul>
+
+<div class="tab-content">
+<!--	<div class="tab-pane" id="nodeSummary">
+
+</div>-->
+	<div class="tab-pane" id="nodeRun">
+		
+	</div>
+	<div class="tab-pane" id="nodeFactsOuter">
+		<div>
+			<form class="navbar-search pull-right">
+				<input id="fact-filter" type="text" class="search-query" placeholder="Filter">
+			</form>
+		</div>
+		<div id="nodeFacts">
+		</div>
+	</div>
+</div>

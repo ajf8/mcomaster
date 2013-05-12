@@ -1,0 +1,15 @@
+{{#if hasNodes}}
+<p>Matched <strong>{{nodeCount}}</strong> nodes.</p>
+<table class="table">
+	<thead><tr><td>Node</td></tr></thead>
+	<tbody>
+		{{#each nodes}}
+		<tr>
+			<td><a href="/#/node/{{.}}">{{.}}</a></td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+{{else}}
+<p>Your discovery filter <strong>did not match any nodes.</strong></p>
+{{/if}}

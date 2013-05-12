@@ -1,0 +1,13 @@
+<h4>Aggregates</h4>
+<table class="table table-striped">
+<tbody>
+<tr><td class="node-status-icon node-icon-ok"></td><td>OK</td><td class="aggregate-value">{{okcount}}</td></tr>
+<tr><td class="node-status-icon node-icon-fail"></td><td>Failed</td><td class="aggregate-value">{{failcount}}</td></tr>
+{{#each aggregate_summary}}
+<tr><td colspan="3"><strong>{{result.output}}</strong></td></tr>
+{{#key_value result.value}}
+<tr><td colspan="2"><i class="icon-chevron-right aggregate-icon"> </i>{{key}}</td><td class="aggregate-value">{{value}}</td></tr>
+{{/key_value}}
+{{/each}}
+</tbody>
+</table>

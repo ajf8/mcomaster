@@ -1,0 +1,49 @@
+.filterAddBar
+{
+  padding-bottom:10px;
+}
+
+.filter-remove-icon
+{
+  margin-left:10px;
+  vertical-align:center;
+}
+
+label.filter-type-label {
+   width: 70px;
+   display: inline-block;
+   text-align: right;
+   margin-right:10px;
+}
+
+#filterFormContainer
+{
+  padding-bottom:0px;
+}
+
+#filterFormContainer fieldset
+{
+  margin-bottom:20px;
+}
+
+#actionRequestRegion
+{
+  margin-bottom:20px;
+}
+
+#actionAggregates i.aggregate-icon
+{
+  padding-right:20px;
+}
+
+#actionAggregates td.aggregate-value
+{
+  font-size:16px;
+  font-weight:bold;
+}
+
+#actionResultsRegion > div > div
+{
+  display: block;
+  clear:both;
+}

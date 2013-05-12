@@ -1,0 +1,1 @@
+MCM.Models.User = Backbone.Model.extend({})

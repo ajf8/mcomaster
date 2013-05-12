@@ -1,0 +1,16 @@
+.node-status-icon
+{
+  background-repeat:no-repeat;
+  width: 24px;
+  background-position:center; 
+}
+
+.node-icon-ok
+{
+  background-image: url('/assets/yes24.png');
+}
+
+.node-icon-fail
+{
+  background-image: url('/assets/no24.png');
+}

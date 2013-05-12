@@ -1,0 +1,25 @@
+# Add account credentials and API keys here.
+# See http://railsapps.github.com/rails-environment-variables.html
+# This file should be listed in .gitignore to keep your settings secret!
+# Each entry sets a local environment variable and overrides ENV variables in the Unix shell.
+# For example, setting:
+# GMAIL_USERNAME: Your_Gmail_Username
+# makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
+# Add application configuration variables here, as shown below.
+#
+
+# admin user to seed the database when it is created
+admin_name: First User
+admin_email: user@example.com
+admin_password: changeme
+roles: [admin, user, VIP]
+
+# redis database location
+redis_host: 127.0.0.1
+redis_port: 6379
+
+discovery_ttl: 300 # this should match the registration interval for mcollective
+
+# the hash below is sent to the client as JSON.
+client:
+  refresh_interval: 30 # how long between refreshes of agents, nodes, collectives?
