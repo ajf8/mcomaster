@@ -1,0 +1,36 @@
+.renderjson-container {
+	clear: both;
+}
+
+.renderjson-value, .renderjson-key {
+	margin: 5px;
+	padding: 5px;
+	float: left;
+	font-family: arial, sans-serif;
+	color: #606060;
+	font-size: 15px;
+}
+
+.renderjson-key {
+	font-weight: bold;	
+}
+
+.renderjson-value {
+	
+}
+
+.renderjson-array {
+	border: 1px dashed #b0b0b0;
+}
+
+.renderjson-object {
+	border: 1px solid #d0d0d0;
+}
+
+.renderjson-scalar{
+	background-color: #f8f8f8;	
+}
+
+.renderjson-pair {
+	clear:both;
+}

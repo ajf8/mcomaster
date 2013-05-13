@@ -17,10 +17,25 @@ MCM.Views.ActionResultItem = Backbone.Marionette.ItemView.extend({
   tagName: "tr",
   template: HandlebarsTemplates['actions/results/table_result_item']
   
+  events: {
+    "click a" : "openComplex"
+  }
+  
+  openComplex: (e) ->
+    k = $(e.currentTarget).data("column")
+    v = @model.attributes.body.data[k]
+    bootbox.dialog($('<div></div>').renderJSON(v), [{
+      "label" : "Close",
+      "class" : "btn-inverse"
+    }]).addClass("complex-type-view-modal")
+    e.preventDefault()
+    
   initialize: (options) ->
     @rowItems = []
     for o in options.columns
-      @rowItems.push(@model.attributes.body.data[o.key].toString())
+      v = @model.attributes.body.data[o.key]
+      vh = { kee : o.key, val : v.toString(), isComplex : $.isPlainObject(v) or $.isArray(v) }
+      @rowItems.push(vh)
       
   templateHelpers: ->
     t = { rowItems : @rowItems }

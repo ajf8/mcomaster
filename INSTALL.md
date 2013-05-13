@@ -25,7 +25,7 @@ registration = Meta
   * And enable direct addresing on all nodes (also in server.cfg):
 
 ``` ruby
-directaddressing=1
+direct_addressing=1
 ```
 
   * You will need *one* mcollective node which receives the registrations and saves them in redis.
@@ -43,9 +43,10 @@ setup which can mco ping and run actions. Then configure the discovery agent, wh
 mcomaster$ cp mcollective/discovery/redisdiscovery.* /usr/libexec/mcollective/mcollective/discovery/
 ```
 
-  And add the following settings:
+  And add the following settings to the client.yml (make sure your redis database number is correct):
 
 ``` ruby
+plugin.redis.db = 0
 default_discovery_method = redisdiscovery
 direct_addressing = yes
 ```

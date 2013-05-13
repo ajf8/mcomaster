@@ -47,3 +47,10 @@ label.filter-type-label {
   display: block;
   clear:both;
 }
+
+body .complex-type-view-modal {
+    /* new custom width */
+    width: 900px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -450px;
+}

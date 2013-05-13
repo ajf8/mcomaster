@@ -16,5 +16,13 @@
 <td><strong>{{senderid}}</strong></td>
 <td>{{body.statusmsg}}</td>
 {{#each rowItems}}
-<td>{{.}}</td>
+<td>
+{{#if isComplex}}
+<a href="/#/" data-column="{{kee}}">
+{{/if}}
+{{val}}
+{{#if isComplex}}
+</a>
+{{/if}}
+</td>
 {{/each}}
