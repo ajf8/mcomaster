@@ -13,8 +13,12 @@ module MCollective
         @meta = {:license => "GPLv2",
           :author => "R.I.Pienaar <rip@devco.net>",
           :url => "https://github.com/puppetlabs/mcollective-plugins"}
-        
-        @redis = Redis.new(:host => 'localhost', :port => 6379)
+
+        host = config.pluginconf.fetch("redis.host", "localhost")
+        port = Integer(config.pluginconf.fetch("redis.port", "6379"))
+        db = Integer(config.pluginconf.fetch("redis.db", "0"))
+
+        @redis = Redis.new(:host => host, :port => port, :db => db)
       end
 
       def handlemsg(msg, connection)
