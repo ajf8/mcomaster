@@ -56,7 +56,7 @@ module MCollective
             value = f[:value]
 
             hosts.each do |host|
-              matched_hosts << host if facts[host].include?(fact) && facts[host][fact].match(regexy_string(value))
+              matched_hosts << host if facts[host].include?(fact) && filter_matches(f[:operator], facts[host][fact], value)
             end
 
             found << matched_hosts
@@ -101,6 +101,23 @@ module MCollective
           oldest = now - max_age
 
           @redis.zrangebyscore("mcollective::collective::#{collective}", oldest, now)
+        end
+
+        def filter_matches(operator, term, value)
+          case operator
+            when "=="
+              return term == value
+            when "!="
+              return term != value
+            when ">"
+              return term > value
+            when "<"
+              return term < value
+            when "=~"
+              return value.match(regexy_string(term))
+            else
+              return false
+          end
         end
 
         def regexy_string(string)
