@@ -34,6 +34,14 @@ direct_addressing=1
 mcomaster$ cp mcollective/agent/registration.rb /usr/libexec/mcollective/mcollective/agent/
 ```
 
+  * Configure the host, port and DB for the agent. (These are the same as the ones which go in client.yml)
+
+``` ruby
+plugin.redis.host = localhost
+plugin.redis.port = 6379
+plugin.redis.db = 0
+```
+
   * On the system which will run mcomaster, you should already have a client
 setup which can mco ping and run actions. Then configure the discovery agent, which will query the redis database for discovery data.
 
@@ -46,6 +54,8 @@ mcomaster$ cp mcollective/discovery/redisdiscovery.* /usr/libexec/mcollective/mc
   And add the following settings to the client.yml (make sure your redis database number is correct):
 
 ``` ruby
+plugin.redis.host = localhost
+plugin.redis.port = 6379
 plugin.redis.db = 0
 default_discovery_method = redisdiscovery
 direct_addressing = yes
