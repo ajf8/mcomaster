@@ -70,23 +70,24 @@ Setup mcomaster
 mcomaster$ bundle install
 ```
 
-  * compile assets
-
-``` bash
-mcomaster$ rake assets:precompile
-```
-
-  * configure the admin user, redis location
+  * copy the example application config, then configure the admin user, redis location
 
 ``` bash
 mcomaster$ cp config/application.example.yml config/application.yml
+mcomaster$ vim config/application.yml
 ```
 
   * Setup the database
 
 ``` bash
 mcomaster$ cp config/database.example.yml config/database.yml
-mcomaster$ rake db:reset
+mcomaster$ RAILS_ENV=production rake db:reset
+```
+
+  * compile assets
+
+``` bash
+mcomaster$ rake assets:precompile
 ```
 
   * to start
