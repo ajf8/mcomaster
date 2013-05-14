@@ -18,17 +18,25 @@ MCM.Views.NodeActionResultItem = Backbone.Marionette.ItemView.extend({
 
   initialize: ->
     outputs = @options.ddl.actionDdl.output
-    @paired = {}
+    @rows = []
+    i = 0
     for own output of outputs
-      @paired[output] = @model.attributes.body.data[output]
+      v = @model.attributes.body.data[output]
+      @rows.push( { kee : output, val : v.toString(), isComplex : $.isArray(v) or $.isPlainObject(v) } )
 
   templateHelpers: ->
-    t = _.extend(@options, { paired : @paired })
+    t = _.extend(@options, { rows : @rows })
     
     if @model.attributes.body.statuscode == 0
       t['icon'] = "node-icon-ok"
     else
       t['icon'] = "node-icon-fail"
-    
+      
     return t
+      
+  onShow: ->
+    $(@el).find(".complex").each (ci, c) =>
+      k = $(c).data("column")
+      v = @model.attributes.body.data[k]
+      $(c).renderJSON(v)
 });

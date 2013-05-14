@@ -19,8 +19,15 @@
 </thead>
 <tbody>
 <tr><td>Status</td><td>{{body.statusmsg}}</td></tr>
-{{#key_value paired}}
-<tr><td>{{key}}</td><td>{{value}}</td></tr>
-{{/key_value}}
+{{#each rows}}
+<tr><td>{{kee}}</td><td>
+{{#if isComplex}}
+<div class="complex" data-column="{{kee}}"></div>
+{{else}}
+{{val}}
+{{/if}}
+</td>
+</tr>
+{{/each}}
 </tbody>
 </table>
