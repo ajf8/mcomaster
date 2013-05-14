@@ -14,9 +14,9 @@ Features
 System requirements
 ========================
 
-*   Redis
-*   Ruby - developed on 2.0, earlier versions may work.
-*   Bundler (to install dependencies)
+*   Redis.
+*   Ruby - developed on 1.9.3, ruby 2.0 does not work yet, 1.8.x might work.
+*   Bundler (to install dependencies).
 *   MCollective client already configured.
 
 Install

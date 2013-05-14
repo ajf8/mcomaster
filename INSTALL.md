@@ -7,6 +7,7 @@ Prerequisites
  * Ruby 1.9.x (Maybe 1.8, I haven't tried yet. I use 1.9.3). Unfortunately there's an issue with rails on ruby 2.0 stable for now, so it will not work yet. (See https://github.com/rails/rails/issues/8237 or https://github.com/sstephenson/sprockets/issues/393 ).
  * This guide assumes that you already have mcollective working, and it probably helps to be familiar with it.
  * Redis database (a standalone process) is running and accessible. No setup is needed (at least in Fedora and Debian), just install the package and start the service.
+ * Bundler (to install dependencies).
 
 Setup mcollective
 -----------------
