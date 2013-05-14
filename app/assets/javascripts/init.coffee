@@ -68,30 +68,30 @@ MCM.bind "initialize:after", ->
   $(document).ajaxError (e, xhr) ->
     if MCM.currentUser == undefined or $(".disconnect-notification").length > 0
       return
-      
-    if xhr.status == 403
-      bootbox.dialog("You have been logged out.", [{
-        "label" : "Login",
-        "class" : "btn-primary"
-        "callback" : ->
-          window.location = "/"
-      }], { "classes" : "disconnect-notification" })      
-    else
-      bootbox.dialog('You seem to have been disconnected. <div class="reconnect"></div>', [{
-        "label" : "Reconnect",
-        "class" : "btn-primary"
-        "callback" : ->
-          $.ajax '/collectives', {
-            success: (rsp, check_status) ->
-              debugger;
-              Backbone.history.loadUrl(Backbone.history.fragment)
-              $(".disconnect-notification").modal("hide")
-            fail: (rsp, check_status) ->
-              debugger;
-              $(".disconnect-notification .reconnect").innerHTML(check_status)
-          }
-          return false
-      }], { "classes" : "disconnect-notification" })
+
+#    if xhr.status == 403
+#      bootbox.dialog("You have been logged out.", [{
+#        "label" : "Login",
+#        "class" : "btn-primary"
+#        "callback" : ->
+#          window.location = "/"
+#      }], { "classes" : "disconnect-notification" })      
+#    else
+#      bootbox.dialog('You seem to have been disconnected. <div class="reconnect"></div>', [{
+#        "label" : "Reconnect",
+#        "class" : "btn-primary"
+#        "callback" : ->
+#          $.ajax '/collectives', {
+#            success: (rsp, check_status) ->
+#              debugger;
+#              Backbone.history.loadUrl(Backbone.history.fragment)
+#              $(".disconnect-notification").modal("hide")
+#            fail: (rsp, check_status) ->
+#              debugger;
+#              $(".disconnect-notification .reconnect").innerHTML(check_status)
+#          }
+#          return false
+#      }], { "classes" : "disconnect-notification" })
 
 $ ->
   MCM.start()
