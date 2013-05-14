@@ -4,6 +4,7 @@ Installation
 Prerequisites
 -----------------
 
+ * Ruby 1.9.x (Maybe 1.8, I haven't tried yet. I use 1.9.3). Unfortunately there's an issue with rails on ruby 2.0 stable for now, so it will not work yet. (See https://github.com/rails/rails/issues/8237 or https://github.com/sstephenson/sprockets/issues/393 ).
  * This guide assumes that you already have mcollective working, and it probably helps to be familiar with it.
  * Redis database (a standalone process) is running and accessible. No setup is needed (at least in Fedora and Debian), just install the package and start the service.
 
@@ -11,6 +12,8 @@ Setup mcollective
 -----------------
 
 First we need to get mcollective nodes sending registration details, and a single node to save these to redis using the registration agent. Then, the MCollective client on the mcomaster host needs to be configured to use this database for discovery, which will allow mcomaster to do fast discovery.
+
+Example configs: https://github.com/ajf8/mcomaster/blob/master/mcollective/client.cfg https://github.com/ajf8/mcomaster/blob/master/mcollective/server.cfg
 
   * On your mcollective nodes, copy the meta.rb registration agent to your
 mcollective extension directory.
