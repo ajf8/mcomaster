@@ -21,6 +21,9 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.Layout.extend({
     resultsRegion: "#actionResultsCollection"
     aggregatesRegion: "#actionAggregates"
   }
+
+  setError: (err) ->
+    @results.setError(err)
   
   receiveStats: (tx, msg) ->
     if tx.txid == @options.tx.txid
