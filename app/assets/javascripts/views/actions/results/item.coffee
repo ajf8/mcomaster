@@ -34,7 +34,7 @@ MCM.Views.ActionResultItem = Backbone.Marionette.ItemView.extend({
     @rowItems = []
     for o in options.columns
       v = @model.attributes.body.data[o.key]
-      vh = { kee : o.key, val : v.toString(), isComplex : $.isPlainObject(v) or $.isArray(v) }
+      vh = { kee : o.key, val : v == undefined ? "(null)" : v.toString(), isComplex : $.isPlainObject(v) or $.isArray(v) }
       @rowItems.push(vh)
       
   templateHelpers: ->
