@@ -26,10 +26,12 @@ class Mcagent
     agents = Array.new
     results = $redis.keys("mcollective::agent::*")
     for e in results
+      Rails.logger.info("found agent #{e}")
       e.gsub!(/^mcollective\:\:agent\:\:/, "")
       begin
         agents.push(Mcagent.new(:id => e))
-      rescue
+      rescue => ex
+        Rails.logger.error(ex.message+"\n"+ex.backtrace.join("\n"))
       end
     end
     return agents.sort
