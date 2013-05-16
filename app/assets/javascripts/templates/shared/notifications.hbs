@@ -13,6 +13,8 @@
 {{! limitations under the License. }} 
 {{! }} 
 <div class="alert alert-{{alertType}}">
+  {{#unless noDismiss}}
   <a href="#" class="close" data-dismiss="alert">&#215;</a>
+  {{/unless}}
   <span class="message">{{message}}</span>
 </div>
