@@ -21,8 +21,7 @@ MCM.Views.NodeActionResultItem = Backbone.Marionette.ItemView.extend({
     @rows = []
     i = 0
     for own output of outputs
-      v = @model.attributes.body.data[output]
-      @rows.push( { kee : output, val : v.toString(), isComplex : $.isArray(v) or $.isPlainObject(v) } )
+      @rows.push( MCM.ResultHelpers.newRow(@model, output) )
 
   templateHelpers: ->
     t = _.extend(@options, { rows : @rows })

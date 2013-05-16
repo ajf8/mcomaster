@@ -4,7 +4,6 @@
 #= require jquery.validate.bootstrap
 #= require jquery.renderjson
 #= require bootbox
-#= require util/back_to_top
 #= require underscore
 #= require moment
 #= require backbone
