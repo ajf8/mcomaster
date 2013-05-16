@@ -5,7 +5,7 @@ include MCollective::RPC
 module Mcomaster
   module McClient
     def mcm_rpcclient(agent)
-      mc = MCollective::RPC::rpcclient(agent, :exit_on_failure => false)
+      mc = MCollective::RPC::rpcclient(agent, :exit_on_failure => false, :options => MCollective::Util.default_options)
       mc.progress = false
       mc
     end

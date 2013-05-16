@@ -42,7 +42,7 @@ direct_addressing=1
 mcomaster$ cp mcollective/agent/registration.rb /usr/libexec/mcollective/mcollective/agent/
 ```
 
-  * Configure the host, port and DB number for the registration agent (server.cfg).
+  * Configure the host, port and DB number for the registration agent (server.cfg). NOTE: you will need to make sure the redis gem is available to the ruby which is running this mcollective.
 
 ``` ruby
 plugin.redis.host = localhost
