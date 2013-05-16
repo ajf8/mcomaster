@@ -17,8 +17,9 @@ roles: [admin, user, VIP]
 # redis database location
 redis_host: 127.0.0.1
 redis_port: 6379
+redis_db: 0
 
-discovery_ttl: 300 # this should match the registration interval for mcollective
+discovery_ttl: 320 # this should be the same (a little bit more?) as the registration interval for mcollective
 
 # the hash below is sent to the client as JSON.
 client:
