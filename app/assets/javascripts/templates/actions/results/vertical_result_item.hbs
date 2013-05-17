@@ -15,12 +15,12 @@
 <p style="margin-top:20px;margin-bottom:20px;"><strong>Result from {{senderid}}</strong></p>
 <table class="table table-striped">
 <thead>
-	<tr><td>Output</td><td>Value</td></tr>
+	<tr><th>Output</th><th>Value</th></tr>
 </thead>
 <tbody>
-<tr><th>Status</th><th>{{body.statusmsg}}</th></tr>
+<tr><td>Status</td><td>{{body.statusmsg}}</td></tr>
 {{#each rows}}
-<tr><th>{{kee}}</th><td>
+<tr><td>{{kee}}</td><td>
 {{#if isComplex}}
 <div class="complex" data-column="{{kee}}"></div>
 {{else}}
