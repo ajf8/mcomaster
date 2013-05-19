@@ -34,11 +34,19 @@ class ExecuteController < ApplicationController
       end
     end
 
+    txid = rmq_uuid()
+    
+    logger.info("#{txid} Received a request, parameters: "+request.raw_post)
+    
     if json.has_key?('filter') && json['filter'].is_a?(Hash)
-      mc.filter = convert_filter(json['filter'])
+      filters = convert_filter(json['filter'])
+      logger.info("#{txid} Converted filters: "+filters.inspect)
+      mc.filter = filters
+    else
+      logger.info("#{txid} No filters.")
     end
     
-    txid = rmq_uuid()
+    logger.info("#{txid} Sending acknowledgement.")
     
     rmq_send(txid, { :begin => true, :action => action, :agent => agent })
     

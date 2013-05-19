@@ -26,7 +26,11 @@ class DiscoverController < ApplicationController
     mc = mcm_rpcclient("rpcutil")
 
     if json.has_key?('filter') && json['filter'].is_a?(Hash)
-      mc.filter = convert_filter(json['filter'])
+      filters = convert_filter(json['filter'])
+      logger.info("Doing discovery with filters: "+filters.inspect)
+      mc.filter = filters
+    else
+      logger.info("Doing discovery with no filters.")
     end
 
     discover_result = mc.discover()

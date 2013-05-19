@@ -5,7 +5,11 @@ include MCollective::RPC
 module Mcomaster
   module McClient
     def mcm_rpcclient(agent)
-      mc = MCollective::RPC::rpcclient(agent, :exit_on_failure => false, :options => MCollective::Util.default_options)
+      options = MCollective::Util.default_options
+      if !APP_CONFIG['mcollective'].nil?
+        options.merge!(APP_CONFIG['mcollective'])
+      end
+      mc = MCollective::RPC::rpcclient(agent, :exit_on_failure => false, :options => options)
       mc.progress = false
       mc
     end
@@ -55,20 +59,12 @@ module Mcomaster
         if filter_array.is_a?(Array)
           filter_array.each { |filter_item|
             if (filter_item.is_a?(Hash))
-              symbolize_hash(filter_item)
+              filter_item.symbolize_keys!
             end
           }
         end
       }
       return filters
-    end
-
-    def symbolize_hash(hash)
-      hash.keys.each { |k|
-        v = hash[k]
-        hash.delete(k)
-        hash[k.to_sym] = v
-      }
     end
   end
 end
