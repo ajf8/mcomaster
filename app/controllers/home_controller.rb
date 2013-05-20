@@ -13,9 +13,6 @@
 # limitations under the License.
 #
 class HomeController < ApplicationController
-  #before_filter :authenticate_user!
-  
   def index
-    @nodeCount = Node.count
   end
 end
