@@ -23,12 +23,14 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   }
     
   beginResults: (tx, msg) ->
+    @txid = tx.txid
     resultsCollection = new MCM.Collections.ActionResult([], { tx : tx })
     @results = new @options.viewClass({ tx : tx, collection : resultsCollection, ddl : @ddl })
     @resultsRegion.show(@results)
     
   receiveError: (tx, msg) ->
-    @results.setError(msg)
+    if @txid == tx.txid
+      @results.setError(msg)
     
   initialize: ->
     @listenTo MCM.vent, "action:beginResults", (tx, msg) =>

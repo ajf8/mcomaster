@@ -63,7 +63,7 @@ MCM.Routers.Node = Backbone.Router.extend({
     }
     @myShowView(view)
     view.setTab("#nodeRunTab")
-    MCM.Routers.Action.prototype.requestDdl(agent, action)
+    MCM.Client.requestDdl(agent, action)
 });
 
 MCM.addInitializer ->

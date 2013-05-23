@@ -43,7 +43,7 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
       filter = {}
       filter['filter'] = @filterView.getRequestFilter()
       
-    MCM.vent.trigger "action:submit", {
+    MCM.Client.submitActionForm {
       ddl : @form.ddl,
       args : filter,
       form : $("#actionForm"),
