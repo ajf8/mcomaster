@@ -1,4 +1,5 @@
 #= require jquery
+#= require jquery.ui.resizable
 #= require jquery_ujs
 #= require jquery.validate
 #= require jquery.validate.bootstrap
