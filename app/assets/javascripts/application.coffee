@@ -12,7 +12,9 @@
 #= require backbone.marionette
 #= require Backbone.ModelBinder
 #= require bootstrap
-#= require handlebars
+#= require handlebars.runtime
+#= require jquery.mousewheel-min
+#= require jquery.terminal-0.6.3
 #= require init
 #= require_tree ./helpers/
 #= require_tree ./templates/
@@ -31,5 +33,6 @@
 #= require ./views/menu/empty_menu_item
 #= require ./views/menu/loading_menu_item
 #= require_tree ./views/
-#= require_tree ./routers/ 
+#= require_tree ./routers/
+#= require_tree ./plugins/
 #= require_tree .

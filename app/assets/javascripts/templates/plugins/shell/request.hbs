@@ -1,0 +1,10 @@
+<div id="termWrapper">
+<div id="term"></div>
+</div>
+{{#if includeFilters}}
+<div class="tab-pane" id="requestFilterRegion"></div>
+{{/if}}
+{{#if cancelUrl}}
+<a href="{{cancelUrl}}" id="actionCancelButton" class="btn btn-inverse">
+<i class="icon-stop icon-white"></i> Cancel </a>
+{{/if}}
