@@ -22,9 +22,9 @@ MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
   
   onAdd: ->
     if @collection.length > 0
-      @$el.show()
+      $("#applicationsList").show()
     else
-      @$el.hide()
+      $("#applicationsList").hide()
     
   initialize: ->
     @listenTo @collection, "add", @onAdd  
