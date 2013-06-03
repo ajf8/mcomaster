@@ -13,15 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Routers.Home = Backbone.Router.extend({
-  routes: {
-    "": "home"
-  }
-
-  home: ->
-    homeView = new MCM.Views.AgentsHomeList(collection : MCM.agents)
-    MCM.mainRegion.show(homeView)
+MCM.Collections.Applications = Backbone.Collection.extend({
+    model: MCM.Models.Application
 });
-
-MCM.addInitializer ->
-  MCM.homeController = new MCM.Routers.Home()  

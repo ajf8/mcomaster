@@ -26,6 +26,7 @@ MCM.layouts = {};
 
 MCM.addRegions({
   mainRegion: "#mainContent"
+  applicationsListRegion : "#applicationsList"
   nodesListRegion : "#nodesList"
   agentsListRegion: "#agentsList"
   agentsToolbarRegion: "#agentsToolbar"
@@ -51,14 +52,14 @@ MCM.vent.on "authentication:logged_out", ->
     window.location = "/#/login"
   
 MCM.bind "initialize:after", ->
-  if MCM.remoteConfig
-    if MCM.remoteConfig.refresh_interval and MCM.remoteConfig.refresh_interval > 0
-      setInterval ->
-        MCM.agents.fetch()
-        MCM.collectives.fetch()
-        MCM.nodes.fetch()
-        return true
-      , (MCM.remoteConfig.refresh_interval * 1000)
+  MCM.remoteConfig = MCM.remoteConfig || {}
+  if MCM.remoteConfig.refresh_interval and MCM.remoteConfig.refresh_interval > 0
+    setInterval ->
+      MCM.agents.fetch()
+      MCM.collectives.fetch()
+      MCM.nodes.fetch()
+      return true
+    , (MCM.remoteConfig.refresh_interval * 1000)
 
   if(MCM.currentUser)
     MCM.vent.trigger("authentication:logged_in", MCM.currentUser);
@@ -68,6 +69,35 @@ MCM.bind "initialize:after", ->
   $(document).ajaxError (e, xhr) ->
     if MCM.currentUser == undefined or $(".disconnect-notification").length > 0
       return
+
+MCM.addInitializer ->
+  unless MCM.remoteConfig.noNodeMenu
+    MCM.nodes = new MCM.Collections.Node
+    #nodesMenuPaginator = new MCM.Collections.Paginator(MCM.nodes, 0, 1)
+    nodesView = new MCM.Views.NodesMenu(collection : MCM.nodes)
+    MCM.nodesListRegion.show(nodesView)
+    
+  MCM.collectives  = new MCM.Collections.Collective 
+  collectivesMenuView = new MCM.Views.CollectivesMenu(collection : MCM.collectives)
+  collectivesToolbarView = new MCM.Views.CollectivesDropdown(collection : MCM.collectives)
+  MCM.collectivesListRegion.show(collectivesMenuView)
+    
+  MCM.agents = new MCM.Collections.Agent
+  agentsView = new MCM.Views.AgentsMenu(collection : MCM.agents)
+  agentsToolbarView = new MCM.Views.AgentsDropdown(collection : MCM.agents)
+  MCM.agentsListRegion.show(agentsView)
+  
+  MCM.applications = new MCM.Collections.Applications
+  applicationsMenuView = new MCM.Views.ApplicationsMenu(collection : MCM.applications) 
+  MCM.applicationsListRegion.show(applicationsMenuView)
+  
+  MCM.vent.on "authentication:logged_in", (user) ->
+    MCM.agents.fetch()
+    MCM.collectives.fetch()
+    MCM.nodes.fetch()
+    MCM.agentsToolbarRegion.show(agentsToolbarView)
+    MCM.collectivesToolbarRegion.show(collectivesToolbarView)
+      
 
 #    if xhr.status == 403
 #      bootbox.dialog("You have been logged out.", [{

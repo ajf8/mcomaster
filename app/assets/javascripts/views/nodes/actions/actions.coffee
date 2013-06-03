@@ -13,22 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.NodeActions = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['nodes/actions/view']
-  
-  #itemViewContainer: "#nodeAgentItemContainer"
-  
+MCM.Views.NodeActions = Backbone.Marionette.CollectionView.extend({
   itemView: MCM.Views.AgentTableItem
-
-  initialize: ->
-    @listenTo @options.nodemodel, "change", @render
     
   itemViewOptions: ->
     return @options
-    
-  templateHelpers: ->
-    ctx = _.extend(@options);
-    if @options.nodemodel.attributes.checkin_age
-      ctx.lastCheckinFormatted = moment.duration(0-@options.nodemodel.attributes.checkin_age, 'seconds').humanize(true)
-    return ctx
 });

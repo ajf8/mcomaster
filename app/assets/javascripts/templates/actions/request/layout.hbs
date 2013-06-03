@@ -15,22 +15,17 @@
 
 <div id="requestHeaderRegion">
 </div>
-
-{{#if includeFilters}}
 <ul class="nav nav-tabs" id="requestTabs">
 <li class="active"><a href="#requestFormRegion" data-toggle="tab">Inputs</a></li>
 <li><a href="#requestFilterRegion" data-toggle="tab">Discovery Filters</a></li>
+{{#if includeShell}}
+<li><a href="#requestShellRegion" data-toggle="tab">Shell</a></li>
+{{/if}}
 </ul>
 <div class="tab-content">
 <div class="tab-pane active" id="requestFormRegion"></div>
 <div class="tab-pane" id="requestFilterRegion"></div>
+{{#if includeShell}}
+<div class="tab-pane" id="requestShellRegion"></div>
+{{/if}}
 </div>
-{{else}}
-<div id="requestFormRegion"></div>
-{{/if}}
-<button type="submit" id="actionSubmitButton" class="btn btn-primary" form="actionForm">
-<i class="icon-play icon-white"></i> Execute</button>
-{{#if cancelUrl}}
-<a href="{{cancelUrl}}" id="actionCancelButton" class="btn btn-inverse">
-<i class="icon-stop icon-white"></i> Cancel </a>
-{{/if}}

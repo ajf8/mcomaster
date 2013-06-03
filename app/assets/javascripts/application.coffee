@@ -20,8 +20,10 @@
 #= require_tree ./templates/
 #= require_tree ./models/
 #= require_tree ./collections/
+#= require ./views/applications/menu_item
 #= require ./views/collectives/menu_item
 #= require ./views/collectives/dropdown_item
+#= require ./views/nodes/apps/item
 #= require ./views/nodes/menu_item
 #= require ./views/nodes/facts/fact_item
 #= require ./views/nodes/actions/result_item
@@ -35,4 +37,5 @@
 #= require_tree ./views/
 #= require_tree ./routers/
 #= require_tree ./plugins/
+#= require_tree ./apps/
 #= require_tree .

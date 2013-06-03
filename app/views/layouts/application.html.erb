@@ -66,9 +66,10 @@
 				<% if signed_in? -%>
 				<div class="span3" id="menuContent">
 				<% else -%>
-				<div class="span3" style="display:none;" id="menuContent">
+				<div class="span3" style="display:hidden;" id="menuContent">
 				<% end -%>
 					<div class="accordion" id="accordion2">
+						<div class="accordion-group" id="applicationsList" style="display:hidden;"></div>
 						<div class="accordion-group" id="agentsList"></div>
 						<div class="accordion-group" id="collectivesList"></div>
 						<div class="accordion-group" id="nodesList"></div>
@@ -83,7 +84,7 @@
 				</div>
 			</div>
 
-			<hr>
+			<hr/>
 
 			<footer>
 				<p>

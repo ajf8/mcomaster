@@ -13,30 +13,22 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['actions/results/results']
+MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
+  template: HandlebarsTemplates['menu/generic']
   
-  itemView: MCM.Views.ActionResultItem
-
-  itemViewContainer: "tbody"
+  itemView: MCM.Views.ApplicationMenuItem
   
-  itemViewOptions: ->
-    return {
-      columns : @options.ddl.columns
-      viewClass : @options.itemViewClass
-    }
+  itemViewContainer: "ul.dropdown-menu"
+  
+  onAdd: ->
+    if @collection.length > 0
+      @$el.show()
+    else
+      @$el.hide()
     
-  setError: (error) ->
-    @error = error
-    @render()
+  initialize: ->
+    @listenTo @collection, "add", @onAdd  
     
   templateHelpers: ->
-    resultCount = @collection.length
-    
-    return {
-      error : @error,
-      columns : @options.ddl.columns,
-      resultCount : resultCount,
-      hasResults : resultCount > 0
-    }
+    return { menuName : "Applications" }
 });

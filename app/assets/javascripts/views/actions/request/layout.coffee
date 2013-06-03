@@ -19,33 +19,37 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
   regions: {
     headerRegion: "#requestHeaderRegion"
     formRegion: "#requestFormRegion"
+    shellRegion: "#requestShellRegion"
     filterRegion: "#requestFilterRegion"
   }
   
   onShow: ->
     @form = new MCM.Views.ActionRequest(@options)
     @formRegion.show(@form)
-  
-    if @options.filterCollection and @options.submissionArgs == undefined
-      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection})
+    
+    if @options.filterCollection and @options.filter == undefined
+      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, 'includeExecuteButton' : true })
       @filterRegion.show(@filterView)
-      
+
+    if MCM.remoteConfig.includeActionShell == true
+      @shell = new MCM.Plugins.Shell.GenericRequestView({ agent : @options.agent, id : @options.id, filterView : @filterView })
+      @shellRegion.show(@shell)
+        
     @header = new MCM.Views.ActionRequestHeader(@options)
     @headerRegion.show(@header)
 
   events : {
-    "click #actionSubmitButton" : "submit"
+    "click .action-exec-button" : "submit"
   }
   
   submit: (e) ->
-    filter = @options.submissionArgs
+    filter = @options.filter
     if filter == undefined && @filterView != undefined
-      filter = {}
-      filter['filter'] = @filterView.getRequestFilter()
+      filter = @filterView.getRequestFilter()
       
     MCM.Client.submitActionForm {
       ddl : @form.ddl,
-      args : filter,
+      filter : filter,
       form : $("#actionForm"),
       event : e,
       agent : @options.agent,
@@ -55,7 +59,5 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
     e.preventDefault()
     
   templateHelpers: ->
-    _.extend @options, {
-      includeFilters : @options.submissionArgs == undefined
-    }
+    return _.extend(@options, { includeShell : MCM.remoteConfig.includeActionShell == true })
 })

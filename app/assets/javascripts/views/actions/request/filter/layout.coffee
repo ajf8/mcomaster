@@ -47,4 +47,7 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
   onShow: ->
     @form = new MCM.Views.ActionRequestFilterForm(@options)
     @formRegion.show(@form)
+    
+  templateHelpers: ->
+    return @options
 })

@@ -20,6 +20,7 @@ MCM.Views.Node = Backbone.Marionette.Layout.extend({
     #summaryRegion : "#nodeSummary"
     factsRegion: "#nodeFacts"
     runRegion : "#nodeRun"
+    #shellRegion: "#nodeShell"
   }
   
   viewName : "NodeView"
@@ -33,6 +34,9 @@ MCM.Views.Node = Backbone.Marionette.Layout.extend({
 
     @factsRegion.show(@factsView)
     @runRegion.show(@runView)
+    
+    #shellView = new MCM.Plugins.Shell.GenericRequestView({ agent : @options.agent, action : @options.action, filter : @options.filter })
+    #@shellRegion.show(shellView)
 
     $(@activeTabSelector).tab('show')
 

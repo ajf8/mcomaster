@@ -24,7 +24,8 @@ MCM.Routers.Action = Backbone.Router.extend({
       agent : agent,
       id : id,
       filterCollection : filterCollection,
-      viewClass : MCM.Views.Layouts.ActionResults,
+      resultsViewClass : MCM.Views.Layouts.ActionResults,
+      requestViewClass : MCM.Views.Layouts.ActionRequest,
       cancelUrl : "/#/agent/"+agent
     }
     MCM.mainRegion.show(view);

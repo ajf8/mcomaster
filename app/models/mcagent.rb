@@ -55,6 +55,8 @@ class Mcagent
       @ddl = ddl
     else
       @actions = Hash.new
+      @meta = ddl[:meta]
+      @meta.delete("name")
       ddl[:actions].each_pair{ |k,v|
         @actions[k] = v[:description]
       }

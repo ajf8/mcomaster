@@ -13,30 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['actions/results/results']
-  
-  itemView: MCM.Views.ActionResultItem
-
-  itemViewContainer: "tbody"
-  
+MCM.Views.NodeApplications = Backbone.Marionette.CollectionView.extend({
+  itemView: MCM.Views.NodeApplicationItem
+    
   itemViewOptions: ->
-    return {
-      columns : @options.ddl.columns
-      viewClass : @options.itemViewClass
-    }
-    
-  setError: (error) ->
-    @error = error
-    @render()
-    
-  templateHelpers: ->
-    resultCount = @collection.length
-    
-    return {
-      error : @error,
-      columns : @options.ddl.columns,
-      resultCount : resultCount,
-      hasResults : resultCount > 0
-    }
+    return @options
 });

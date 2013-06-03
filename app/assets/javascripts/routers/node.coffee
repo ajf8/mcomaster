@@ -31,7 +31,9 @@ MCM.Routers.Node = Backbone.Router.extend({
     return view
       
   addActionBrowser: (id, view) ->
-    view.runView = new MCM.Views.NodeActions({collection : MCM.agents, nodemodel : view.model})
+    agentsCollection = new MCM.Collections.NodeAgentFiltered(MCM.agents, view.model)
+    applicationsCollection = new MCM.Collections.NodeApplicationFiltered(MCM.applications, view.model)
+    view.runView = new MCM.Views.Layouts.Routes( nodemodel : view.model, agentsCollection : agentsCollection, applicationsCollection : applicationsCollection )
 
   showNodeFacts: (id) ->
     view = @getCommonView(id)
@@ -47,20 +49,19 @@ MCM.Routers.Node = Backbone.Router.extend({
     
   showNodeAction: (id, agent, action) ->
     view = @getCommonView(id)
-    submissionArgs = {
-      filter: {
-        identity : [ id ]
-      }
+    filter = {
+      identity : [ id ]
     }
     view.runView = new MCM.Views.Layouts.Action {
       agent : agent,
       id : action,
       cancelUrl : "/#/node/"+id
       nobread : true,
-      viewClass : MCM.Views.NodeActionResults
-      fewResults : true,
-      submissionArgs : submissionArgs
+      resultsViewClass : MCM.Views.NodeActionResults,
+      requestViewClass : MCM.Views.Layouts.NodeActionRequest,
+      filter : filter
     }
+
     @myShowView(view)
     view.setTab("#nodeRunTab")
     MCM.Client.requestDdl(agent, action)

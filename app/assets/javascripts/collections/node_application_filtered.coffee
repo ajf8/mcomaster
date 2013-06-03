@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Collections.NodeAgentFiltered = (original, nodemodel) ->
+MCM.Collections.NodeApplicationFiltered = (original, nodemodel) ->
   filtered = new original.constructor()
   
   # allow this object to have it's own events
@@ -22,17 +22,21 @@ MCM.Collections.NodeAgentFiltered = (original, nodemodel) ->
   original.listenTo nodemodel, "change", ->
     filtered.filterByNode(nodemodel)
   
-  # call 'where' on the original function so that
-  # filtering will happen from the complete collection
   filtered.filterByNode = (node) ->
     items = undefined
     
-    # call 'where' if we have criteria
-    # or just get all the models if we don't
     if node
       items = []
       for i in original.models
-        if $.inArray(i.attributes.id, node.attributes.agents) > -1
+        isValid = true
+        if i.attributes.node_template == undefined
+          isValid = false
+        if typeof(i.attributes.node_must_have) == "string"
+          isValid = $.inArray(i.attributes.node_must_have, node.attributes.agents) > -1
+        else if typeof(i.attributes.node_must_have) == "function"
+          isValid = i.attributes.node_must_have(node)
+          
+        if isValid
           items.push(i)
     else
       items = original.models
@@ -43,10 +47,6 @@ MCM.Collections.NodeAgentFiltered = (original, nodemodel) ->
     # reset the filtered collection with the new items
     filtered.reset items
 
-  
-  # when the original collection is reset,
-  # the filtered collection will re-filter itself
-  # and end up with the new filtered result set
   original.on "add", ->
     filtered.filterByNode filtered._currentNode
   

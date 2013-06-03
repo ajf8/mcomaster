@@ -29,12 +29,18 @@ MCM.Client =
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
     
+    columns = []
+    outputs = actionDdl.output
+    for own output of outputs
+      columns.push(_.extend({key : output}, outputs[output]))
+
     return {
       agent : agent,
       action : action,
       validationRules : validationRules
       meta : ddl['meta']
       actionDdl : actionDdl
+      columns : columns
     }
 
   requestDdl: (agent, action) ->
@@ -50,8 +56,7 @@ MCM.Client =
     
   submitActionForm: (submission) ->
     that = @
-    submission.formData = submission.args || {}
-    submission.formData.args = {}
+    submission.args = submission.args || {}
     _.each(submission.form.serializeArray(), (x) ->
       input_type = submission.ddl.input[x.name].type
       if input_type == "boolean"
@@ -60,18 +65,19 @@ MCM.Client =
         else if x.value == "false"
           x.value = false
           
-      submission.formData.args[x.name] = x.value
+      submission.args[x.name] = x.value
     )
     
     @submitAction(submission)
 
   submitAction: (submission) ->
     that = @
+    data = { 'filter' : submission.filter || {}, 'args' : submission.args || {} };
     $.ajax({
       type: "POST"
       url: "/execute/"+submission.agent+"/"+submission.action 
       dataType: "json"
-      data: JSON.stringify(submission.formData)
+      data: JSON.stringify(data)
       success: (data) ->
         that.receiveTxn(data)
     });

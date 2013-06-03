@@ -35,6 +35,12 @@
 		<p>This action has no parameters.</p>
 		{{/if}}
 	</fieldset>
+	<button type="submit" class="btn btn-primary action-exec-button" form="actionForm">
+	<i class="icon-play icon-white"></i> Execute</button>
+	{{#if cancelUrl}}
+	<a href="{{cancelUrl}}" id="actionCancelButton" class="btn btn-inverse">
+	<i class="icon-stop icon-white"></i> Cancel </a>
+{{/if}}
 </form>
 
 {{else}}

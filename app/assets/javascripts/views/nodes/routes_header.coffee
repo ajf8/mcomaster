@@ -13,30 +13,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['actions/results/results']
+MCM.Views.NodeRoutesHeader = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['nodes/routes_header']
   
-  itemView: MCM.Views.ActionResultItem
-
-  itemViewContainer: "tbody"
-  
-  itemViewOptions: ->
-    return {
-      columns : @options.ddl.columns
-      viewClass : @options.itemViewClass
-    }
-    
-  setError: (error) ->
-    @error = error
-    @render()
+  initialize: ->
+    @listenTo @options.nodemodel, "change", @render
     
   templateHelpers: ->
-    resultCount = @collection.length
-    
-    return {
-      error : @error,
-      columns : @options.ddl.columns,
-      resultCount : resultCount,
-      hasResults : resultCount > 0
-    }
-});
+    ctx = _.extend(@options);
+    if @options.nodemodel.attributes.checkin_age
+      ctx.lastCheckinFormatted = moment.duration(0-@options.nodemodel.attributes.checkin_age, 'seconds').humanize(true)
+    return ctx
+})

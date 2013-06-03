@@ -13,15 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Routers.Home = Backbone.Router.extend({
-  routes: {
-    "": "home"
-  }
-
-  home: ->
-    homeView = new MCM.Views.AgentsHomeList(collection : MCM.agents)
-    MCM.mainRegion.show(homeView)
-});
-
-MCM.addInitializer ->
-  MCM.homeController = new MCM.Routers.Home()  
+MCM.Views.ApplicationMenuItem = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['applications/menu_item']
+  tagName : "li"
+})

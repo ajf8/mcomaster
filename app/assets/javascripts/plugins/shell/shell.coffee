@@ -1,11 +1,7 @@
 MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
-  "use strict"
-
-  ShellPlugin = {}
-
-  ShellPlugin.RequestView = Marionette.Layout.extend({
+  ShellPlugin.AbstractRequestView = Marionette.Layout.extend({
     regions : { 
-      filterRegion: "#requestFilterRegion"
+      filterRegion: "#shellFilterRegion"
       termRegion : "#term"
     }
 
@@ -15,53 +11,41 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
       @listenTo(MCM.vent, "action:beginResults", @onBeginResults)
       @listenTo(MCM.vent, "action:receiveResult", @onReceiveResult)
       @listenTo(MCM.vent, "action:receiveStats", @onReceiveStats)
+      @listenTo(MCM.vent, "action:receiveError", @onReceiveError)
 
+    getFilter: ->
+      return @options.filter || {}
+      
+    onReceiveError: (tx, msg) ->
+      @term.echo "[1;31m *** Error: "+msg+"[0m"
+      @term.echo " "
+      
     onReceiveStats: (tx, msg) ->
       @term.echo "[1;33m *** Ran on "+msg.responses+" hosts in "+msg.totaltime.toFixed(3)+" seconds[0m .. [1;32m"+msg.okcount+" OK[0m, [1;31m"+msg.failcount+" Failed[0m\n"
       
     onBeginResults: (tx, msg) ->
       @term.echo "Command acknowledged by mcomaster .. "+tx.txid+"\n"
-    
-    onReceiveResult: (tx, msg) -> 
-      statusColor = ""
-      statusMsg = "Exit code = "+msg.body.statuscode
+      
+    getStatusColor: (msg) ->
       if msg.body.statuscode == 0
-        statusColor = "[1;32m"
+        return "[1;32m"
       else
-        statusColor = "[1;31m"
+        return "[1;31m"
+        
+     getHostLine: (msg) ->
+      statusColor = @getStatusColor(msg)
+      statusMsg = "Exit code = "+msg.body.statuscode
         
       if msg.body.statuscode == 0 and msg.body.statusmsg != ""
         statusMsg = statusMsg + " (" + msg.body.statusmsg+")"
-        
-      @term.echo("[1;34m"+msg.senderid+"[0m  ##  "+statusColor+statusMsg+"[0m")
-      @term.echo("")
-      if msg.body.data.stdout != undefined and msg.body.data.stdout != null and msg.body.data.stdout != ""
-        @term.echo(msg.body.data.stdout)
-      else
-        @term.echo("(no output)")
-
-      if msg.body.data.stderr != undefined and msg.body.data.stderr != null and  msg.body.data.stderr != ""
-        @term.echo("[1;31mstderr: ")
-        @term.echo(msg.body.data.stderr+"[0m")
-            
+      
+      return "[1;34m"+msg.senderid+"[0m  ##  "+statusColor+statusMsg+"[0m"
+                         
     onCommand: (command, term) ->
-      if command == ""
-        return
-        
-      filter = @options.submissionArgs
-      if filter == undefined && @filterView != undefined
-        filter = {}
-        filter['filter'] = @filterView.getRequestFilter()
-           
-      MCM.Client.submitAction {
-        formData : _.extend(filter, { args : { cmd : command } })
-        agent : "shell"
-        action : "execute"
-      }
-      return
+      console.log("implement me...")
 
     onShow: ->
-      if @options.filterCollection and @options.submissionArgs == undefined
+      if @options.filterCollection
         @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection})
         @filterRegion.show(@filterView)
 
@@ -70,38 +54,75 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
       
     templateHelpers: ->
       _.extend @options, {
-        includeFilters : @options.submissionArgs == undefined
+        includeFilters : @options.filterCollection != undefined
       }
   })
-    
-  ShellPlugin.Router = Backbone.Router.extend({
-    routes: {
-      "p/shell" : "shellAction",
-      "p/shell/node/:node" : "shellNodeAction"
-    }
-            
-    shellAction: ->
-      filterCollection = new MCM.Collections.ActionRequestFilter
-      view = new ShellPlugin.RequestView({ filterCollection : filterCollection, prompt : "# " })
-      MCM.mainRegion.show(view);
-      
-    shellNodeAction: (node) ->
-      submissionArgs = {
-        filter: {
-          identity : [ node ]
-        }
-      }
+  
+  ShellPlugin.GenericRequestView = ShellPlugin.AbstractRequestView.extend({
+    usage: ->
+      @term.echo("[1;31mThis shell will only execute the "+@options.id+" action of the "+@options.agent+" agent. To execute another action, navigate to it.")
+      @term.echo(" ")
+      @term.echo(@ddl.action+" - "+@ddl.actionDdl.description)
+      example = @ddl.action
+      for own key of @ddl.actionDdl.input
+        i = @ddl.actionDdl.input[key]
+        @term.echo("  * "+key+" - "+i.description+" ("+i.type+")")
+        example = example + " <" + key + "=" + i.type + ">"
+        @term.echo(" ")
+      @term.echo("usage: "+example)
+      @term.echo(" ")
 
-      view = new ShellPlugin.RequestView {
-        submissionArgs : submissionArgs,
-        prompt : node+"# " 
-      }
+    getFilter: ->
+      if @options.filterView
+        return @options.filterView.getRequestFilter()
+      else
+        return {}
       
-      MCM.mainRegion.show(view)
-  })
-    
-  ShellPlugin.onlyIf = ->
-    return MCM.agents.get("shell") != undefined
-    
-  MCM.addInitializer ->
-    new ShellPlugin.Router();
+    onCommand: (command, term) ->
+      if command == ""
+        return
+        
+      args = command.match(/('[^']+'|"[^"]+"|[^ ]+)/g)
+      if args.length < 1
+        return
+      
+      if args[0] != @options.id
+        @usage()
+        return
+      
+      agentArgs = {}
+      i = 1
+      while i < args.length
+        args[i] = args[i].replace(/^"/, "").replace(/"$/, "")
+        if matches = args[i].match(/^(.+?)=(.+)/)
+          agentArgs[matches[1]] = matches[2]
+        i++
+           
+      MCM.Client.submitAction {
+        filter : @getFilter()
+        args : agentArgs
+        agent : @options.agent
+        action : args[0]
+      }
+        
+      return
+      
+    receiveDdl: (ddl) ->
+      @ddl = ddl
+      @usage()
+      
+    initialize: ->
+      ShellPlugin.AbstractRequestView.prototype.initialize.call(this);
+      @listenTo MCM.vent, "action:receiveDdl", @receiveDdl
+       
+    onReceiveResult: (tx, msg) ->
+      @term.echo(@getHostLine(msg))
+      for o in @ddl.columns
+        @term.echo("  "+o.display_as+": "+msg.body.data[o.key])
+      @term.echo(" ")
+      
+    onShow: ->
+      ShellPlugin.AbstractRequestView.prototype.onShow.call(this)
+      @term.echo("Receiving DDL...")
+      @term.echo(" ")
+  });

@@ -22,6 +22,9 @@
 </div>
 {{#if hasFilters}}
 <div id="filterFormContainer" class="well">
+{{else}}
+<div id="filterFormContainer" class="well" style="display:none;">
+{{/if}}
 <form>
 <fieldset>
 <div id="filterContainer">
@@ -30,7 +33,3 @@
 <button class="btn btn-inverse filter-discover-button"><i class="icon-question-sign icon-white"></i> Discover</button>
 </form>
 </div>
-{{else}}
-<div id="filterContainer">
-</div>
-{{/if}}
