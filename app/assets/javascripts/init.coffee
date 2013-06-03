@@ -96,7 +96,7 @@ MCM.addInitializer ->
   
   # TODO: tidy this up, make a single view class of some sort   
   $(document).ajaxError (e, xhr, req) ->
-    if MCM.currentUser == undefined or req.url == "/users/sign_in.json"
+    if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"
       return
       
     loginDialogs = $(".logout-notification").length
