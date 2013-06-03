@@ -97,7 +97,6 @@ MCM.addInitializer ->
     MCM.nodes.fetch()
     MCM.agentsToolbarRegion.show(agentsToolbarView)
     MCM.collectivesToolbarRegion.show(collectivesToolbarView)
-      
 
 #    if xhr.status == 403
 #      bootbox.dialog("You have been logged out.", [{
