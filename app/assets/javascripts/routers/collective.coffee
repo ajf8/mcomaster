@@ -13,18 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Routers.Collective = Backbone.Router.extend({
-  routes: {
+MCM.Routers.Collective = Backbone.Marionette.AppRouter.extend({
+  controller: MCM.Controllers.Collective
+  
+  appRoutes: {
     "collective/:id": "showCollective"
   }
-
-  showCollective: (id) ->
-    collective = new MCM.Models.Collective({ id : id })
-    collectiveView = new MCM.Views.Collective({ model : collective })
-    
-    collective.fetch()
-    
-    MCM.mainRegion.show(collectiveView)
 });
 
 MCM.addInitializer ->

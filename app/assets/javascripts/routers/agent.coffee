@@ -13,18 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Routers.Agent = Backbone.Router.extend({
-  routes: {
+MCM.Routers.Agent = Backbone.Marionette.AppRouter.extend({
+  controller: MCM.Controllers.Agent
+  
+  appRoutes: {
     "agent/:id": "showAgent"
   }
-
-  showAgent: (id) ->
-    node = new MCM.Models.Agent({ id : id })
-    agentsView = new MCM.Views.Agent({ model : node })
-    
-    node.fetch()
-    
-    MCM.mainRegion.show(agentsView)
 });
 
 MCM.addInitializer ->

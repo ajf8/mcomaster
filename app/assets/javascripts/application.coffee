@@ -35,6 +35,7 @@
 #= require ./views/menu/empty_menu_item
 #= require ./views/menu/loading_menu_item
 #= require_tree ./views/
+#= require_tree ./controllers/
 #= require_tree ./routers/
 #= require_tree ./plugins/
 #= require_tree ./apps/

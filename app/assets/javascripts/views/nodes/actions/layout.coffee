@@ -30,7 +30,7 @@ MCM.Views.Layouts.NodeActionRequest = Backbone.Marionette.Layout.extend({
     @headerRegion.show(@header)
     
   events : {
-    "click #actionSubmitButton" : "submit"
+    "click .action-exec-button" : "submit"
   }
   
   submit: (e) ->

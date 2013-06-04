@@ -20,6 +20,7 @@ MCM.Views.Layouts = {};
 MCM.Models = {};
 MCM.Collections = {};
 MCM.Routers = {};
+MCM.Controllers = {};
 MCM.Helpers = {};
 
 MCM.layouts = {};
