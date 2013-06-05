@@ -33,6 +33,7 @@ MCM.addRegions({
   agentsToolbarRegion: "#agentsToolbar"
   collectivesListRegion: "#collectivesList"
   collectivesToolbarRegion: "#collectivesToolbar"
+  applicationsToolbarRegion: "#applicationsToolbar"
   loggedInBarRegion : "#loggedInBar"
 });
 
@@ -87,6 +88,8 @@ MCM.addInitializer ->
   MCM.applications = new MCM.Collections.Applications
   applicationsMenuView = new MCM.Views.ApplicationsMenu(collection : MCM.applications) 
   MCM.applicationsListRegion.show(applicationsMenuView)
+  applicationsToolbarView = new MCM.Views.ApplicationsDropdown(collection : MCM.applications)
+  MCM.applicationsToolbarRegion.show(applicationsToolbarView)
   
   MCM.vent.on "authentication:logged_in", (user) ->
     MCM.agents.fetch()

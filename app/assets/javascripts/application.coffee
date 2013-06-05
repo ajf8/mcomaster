@@ -21,6 +21,7 @@
 #= require_tree ./models/
 #= require_tree ./collections/
 #= require ./views/applications/menu_item
+#= require ./views/applications/dropdown_item
 #= require ./views/collectives/menu_item
 #= require ./views/collectives/dropdown_item
 #= require ./views/nodes/apps/item

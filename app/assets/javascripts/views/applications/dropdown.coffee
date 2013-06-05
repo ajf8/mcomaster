@@ -13,19 +13,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['menu/generic']
+MCM.Views.ApplicationsDropdown = Backbone.Marionette.CompositeView.extend({
+  template: HandlebarsTemplates['dropdown/generic']
   
-  itemView: MCM.Views.ApplicationMenuItem
+  itemView: MCM.Views.ApplicationDropdownItem
   
   itemViewContainer: "ul.dropdown-menu"
   
+  templateHelpers: { "dropdownName" : "Applications" }
+  
   onAdd: ->
-    $("#applicationsList").show()
+    @$el.parent().show()
     
   initialize: ->
     @listenTo @collection, "add", @onAdd  
-    
-  templateHelpers: ->
-    return { menuName : "Applications" }
+
 });

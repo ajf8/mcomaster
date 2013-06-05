@@ -14,7 +14,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
         @term.echo(msg.body.data.stderr)
     
     getFilter: ->
-      return @filterView.getRequestFilter()
+      return @options.filter || @filterView.getRequestFilter()
       
     onCommand: (command, term) ->         
       if command == ""
