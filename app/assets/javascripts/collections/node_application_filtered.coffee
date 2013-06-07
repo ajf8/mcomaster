@@ -13,6 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+
+# Decorate the application collection. If the application model
+# has a "node_must_have" string it will be checked for in the 
+# nodes agents. It can be a function, in which case it should return true
+# when provided the node model for it to display.
+
 MCM.Collections.NodeApplicationFiltered = (original, nodemodel) ->
   filtered = new original.constructor()
   

@@ -23,7 +23,6 @@ MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
   itemViewOptions: ->
     return {
       columns : @options.ddl.columns
-      viewClass : @options.itemViewClass
     }
     
   setError: (error) ->

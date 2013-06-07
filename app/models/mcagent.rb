@@ -29,9 +29,11 @@ class Mcagent
       Rails.logger.debug("found agent #{e}")
       e.gsub!(/^mcollective\:\:agent\:\:/, "")
       begin
+        # without :verbose => true, put minimal information in
         agents.push(Mcagent.new(:id => e))
       rescue => ex
-        Rails.logger.debug(ex.message+"\n"+ex.backtrace.join("\n"))
+        # some agents like discovery don't have DDLs, so discard exceptions
+        #Rails.logger.debug(ex.message+"\n"+ex.backtrace.join("\n"))
       end
     end
     return agents.sort
@@ -55,7 +57,10 @@ class Mcagent
       @ddl = ddl
     else
       @actions = Hash.new
+      # added metadata so it's available to applications deciding
+      # if they show or not
       @meta = ddl[:meta]
+      # already have this in 'id'
       @meta.delete("name")
       ddl[:actions].each_pair{ |k,v|
         @actions[k] = v[:description]

@@ -14,6 +14,4 @@
  limitations under the License.
 ###
 MCM.Models.ActionResultsStats = Backbone.Model.extend({
-  initialize: ->
-    #@attributes.totaltime = @attributes.totaltime.toFixed(3)
 });

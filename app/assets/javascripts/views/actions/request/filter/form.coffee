@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+# A CompositeView which has buttons for creating new items, and displaying them
 MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['actions/request/filter/filter']
   
@@ -30,6 +31,8 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
   initialize: ->
     @idCounter = 0
 
+  # serialize all the filters into the object the
+  # server API expects
   getRequestFilter: ->
     filters = {}
     $.each @children._views, (key, val) ->
@@ -55,6 +58,9 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
     @render()
   
   newFilter: (filterType) ->
+    # needs an ID, just an incrementing counter, for removal
+    # filterType chooses where it goes in the top level of
+    # the filter object 
     return new MCM.Models.ActionRequestFilter({'id' : "filter"+@idCounter++, 'filterType' : filterType})
     
   addFactFilter: (e) ->
@@ -74,6 +80,8 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
     e.preventDefault()
     
   templateHelpers: ->
+    # used in template to display:none the div.well containing
+    # filters, or not
     { 'hasFilters' : @collection.size() > 0 }
     
   onShow: ->

@@ -19,6 +19,8 @@ MCM.Models.Node = Backbone.Model.extend({
   initialize: ->
     @factsCollection = new MCM.Collections.NodeFact
     
+  # create a subcollection with facts so they can be displayed
+  # in a collectionview
   parse: (data) ->
     facts = []
     for own key of data.facts

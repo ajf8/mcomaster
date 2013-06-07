@@ -13,6 +13,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+
+# A layout for a single action. Includes the form, optional filters,
+# and displays the results.
+
+# The results view class is provided in @options.resultsVIewClass.
+# To allow for the result attributes to be shown in columns (many results)
+# or rows (single result).
+
 MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   template: HandlebarsTemplates['actions/view']
 
@@ -46,6 +54,7 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
     return @options
     
   onShow: ->
+    
     $(window).backToTop();
     @request = new @options.requestViewClass(@options)
     @requestRegion.show(@request)

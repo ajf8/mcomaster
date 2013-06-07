@@ -13,6 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+
+# This collection decorates the agents collection, and filters it based on a node collection.
+
 MCM.Collections.NodeAgentFiltered = (original, nodemodel) ->
   filtered = new original.constructor()
   

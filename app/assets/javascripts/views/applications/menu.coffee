@@ -21,7 +21,7 @@ MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
   itemViewContainer: "ul.dropdown-menu"
   
   onAdd: ->
-    $("#applicationsList").show()
+    @$el.parent().show()
     
   initialize: ->
     @listenTo @collection, "add", @onAdd  

@@ -14,6 +14,7 @@
  limitations under the License.
 ###
 MCM.Views.NodeApplicationItem = Backbone.Marionette.ItemView.extend({
+  # the node_template attribute of the node model chooses the template 
   template: (ctx) ->
     if ctx.node_template
       return HandlebarsTemplates[ctx.node_template](ctx)
@@ -21,6 +22,7 @@ MCM.Views.NodeApplicationItem = Backbone.Marionette.ItemView.extend({
       return ""
   
   templateHelpers: ->
+    # provide the node ID so it can be used in a URL
     if @options.nodemodel
       return {
         nodeid : @options.nodemodel.attributes.id

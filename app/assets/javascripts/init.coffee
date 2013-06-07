@@ -15,6 +15,8 @@
 ###
 window.MCM = new Backbone.Marionette.Application();
 
+# Namespaces
+
 MCM.Views = {};
 MCM.Views.Layouts = {};
 MCM.Models = {};
@@ -24,6 +26,9 @@ MCM.Controllers = {};
 MCM.Helpers = {};
 
 MCM.layouts = {};
+
+# Visual regions of the application, mapped to CSS selectors
+# eg. used as MCM.mainRegion.show(view)
 
 MCM.addRegions({
   mainRegion: "#mainContent"
@@ -37,9 +42,11 @@ MCM.addRegions({
   loggedInBarRegion : "#loggedInBar"
 });
 
+# go to home page if an interactive login succeeds
 MCM.vent.on "authentication:interactive_logged_in", (user) ->
   window.location = "/#/"
-  
+
+# show navigation menu on login, and the logged in bar at the top
 MCM.vent.on "authentication:logged_in", (user) ->
   MCM.loggedInBarRegion.show(new MCM.Views.LoggedInBar(model : user))
   menu = $("#menuContent")
@@ -90,14 +97,14 @@ MCM.addInitializer ->
   MCM.applicationsListRegion.show(applicationsMenuView)
   applicationsToolbarView = new MCM.Views.ApplicationsDropdown(collection : MCM.applications)
   MCM.applicationsToolbarRegion.show(applicationsToolbarView)
-  
-  MCM.vent.on "authentication:logged_in", (user) ->
+
+  MCM.vent.on "authentication:logged_in", (user) ->  
     MCM.agents.fetch()
     MCM.collectives.fetch()
     MCM.nodes.fetch()
     MCM.agentsToolbarRegion.show(agentsToolbarView)
     MCM.collectivesToolbarRegion.show(collectivesToolbarView)
-  
+
   # TODO: tidy this up, make a single view class of some sort   
   $(document).ajaxError (e, xhr, req) ->
     if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"

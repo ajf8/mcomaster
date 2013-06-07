@@ -13,6 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+
+# Decorate the nodes facts collection.
+# Allows a search term to be set for filtering.
+
 MCM.Collections.NodeFactFiltered = (original) ->
   filtered = new original.constructor()
   

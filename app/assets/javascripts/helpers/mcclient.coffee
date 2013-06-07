@@ -1,4 +1,11 @@
+# An object with functions for interacting with API (rails controllers)
+
 MCM.Client = 
+  # transform DDL, so it is easier to template using handlebars.js
+  # and create the options for jquery.validation plugin
+  # this is called from a successful requestDdl ajax call (below), then
+  # the result sent out as a action:receiveDdl event on App.vent for 
+  # any view to receive  
   transformDdl : (ddl, agent, action) ->
     actionDdl = ddl['actions'][action]
     
@@ -28,7 +35,10 @@ MCM.Client =
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
+        
     
+    # when displaying result rows, this is used to make sure the columns
+    # align properly (we don't have to rely on the same fields and order)
     columns = []
     outputs = actionDdl.output
     for own output of outputs
@@ -43,6 +53,8 @@ MCM.Client =
       columns : columns
     }
 
+  # request a DDL, transform it with transformDdl, then send it out the event aggregator
+  # as action:requestDdl
   requestDdl: (agent, action) ->
     that = @
     $.ajax({
@@ -53,7 +65,11 @@ MCM.Client =
         
       dataType: "json"
     });
-    
+  
+  # gather the fields from the form and save them
+  # into submission.args. convert booleans from strings
+  # if the DDL says the field is a bool.
+  
   submitActionForm: (submission) ->
     that = @
     submission.args = submission.args || {}
@@ -70,6 +86,10 @@ MCM.Client =
     
     @submitAction(submission)
 
+  # submission object needs: args, action, agent
+  # the server should immediately return as a "transaction ID" and then
+  # background the execution. we use the txid a a handle to poll for new messages.
+  # these are spooled over a redis queue on the server side.
   submitAction: (submission) ->
     that = @
     data = { 'filter' : submission.filter || {}, 'args' : submission.args || {} };
@@ -81,7 +101,10 @@ MCM.Client =
       success: (data) ->
         that.receiveTxn(data)
     });
-    
+  
+  # helper for doing ajax requests on a transaction.
+  # add a counter on the end of the URL to avoid caching
+  # issues (some browsers seem to cache for less than a second with max-age:0?) 
   txGet: (tx, options) ->      
     if !tx.getCount
       tx.getCount = 0
@@ -93,16 +116,23 @@ MCM.Client =
     }, options))
     
     tx.getCount++
-    
+  
+  # TODO: make this a receive any kind of event? add infinite loop protection
+  
+  # each get can contain multiple messages
+  # the top level of the response is an array of them
   receiveTxn: (tx) ->
     @txGet tx, {
       success: (rdata) =>
         for envelope in rdata
+          # each message (envelope) has a "key" (the txid:messagenumber) and a "value" (the actual message)
           msg = envelope.value
-
+          # use the presence of a key in the actual message to decide what it is
+          # and fire the appropriate event
           if msg.begin 
             MCM.vent.trigger("action:beginResults", tx, msg.begin)          
           else if msg.node
+            # use txid:messagenumber as a unique 
             msg.node.id = envelope.key
             MCM.vent.trigger("action:receiveResult", tx, msg.node)
           else if msg.error
@@ -112,13 +142,19 @@ MCM.Client =
           
           tx.msgCount++
           
+          # server says this transaction is now closed, by replying with
+          # an "end" key. eg. { end: 1 }
+          # so stop polling
           if msg.end
             return
-            
+        
+        # TODO: make configurable interval 
         setTimeout =>      
           @receiveTxn(tx)
         , 400
-          
+      
+      # probably a 404, meaning that there's more  
+      # TODO: check status code, generate error event if not 404?
       error: (rdata) =>
         setTimeout =>
           @receiveTxn(tx)

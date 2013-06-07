@@ -13,6 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+# this view summarizes OK/fails, and additionally any aggregates in the
+# result that MCollective returns
 MCM.Views.ActionResultsAggregates = Backbone.Marionette.ItemView.extend({
   template: HandlebarsTemplates['actions/results/aggregates']
   className: "span6"

@@ -1,6 +1,9 @@
 MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
+  # this app view extends a view in a plugin, but it doesn't have to
+  
   ShellApp.ShellAgentRequestView = App.module("Plugins.Shell").AbstractRequestView.extend({
-    onReceiveResult: (tx, msg) -> 
+    onReceiveResult: (tx, msg) ->
+      # display coloured hostname and exit code 
       @term.echo(@getHostLine(msg))
       @term.echo("")
       
@@ -13,6 +16,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
         @term.echo("[1;31mstderr: ")
         @term.echo(msg.body.data.stderr)
     
+    # either get filter from the options (node view) or from the widget
     getFilter: ->
       return @options.filter || @filterView.getRequestFilter()
       
@@ -34,12 +38,16 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
       "app/shell" : "shellAction",
       "app/shell/node/:node" : "shellNodeAction"
     }
-            
+    
+    # open the shell agent request view with a filter collection
+    # this causes filters to be displayed
+    
     shellAction: ->
       filterCollection = new MCM.Collections.ActionRequestFilter
       view = new ShellApp.ShellAgentRequestView({ filterCollection : filterCollection, prompt : "# " })
       MCM.mainRegion.show(view);
-      
+    
+    # node specific view, so create with filter and prompt  
     shellNodeAction: (node) ->
       filter = {
         identity : [ node ]
@@ -54,6 +62,8 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
       MCM.mainRegion.show(view)
   })
 
+  # once the module is loaded, listen to agents being added
+  # check for the agent this application will interact with
   ShellApp.on "start", ->
     @listenTo MCM.agents, "add", (model) ->
       if model.attributes.id == "shell" and model.attributes.meta.author == "Jeremy Carroll"

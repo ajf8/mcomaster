@@ -12,12 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# a REST message queue, backed by redis 
+# lib/mcomaster/restmqclient.rb is a mixin which can put things on the queue
+
+# each message has its own key, <txid>:<messagenumber>
+# and each queue has a counter at <txid>:UUID
+
 class RestmqController < ApplicationController
   require 'mcomaster/restmqclient'
   include Mcomaster::RestMQ
   
   before_filter :set_cache_buster, :authenticate_user!
-  
+   
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
@@ -49,6 +56,7 @@ class RestmqController < ApplicationController
     queue = queue + QUEUE_SUFFIX
     response = []
     
+    # get all messages on the queue 
     while true
       b = $redis.rpop queue
     

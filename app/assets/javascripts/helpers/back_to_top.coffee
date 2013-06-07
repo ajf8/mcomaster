@@ -13,6 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+
+# simple jquery plugin to do an animated jump to the top of the page
+# used on clicking menu , so user doesn't have to scroll to top of page
+# eg. $(window).backToTop()
+
 $.fn.extend
   backToTop: (options) ->
     self = $.fn.backToTop

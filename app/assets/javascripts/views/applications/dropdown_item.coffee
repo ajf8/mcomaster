@@ -15,6 +15,5 @@
 ###
 MCM.Views.ApplicationDropdownItem = Backbone.Marionette.ItemView.extend({
   template: HandlebarsTemplates['applications/dropdown_item']
-  
   tagName: "li"
 })

@@ -15,7 +15,10 @@
 ###
 MCM.Collections.ActionResult = Backbone.Collection.extend({
   model: MCM.Models.ActionResult
-    
+  
+  # create a result collection with the transaction object
+  # (returned by the server, see mcclient.coffee)
+  # then listen for any results to that txid
   initialize: (models, options) ->
     @tx = options.tx
     

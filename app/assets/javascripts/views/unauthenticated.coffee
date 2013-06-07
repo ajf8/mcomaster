@@ -32,7 +32,4 @@ MCM.Views.Layouts.Unauthenticated = Backbone.Marionette.Layout.extend(
   switchViews: (e) ->
     e.preventDefault()
     @tabContent.show new @views[$(e.target).data("content")]
-)
-
-MCM.addInitializer ->
-  MCM.layouts.unauthenticated = new MCM.Views.Layouts.Unauthenticated()
+) 

@@ -21,6 +21,10 @@ MCM.Views.ActionResultItem = Backbone.Marionette.ItemView.extend({
     "click a" : "openComplex"
   }
   
+  # complex = objects or arrays, things which might be too
+  # big to display nicely in a table. so provide a link which
+  # renders the object nicely in a bootbox modal dialog
+  
   openComplex: (e) ->
     k = $(e.currentTarget).data("column")
     v = @model.attributes.body.data[k]
