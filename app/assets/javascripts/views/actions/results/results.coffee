@@ -43,22 +43,21 @@ MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
     
     needsQuotes = false
     
-    if text.indexOf(/\n/) >= 0
-      text = text.replace(/\n/g, '\n')
+    if text.indexOf('"') >= 0
+      text = text.replace('"', '""');
       needsQuotes = true
 
-    if text.indexOf(/\r/) >= 0
-      text = text.replace(/\r/g, '\r')
+    if text.indexOf("\n") >= 0
+      text = text.replace("\n", '\\n')
+      needsQuotes = true
+
+    if text.indexOf("\r") >= 0
+      text = text.replace("\r", '\\n')
       needsQuotes = true
       
     if text.indexOf(",") >= 0
-      text = text.replace(/"/g, '""');
       needsQuotes = true
-    
-    if text.indexOf(/"/ >= 0)
-      text.replace(/"/g, '""');
-      needsQuotes = true
-    
+        
     if needsQuotes
       return '"'+text+'"'
     else
