@@ -13,18 +13,16 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.NodeActionResults = Backbone.Marionette.CompositeView.extend({
+MCM.Views.NodeActionResults = MCM.Views.AbstractActionResults.extend({
   template: HandlebarsTemplates['nodes/actions/results']
   
   itemView: MCM.Views.NodeActionResultItem
 
+  itemViewContainer: ".result-container"
+
   itemViewOptions: ->
     return @options
     
-  setError: (error) ->
-    @error = error
-    @render()
-     
   templateHelpers: ->
     return {
       error : @error
