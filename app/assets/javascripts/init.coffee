@@ -110,8 +110,8 @@ MCM.addInitializer ->
     if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"
       return
       
-    loginDialogs = $(".logout-notification").length
-    if xhr.status == 401 and loginDialogs < 1
+    #loginDialogs = $(".logout-notification").length
+    if xhr.status == 401 and loginDialogs < 1 and MCM.currentUser != undefined
       if $(".disconnect-notification").length > 0
          $(".disconnect-notification").modal('hide')
 
@@ -121,7 +121,7 @@ MCM.addInitializer ->
         "callback" : ->
           window.location = "/"
       }], { "classes" : "logout-notification" })
-    else if xhr.status != 404 and $(".disconnect-notification").length < 1 and loginDialogs < 1 
+    if xhr.status != 404 and $(".disconnect-notification").length < 1 and loginDialogs < 1 
       bootbox.dialog('<div class="reconnect"></div>You seem to have been disconnected.', [{
         "label" : "Reconnect",
         "class" : "btn-primary"

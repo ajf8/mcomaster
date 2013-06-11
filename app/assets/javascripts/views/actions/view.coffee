@@ -33,7 +33,7 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   beginResults: (tx, msg) ->
     @txid = tx.txid
     resultsCollection = new MCM.Collections.ActionResult([], { tx : tx })
-    @results = new @options.resultsViewClass({ tx : tx, collection : resultsCollection, ddl : @ddl })
+    @results = new @options.resultsViewClass({ tx : tx, collection : resultsCollection, ddl : @ddl, agent : @options.agent, action : @options.id })
     @resultsRegion.show(@results)
     
   receiveError: (tx, msg) ->
@@ -53,8 +53,7 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   templateHelpers: ->
     return @options
     
-  onShow: ->
-    
+  onShow: -> 
     $(window).backToTop();
     @request = new @options.requestViewClass(@options)
     @requestRegion.show(@request)
