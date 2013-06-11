@@ -21,14 +21,25 @@ MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
   itemViewContainer: "tbody"
   
   events: {
-    "click a.export-csv" : "export"
+    "click a.export-csv" : "exportCSV"
+    "click a.export-json" : "exportJSON"
   }
-  
+
+  # Create a fake link with a data: URL. the download attribute sets the filename
+  # (this can't be done with window.open AFAIK) then synthesise a click event  
+  localDownload: (type, name, content) ->
+    link = document.createElement("a")
+    link.setAttribute("href", 'data:'+type+';charset=utf-8,'+encodeURIComponent(content))
+    link.setAttribute("download", name)
+    theEvent = document.createEvent("MouseEvent");
+    theEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    link.dispatchEvent(theEvent);
+    
   csvEscape: (text) ->
     if text == undefined or text == ""
       return ""
     else if typeof(text) != "string"
-      return text.toString()
+      text = text.toString()
     
     needsQuotes = false
     
@@ -52,14 +63,20 @@ MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
       return '"'+text+'"'
     else
       return text
+  
+  exportJSON: (e) ->
+    name = @options.agent+"-"+@options.action+"-"+moment().format("YYYYMMDD_HHmm")+".json"
+    @localDownload "text/csv", name, JSON.stringify(@collection.toJSON())
+    e.preventDefault()
     
-  export: (e) ->
+  exportCSV: (e) ->
     csv = ''
     csv_row = ['Node','Status']
     
     for col in @options.ddl.columns
       csv_row.push(@csvEscape(col.display_as))
-      csv += csv_row.join(",")+'\r\n'
+    
+    csv += csv_row.join(",")+'\r\n'
       
     for model in @collection.models
       csv_row = [model.attributes.senderid, model.attributes.body.statusmsg]
@@ -67,18 +84,10 @@ MCM.Views.ActionResults = Backbone.Marionette.CompositeView.extend({
         csv_row.push(@csvEscape(model.attributes.body.data[col.key]))
       csv += csv_row.join(",")+'\r\n'
     
-    # Create a fake link with a data: URL, the download attribute sets the filename
-    # (this can't be done with window.open AFAIK) then synthesise a click event
-
-    link = document.createElement("a")
-    link.setAttribute("href", 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv))
-    link.setAttribute("download", @options.agent+"-"+@options.action+"-"+moment().format("YYYYMMDD_HHmm")+".csv")
-    theEvent = document.createEvent("MouseEvent");
-    theEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    link.dispatchEvent(theEvent);
+    name = @options.agent+"-"+@options.action+"-"+moment().format("YYYYMMDD_HHmm")+".csv"
+    @localDownload "text/csv", name, csv
     
     e.preventDefault()
-    return true
     
   itemViewOptions: ->
     return {
