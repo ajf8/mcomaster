@@ -1,0 +1,146 @@
+#!/bin/bash
+#
+# Init script for mcomaster
+#
+# chkconfig: - 85 15
+# description: Init script for mcomaster
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+if [ -f /etc/sysconfig/mcomaster ]; then
+    . /etc/sysconfig/mcomaster
+fi
+
+prog=mcomaster
+THIN=/usr/bin/thin
+RETVAL=0
+MCOMASTER_PORT=${MCOMASTER_PORT:-3000}
+MCOMASTER_USER=${MCOMASTER_USER:-mcomaster}
+MCOMASTER_HOME=${MCOMASTER_HOME:-/usr/share/mcomaster}
+MCOMASTER_ENV=${MCOMASTER_ENV:-production}
+MCOMASTER_USE_PASSENGER=${MCOMASTER_USE_PASSENGER:-0}
+MCOMASTER_USE_THIN=${MCOMASTER_USE_THIN:-0}
+
+if [[ -z $MCOMASTER_PID ]]
+then
+    if [[ $MCOMASTER_USE_THIN = 1 ]]
+    then
+        MCOMASTER_PID=${MCOMASTER_HOME}/tmp/pids/thin.*.pid
+    else
+        MCOMASTER_PID=${MCOMASTER_HOME}/tmp/pids/server.pid
+    fi
+fi
+
+start() {
+    echo -n $"Starting $prog: "
+    if [[ $MCOMASTER_USE_THIN = 1 ]]
+    then
+        /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
+            --environment $MCOMASTER_ENV \
+            --group ${MCOMASTER_USER} \
+            --config /etc/mcomaster/thin.yml \
+            --rackup "${MCOMASTER_HOME}/config.ru"
+    else
+        cd ${MCOMASTER_HOME}
+        daemon --user ${MCOMASTER_USER} /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/rails s -p ${MCOMASTER_PORT} -e ${MCOMASTER_ENV} -d ${MCOMASTER_EXTRA_ARGS} > /dev/null
+    fi
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo_success
+    else
+        echo_failure
+    fi
+
+    echo
+    return $RETVAL
+}
+stop() {
+    echo -n $"Stopping $prog: "
+    RETVAL=0
+    for PID in $MCOMASTER_PID
+    do
+        if [ -f ${PID} ]; then
+            killproc -p ${PID}
+            RESULT=$? && [[ $RETVAL = 0 ]] && RETVAL=$RESULT
+        else
+            echo -n $"mcomaster was not running.";
+            failure $"mcomaster was not running.";
+            echo
+            RETVAL=1
+        fi
+    done
+    echo
+    return $RETVAL
+}
+
+railsrestart() {
+    echo -n $"Restarting mcomaster rails app: "
+    touch "${MCOMASTER_HOME}/tmp/restart.txt"
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo_success
+    else
+        echo_failure
+    fi
+
+    echo
+    return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+    start|stop)
+        if [ ${MCOMASTER_USE_PASSENGER} = 1 ]
+        then
+            echo -n "mcomaster is running under passenger"
+            echo_passed
+            echo
+        else
+            $1
+        fi
+        RETVAL=$?
+    ;;
+    restart)
+        if [ ${MCOMASTER_USE_PASSENGER} = 1 ]
+        then
+            railsrestart
+            RETVAL=$?
+        else
+            stop
+            start
+            RETVAL=$?
+        fi
+    ;;
+    status)
+        echo -n "mcomaster"
+        if [ ${MCOMASTER_USE_PASSENGER} = 1 ]
+        then
+            echo -n " is running under passenger"
+            echo_passed
+            echo
+            RETVAL=1
+        else
+            RETVAL=1
+            for PID in $MCOMASTER_PID
+            do
+                status -p $PID
+                RETURN=$? && [ "$RETVAL" != 0 ] && RETVAL=$RETURN
+            done
+        fi
+    ;;
+    condrestart)
+        if [ -f ${MCOMASTER_HOME}/tmp/pids/server.pid ]; then
+            restart
+            RETVAL=$?
+        fi
+        ;;
+
+    *)
+        echo $"Usage: $prog {start|stop|restart|condrestart}"
+        exit 1
+esac
+
+exit $RETVAL

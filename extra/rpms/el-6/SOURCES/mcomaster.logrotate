@@ -1,0 +1,10 @@
+# mcomaster logs:
+/var/log/mcomaster/*.log {
+  daily
+  missingok
+  rotate 14
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}
