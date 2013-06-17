@@ -1,17 +1,3 @@
-# Generated from mcomaster-0.0.1.gem by gem2rpm -*- rpm-spec -*-
-#%{?scl:Requires:%scl_runtime}
-
-%if "%{?scl}" == "ruby193"
-    %global scl_prefix %{scl}-
-    %global scl_ruby /usr/bin/ruby193-ruby
-    %global scl_rake /usr/bin/ruby193-rake
-    ### TODO temp disabled for SCL
-    %global nodoc 1
-%else
-    %global scl_ruby /usr/bin/ruby
-    %global scl_rake /usr/bin/rake
-%endif
-
 Summary: Web interface to mcollective
 Name: mcomaster
 Version: 0.1.0
@@ -24,25 +10,29 @@ Source1: mcomaster.init
 Source2: mcomaster.sysconfig
 Source3: mcomaster.logrotate
 
-Requires: %{?scl_prefix}ruby
-Requires: %{?scl_prefix}rubygems
-Requires: %{?scl_prefix}rubygem(bundler)
+Requires: ruby193-ruby
+Requires: ruby193-rubygems
+Requires: ruby193-rubygem-bundler
 Requires(pre): shadow-utils
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
 Requires(postun): initscripts
 
-BuildRequires: %{?scl_prefix}ruby
-BuildRequires: %{?scl_prefix}rubygem(bundler)
-BuildRequires: scl-utils-build
+BuildRequires: ruby193-ruby
+BuildRequires: ruby193-rubygems
+BuildRequires: ruby193-rubygem-bundler
+BuildRequires: ruby193-ruby-devel
+BuildRequires: make
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: sqlite-devel
 
 %description
 mcomaster is a web interface to mcollective.
 
 %prep
 %setup -q
-#rm Gemfile.lock
 scl enable ruby193 "bundle install --deployment --without test development"
 #scl enable ruby193 "bundle package"
 mv config/application.example.yml config/application.yml
@@ -92,6 +82,15 @@ ln -sv %{_localstatedir}/log/%{name} %{buildroot}%{_datadir}/%{name}/log
 ln -sv %{_localstatedir}/run/%{name} %{buildroot}%{_datadir}/%{name}/tmp
 echo %{version} > %{buildroot}%{_datadir}/%{name}/VERSION
 
+mkdir %{buildroot}%{_datadir}/%{name}/.bundle
+cat >%{buildroot}%{_datadir}/%{name}/.bundle/config <<EOF
+---
+BUNDLE_FROZEN: '1'
+BUNDLE_PATH: vendor/bundle
+BUNDLE_WITHOUT: development:test
+BUNDLE_DISABLE_SHARED_GEMS: '1'
+EOF
+
 %clean
 rm -rf %{buildroot}
 
@@ -99,7 +98,7 @@ rm -rf %{buildroot}
 # Add the "mcomaster" user and group
 getent group %{name} >/dev/null || groupadd -r %{name}
 getent passwd %{name} >/dev/null || \
-useradd -r -g %{name} -d /var/lib/mcomaster -s /sbin/nologin -c "mcomaster" %{name}
+useradd -r -g %{name} -d /var/lib/mcomaster -s /bin/bash -c "mcomaster" %{name}
 exit 0
 
 %files
