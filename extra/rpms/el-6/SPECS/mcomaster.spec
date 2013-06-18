@@ -55,7 +55,7 @@ scl enable ruby193 "RAILS_ENV=production rake db:migrate"
 scl enable ruby193 "bundle exec rake assets:precompile"
 
 %install
-
+rm -rf %{buildroot}
 install -d -m0755 %{buildroot}%{_datadir}/%{name}
 install -d -m0755 %{buildroot}%{_sysconfdir}/%{name}
 install -d -m0755 %{buildroot}%{_localstatedir}/lib/%{name}
@@ -71,10 +71,10 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/yum.repos.d
 cp -p -r bin app config config.ru extra Gemfile Gemfile.lock lib Rakefile script mcollective vendor %{buildroot}%{_datadir}/%{name}
 
 # Move config files to %{_sysconfdir}
-for i in database.yml application.yml; do
-mv %{buildroot}%{_datadir}/%{name}/config/$i %{buildroot}%{_sysconfdir}/%{name}
-ln -sv %{_sysconfdir}/%{name}/$i %{buildroot}%{_datadir}/%{name}/config/$i
-done
+mv %{buildroot}%{_datadir}/%{name}/config/database.yml %{buildroot}%{_sysconfdir}/%{name}/database.yml
+mv %{buildroot}%{_datadir}/%{name}/config/application.yml %{buildroot}%{_sysconfdir}/%{name}/application.yml
+ln -s %{_sysconfdir}/%{name}/database.yml %{buildroot}%{_datadir}/%{name}/config/database.yml
+ln -s %{_sysconfdir}/%{name}/application.yml %{buildroot}%{_datadir}/%{name}/config/application.yml
 touch %{buildroot}%{_datadir}/%{name}/config/initializers/local_secret_token.rb
 
 # Put db in %{_localstatedir}/lib/%{name}/db

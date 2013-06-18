@@ -99,15 +99,16 @@ the stock 1.8.
   * Create the database:
 
 ``` bash
+# su mcomaster
 $ cd /usr/share/mcomaster
-$ RAILS_ENV=production ruby193-ruby bin/rake db:reset
+$ RAILS_ENV=production scl enable ruby193 "bin/rake db:reset"
 
 ```
 
   * And a first admin user:
 
 ``` bash
-RAILS_ENV=production script/add_user.sh -u username -p password -m 'email@domain.com'
+$ RAILS_ENV=production scl enable ruby193 "/usr/share/mcomaster/script/add_user.sh -u user -m user@example.com -p password"
 ```
 
 Install mcomaster (from source)
