@@ -9,10 +9,10 @@
 #
 
 # admin user to seed the database when it is created
-admin_name: First User
-admin_email: user@example.com
-admin_password: changeme
-roles: [admin, user, VIP]
+#admin_name: First User
+#admin_email: user@example.com
+#admin_password: changeme
+#roles: [admin, user, VIP]
 
 # redis database location
 redis_host: 127.0.0.1

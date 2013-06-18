@@ -1,0 +1,11 @@
+[mcomaster]
+name=mcomaster
+baseurl=http://yum.mcomaster.org/releases/latest/el6/$basearch
+gpgcheck=0
+enabled=1
+
+[mcomaster-source]
+name=mcomaster-source
+baseurl=http://yum.mcomaster.org/releases/latest/el6/source
+gpgcheck=0
+enabled=0

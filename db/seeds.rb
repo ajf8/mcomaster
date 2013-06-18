@@ -12,7 +12,10 @@ YAML.load(ENV['roles']).each do |role|
   Role.find_or_create_by_name({ :name => role }, :without_protection => true)
   puts 'role: ' << role
 end
-puts 'DEFAULT USERS'
-user = User.find_or_create_by_email :name => ENV['admin_name'].dup, :email => ENV['admin_email'].dup, :password => ENV['admin_password'].dup, :password_confirmation => ENV['admin_password'].dup
-puts 'user: ' << user.name
-user.add_role :admin
+
+unless ENV['admin_name'].nil? or ENV['admin_email'].nil? or ENV['admin_password'].nil?
+  puts 'DEFAULT USERS'
+  user = User.find_or_create_by_email :name => ENV['admin_name'].dup, :email => ENV['admin_email'].dup, :password => ENV['admin_password'].dup, :password_confirmation => ENV['admin_password'].dup
+  puts 'user: ' << user.name
+  user.add_role :admin
+end

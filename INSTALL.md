@@ -4,7 +4,7 @@ Installation
 Prerequisites
 -----------------
 
- * Ruby 1.9.x (Maybe 1.8, I haven't tried yet. I use 1.9.3). Unfortunately there's an issue with rails on ruby 2.0 stable for now, so it will not work yet. (See https://github.com/rails/rails/issues/8237 or https://github.com/sstephenson/sprockets/issues/393 ).
+ * Ruby 1.9 / Ruby 2.0. NOT compatible with Ruby 1.8.
  * This guide assumes that you already have mcollective working, and it probably helps to be familiar with it.
  * Redis database (a standalone process) is running and accessible. No setup is needed (at least in Fedora and Debian), just install the package and start the service.
  * Bundler (to install dependencies).
@@ -68,7 +68,49 @@ default_discovery_method = redisdiscovery
 direct_addressing = yes
 ```
 
-Setup mcomaster
+Install mcomaster from CentOS/RHEL 6 RPM
+---------------
+
+The el6 RPM currently bundles all of its rubygem dependencies, isolated from your system ruby,
+for ease of maintenance and installation. Because el6 ships with Ruby 1.8 which is not
+supported (rolify, a dependency, dropped support), a Ruby 1.9.3 SCL (Software Collection) is used.
+
+The Ruby SCL is kept seperate and will not interfere with any other version of ruby, including
+the stock 1.8.
+
+  * Install the SCL repository:
+
+``` bash
+# wget http://people.redhat.com/bkabrda/scl_ruby193.repo -O /etc/yum.repos.d/scl_ruby193.repo
+```
+
+  * Install the mcomaster repository:
+
+``` bash
+# rpm -Uvh http://yum.mcomaster.org/releases/latest/el6/x86_64/mcomaster-release.rpm
+```
+
+  * Install mcomaster packages:
+
+``` bash
+# yum install mcomaster
+```
+
+  * Create the database:
+
+``` bash
+$ cd /usr/share/mcomaster
+$ RAILS_ENV=production ruby193-ruby bin/rake db:reset
+
+```
+
+  * And a first admin user:
+
+``` bash
+RAILS_ENV=production script/add_user.sh -u username -p password -m 'email@domain.com'
+```
+
+Install mcomaster (from source)
 ---------------
 
   * In the mcomaster tree, use bundler to install dependencies (gem install bundler if this command does not exist):
@@ -89,6 +131,12 @@ mcomaster$ vim config/application.yml
 ``` bash
 mcomaster$ cp config/database.example.yml config/database.yml
 mcomaster$ RAILS_ENV=production rake db:reset
+```
+
+  * And a first admin user:
+
+``` bash
+RAILS_ENV=production script/add_user.sh -u username -p password -m 'email@domain.com'
 ```
 
   * compile assets

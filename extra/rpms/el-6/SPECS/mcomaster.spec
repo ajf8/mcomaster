@@ -9,6 +9,7 @@ Source0: mcomaster-%{version}.tar.gz
 Source1: mcomaster.init
 Source2: mcomaster.sysconfig
 Source3: mcomaster.logrotate
+Source4: mcomaster.repo
 
 Requires: ruby193-ruby
 Requires: ruby193-rubygems
@@ -27,6 +28,18 @@ BuildRequires: make
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: sqlite-devel
+
+%package release
+Summary:        mcomaster repository files
+Group:          Applications/System
+
+%description release
+This package contains the repository configuration for the mcomaster
+yum repository.
+
+%files release
+%defattr(-,root,root,-)
+%config(noreplace) %{_sysconfdir}/yum.repos.d/*
 
 %description
 mcomaster is a web interface to mcollective.
@@ -51,6 +64,9 @@ install -d -m0750 %{buildroot}%{_localstatedir}/log/%{name}
 install -Dp -m0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 install -Dp -m0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 install -Dp -m0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+
+install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/yum.repos.d
+install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/yum.repos.d
 
 cp -p -r bin app config config.ru extra Gemfile Gemfile.lock lib Rakefile script mcollective vendor %{buildroot}%{_datadir}/%{name}
 
