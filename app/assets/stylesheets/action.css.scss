@@ -42,6 +42,17 @@ label.filter-type-label {
   font-weight:bold;
 }
 
+#actionResultsPaginator
+{
+  padding-bottom:10px;
+  padding-top:10px;
+}
+
+#actionResultsRegion .pagination ul
+{
+  box-shadow:none;
+}
+
 #actionResultsRegion > div > div
 {
   display: block;
@@ -54,3 +65,8 @@ body .complex-type-view-modal {
     /* must be half of the width, minus scrollbar on the left (30px) */
     margin-left: -450px;
 }
+
+td.idx-cell {
+  display:block;
+}
+

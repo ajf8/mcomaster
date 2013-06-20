@@ -78,7 +78,6 @@ MCM.bind "initialize:after", ->
 MCM.addInitializer ->
   unless MCM.remoteConfig.noNodeMenu
     MCM.nodes = new MCM.Collections.Node
-    #nodesMenuPaginator = new MCM.Collections.Paginator(MCM.nodes, 0, 1)
     nodesView = new MCM.Views.NodesMenu(collection : MCM.nodes)
     MCM.nodesListRegion.show(nodesView)
     

@@ -24,5 +24,14 @@ MCM.Collections.ActionResult = Backbone.Collection.extend({
     
     @listenTo MCM.vent, "action:receiveResult", (tx, msg) =>
       if tx.txid == @tx.txid
+        msg.idx = @length + 1
         @add(new MCM.Models.ActionResult(msg))
+        #testing
+        #baseId = msg.id
+        #i = 0
+        #while i < 500
+        #  msg.id = baseId + i
+        #  msg.idx = @length + 1
+        #  @add(new MCM.Models.ActionResult(msg))
+        #  i++
 });

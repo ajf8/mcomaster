@@ -33,7 +33,8 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   beginResults: (tx, msg) ->
     @txid = tx.txid
     resultsCollection = new MCM.Collections.ActionResult([], { tx : tx })
-    @results = new @options.resultsViewClass({ tx : tx, collection : resultsCollection, ddl : @ddl, agent : @options.agent, action : @options.id })
+    filteredResultsCollection = new MCM.Collections.Paginator(resultsCollection, { perPage : MCM.remoteConfig.defaultPerPage || 50 })
+    @results = new @options.resultsViewClass({ tx : tx, collection : filteredResultsCollection, ddl : @ddl, agent : @options.agent, action : @options.id })
     @resultsRegion.show(@results)
     
   receiveError: (tx, msg) ->

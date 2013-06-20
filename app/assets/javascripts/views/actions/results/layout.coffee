@@ -19,6 +19,7 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.Layout.extend({
   regions: {
     statsRegion: "#actionStats"
     resultsRegion: "#actionResultsCollection"
+    resultsPaginatorRegion : "#actionResultsPaginator"
     aggregatesRegion: "#actionAggregates"
   }
 
@@ -33,8 +34,13 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.Layout.extend({
       @aggregates = new MCM.Views.ActionResultsAggregates(_.extend(@options, model : statsModel))
       @aggregatesRegion.show(@aggregates)
     
+  addPaginatorControls: (tx) ->
+    paginatorView = new MCM.Views.Paginator(collection : @options.collection )
+    @resultsPaginatorRegion.show(paginatorView)
+    
   initialize: ->
     @listenTo MCM.vent, "action:receiveStats", @receiveStats
+    @listenTo @options.collection, "resultsPaginator:needsControls", @addPaginatorControls
 
   onShow: ->
     @results = new MCM.Views.ActionResults(@options)

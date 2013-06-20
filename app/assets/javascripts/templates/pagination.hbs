@@ -1,0 +1,29 @@
+<ul>
+	{{#if hasPrevPage}}
+	<li>
+		<a data-page="{{prevPage}}" href="#">«</a>
+		{{else}}
+	<li class="disabled">
+		<a href="#">«</a>
+		{{/if}}
+	</li>
+
+	{{#each pages}}
+	{{#if isCurrent}}
+	<li class="active">
+	{{else}}
+	<li>
+	{{/if}}
+		<a data-page="{{idx}}" href="#">{{display}}</a>
+	</li>
+	{{/each}}
+
+	{{#if hasNextPage}}
+	<li>
+		<a data-page="{{nextPage}}" href="#">»</a>
+	{{else}}
+	<li class="disabled">
+		<a href="#">»</a>
+	{{/if}}
+	</li>
+</ul>
