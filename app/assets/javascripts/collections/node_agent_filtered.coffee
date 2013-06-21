@@ -16,43 +16,40 @@
 
 # This collection decorates the agents collection, and filters it based on a node collection.
 
-MCM.Collections.NodeAgentFiltered = (original, nodemodel) ->
-  filtered = new original.constructor()
-  
-  # allow this object to have it's own events
-  filtered._callbacks = {}
-  
-  original.listenTo nodemodel, "change", ->
-    filtered.filterByNode(nodemodel)
-  
-  # call 'where' on the original function so that
+MCM.Collections.NodeAgentFiltered = Backbone.Collection.extend({
+  # call 'where' on the parent function so that
   # filtering will happen from the complete collection
-  filtered.filterByNode = (node) ->
+  filterByNode: (node) ->
     items = undefined
     
     # call 'where' if we have criteria
     # or just get all the models if we don't
     if node
       items = []
-      for i in original.models
+      for i in @parent.models
         if $.inArray(i.attributes.id, node.attributes.agents) > -1
           items.push(i)
     else
-      items = original.models
+      items = @parent.models
     
     # store current criteria
-    filtered._currentNode = node
+    @currentNode = node
     
     # reset the filtered collection with the new items
-    filtered.reset items
+    @reset items
 
-  
-  # when the original collection is reset,
+  # when the parent collection is reset,
   # the filtered collection will re-filter itself
   # and end up with the new filtered result set
-  original.on "add", ->
-    filtered.filterByNode filtered._currentNode
+  initialize: (models, options) ->
+    @node = options.node
+    @parent = options.parent
+    
+    @listenTo @node, "change", ->
+      @filterByNode(@node)
   
-  filtered.filterByNode()
-  
-  filtered
+    @listenTo @parent, "add", =>
+      @filterByNode(@currentNode)
+    
+    @filterByNode()
+})

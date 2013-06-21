@@ -27,7 +27,7 @@ MCM.Controllers.Node = {
     return view
       
   addActionBrowser: (id, view) ->
-    agentsCollection = new MCM.Collections.NodeAgentFiltered(MCM.agents, view.model)
+    agentsCollection = new MCM.Collections.NodeAgentFiltered([], { parent : MCM.agents, node : view.model })
     applicationsCollection = new MCM.Collections.NodeApplicationFiltered(MCM.applications, view.model)
     view.runView = new MCM.Views.Layouts.Routes( nodemodel : view.model, agentsCollection : agentsCollection, applicationsCollection : applicationsCollection )
 
