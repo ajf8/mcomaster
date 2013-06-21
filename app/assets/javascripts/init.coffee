@@ -109,7 +109,7 @@ MCM.addInitializer ->
     if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"
       return
       
-    #loginDialogs = $(".logout-notification").length
+    loginDialogs = $(".logout-notification").length
     if xhr.status == 401 and loginDialogs < 1 and MCM.currentUser != undefined
       if $(".disconnect-notification").length > 0
          $(".disconnect-notification").modal('hide')

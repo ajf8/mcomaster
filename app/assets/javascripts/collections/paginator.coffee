@@ -16,55 +16,44 @@
 
 # This collection decorates the results collection
 
-MCM.Collections.Paginator = (original, settings) ->
-  filtered = new Backbone.Collection()
-  filtered.perPage = settings && settings.perPage || 20 
-  filtered.page = 0
-  
-  # allow this object to have it's own events
-  filtered._callbacks = {}
-  
-  filtered.getPages = ->
-    return Math.ceil(original.length / filtered.perPage)
-  
-  filtered.fullLength = ->
-    return original.length
+MCM.Collections.Paginator = Backbone.Collection.extend({
+  initialize: (models, options) ->
+    @original = options.original
+    @perPage = options.perPage || 50
+    @page = 0
+
+    @original.on "add", (model) =>
+      if @length < @perPage
+        @add(model)
+      else if @page == 0 and @original.length == @perPage+1
+        @trigger("resultsPaginator:needsControls")
+      else if @original.length % @perPage == 0 && @original.length != 0
+        @trigger("resultsPaginator:newPage", (@original.length/@perPage)-1)
     
-  # call 'where' on the original function so that
-  # filtering will happen from the complete collection
-  filtered.setPage = (page) ->
+  getPages: ->
+    return Math.ceil(@original.length / @perPage)
+  
+  fullLength: ->
+    return @original.length
+    
+  setPage: (page) ->
     items = undefined
     
-    # call 'where' if we have criteria
-    # or just get all the models if we don't
-    if settings.perPage
+    if @perPage
       items = []
       i = 0
       if page > 0
-        i = filtered.perPage * page
-      end = i + filtered.perPage
-      while i < end and i < original.models.length - 1
-        items.push(original.models[i])
+        i = @perPage * page
+      end = i + @perPage
+      while i < end and i < @original.models.length - 1
+        items.push(@original.models[i])
         i++
     else
-      items = original.models
+      items = @original.models
     
-    filtered.page = page
+    @page = page
     
-    # reset the filtered collection with the new items
-    filtered.reset items
+    @reset items
     
-    filtered.trigger("resultsPaginator:changePage", filtered.page)
-    
-  # when the original collection is reset,
-  # the filtered collection will re-filter itself
-  # and end up with the new filtered result set
-  original.on "add", (model) ->
-    if filtered.length < filtered.perPage
-      filtered.add(model)
-    else if filtered.page == 0 and original.length == filtered.perPage+1
-      filtered.trigger("resultsPaginator:needsControls")
-    else if original.length % filtered.perPage == 0 && original.length != 0
-      filtered.trigger("resultsPaginator:newPage", (original.length/filtered.perPage)-1)
-  
-  filtered
+    @trigger("resultsPaginator:changePage", @page)
+})

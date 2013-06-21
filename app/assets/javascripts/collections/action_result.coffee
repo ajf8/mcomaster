@@ -26,7 +26,7 @@ MCM.Collections.ActionResult = Backbone.Collection.extend({
       if tx.txid == @tx.txid
         msg.idx = @length + 1
         @add(new MCM.Models.ActionResult(msg))
-        #testing
+        # for pagination testing - multiplies results
         #baseId = msg.id
         #i = 0
         #while i < 500

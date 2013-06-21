@@ -1,7 +1,7 @@
 <ul>
 	{{#if hasPrevPage}}
 	<li>
-		<a data-page="{{prevPage}}" href="#">«</a>
+		<a data-page="{{prevPageIdx}}" href="/#/page/{{prevPage}}">«</a>
 		{{else}}
 	<li class="disabled">
 		<a href="#">«</a>
@@ -14,13 +14,13 @@
 	{{else}}
 	<li>
 	{{/if}}
-		<a data-page="{{idx}}" href="#">{{display}}</a>
+		<a data-page="{{idx}}" href="/#/page/{{display}}">{{display}}</a>
 	</li>
 	{{/each}}
 
 	{{#if hasNextPage}}
 	<li>
-		<a data-page="{{nextPage}}" href="#">»</a>
+		<a data-page="{{nextPageIdx}}" href="/#/page/{{nextPage}}">»</a>
 	{{else}}
 	<li class="disabled">
 		<a href="#">»</a>

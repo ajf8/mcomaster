@@ -56,11 +56,13 @@ MCM.Views.Paginator = Backbone.Marionette.ItemView.extend({
           
     if collection.page > 0
       ctx.hasPrevPage = true
-      ctx.prevPage = collection.page-1
+      ctx.prevPage = collection.page
+      ctx.prevPageIdx = collection.page-1
       
     if collection.page+1 < num_pages
       ctx.hasNextPage = true
-      ctx.nextPage = collection.page+1  
+      ctx.nextPageIdx = collection.page+1
+      ctx.nextPage = ctx.nextPageIdx+1   
       
     return ctx
 })
