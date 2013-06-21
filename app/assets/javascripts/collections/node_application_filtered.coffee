@@ -19,21 +19,25 @@
 # nodes agents. It can be a function, in which case it should return true
 # when provided the node model for it to display.
 
-MCM.Collections.NodeApplicationFiltered = (original, nodemodel) ->
-  filtered = new original.constructor()
+MCM.Collections.NodeApplicationFiltered = Backbone.Collection.extend({
+  initialize: (models, options) ->
+    @node = options.node
+    @parent = options.parent
+    
+    @listenTo @node, "change", ->
+      @filterByNode(@node)
+
+    @listenTo @parent, "add", ->
+      @filterByNode(@node)
+      
+    @filterByNode()
   
-  # allow this object to have it's own events
-  filtered._callbacks = {}
-  
-  original.listenTo nodemodel, "change", ->
-    filtered.filterByNode(nodemodel)
-  
-  filtered.filterByNode = (node) ->
+  filterByNode: (node) ->
     items = undefined
     
     if node
       items = []
-      for i in original.models
+      for i in @parent.models
         isValid = true
         if i.attributes.node_template == undefined
           isValid = false
@@ -45,17 +49,8 @@ MCM.Collections.NodeApplicationFiltered = (original, nodemodel) ->
         if isValid
           items.push(i)
     else
-      items = original.models
-    
-    # store current criteria
-    filtered._currentNode = node
+      items = @parent.models
     
     # reset the filtered collection with the new items
-    filtered.reset items
-
-  original.on "add", ->
-    filtered.filterByNode filtered._currentNode
-  
-  filtered.filterByNode()
-  
-  filtered
+    @reset items
+})
