@@ -10,12 +10,15 @@ Features
 *   Results are displayed as they arrive using AJAX.
 *   Aggregates and statistics.
 *   Validate request inputs in realtime.
+*   CSV and JSON export of results.
+*   Possible to extend with applications (experimental) like mcollective.
+*   Results pagination.
 
 System requirements
 ========================
 
 *   Redis.
-*   Ruby - developed on 1.9.3, ruby 2.0 does not work yet, 1.8.x might work.
+*   Ruby - should work on 1.9.x and 2.0
 *   Bundler (to install dependencies).
 *   MCollective client already configured.
 

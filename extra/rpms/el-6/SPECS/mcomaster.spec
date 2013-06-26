@@ -1,7 +1,7 @@
 Summary: Web interface to mcollective
 Name: mcomaster
 Version: 0.1.0
-Release: 1%{?dist}
+Release: %{?jenkins_build_number}%{!?jenkins_build_number:1}%{?dist}
 Group: Development/Languages
 License: Apache 2.0
 URL: http://www.mcomaster.org/
