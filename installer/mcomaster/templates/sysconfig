@@ -1,0 +1,21 @@
+# the location where mcomaster is installed
+#MCOMASTER_HOME=/usr/share/mcomaster
+
+# the port which mcomaster web server is running at
+# note that if the mcomaster user is not root, it has to be a > 1024
+#MCOMASTER_PORT=<%= @mcomaster_port %>
+
+# the user which runs the web interface
+#MCOMASTER_USER=mcomaster
+
+# the rails environment in which mcomaster runs
+#MCOMASTER_ENV=production
+
+# if we're using passenger or not
+# if set to 1, init script will do a railsrestart on 'restart' and will refuse
+# 'start' and 'stop' completely and remind the operator that passenger is in
+# use.
+#MCOMASTER_USE_PASSENGER=0
+
+# set to 1 if you're using thin as a server
+#MCOMASTER_USE_THIN=0

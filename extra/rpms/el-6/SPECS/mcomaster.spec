@@ -117,6 +117,23 @@ getent passwd %{name} >/dev/null || \
 useradd -r -g %{name} -d /var/lib/mcomaster -s /bin/bash -c "mcomaster" %{name}
 exit 0
 
+%post
+/sbin/chkconfig --add %{name} || ::
+(/sbin/service mcomaster status && /sbin/service mcomaster restart) >/dev/null 2>&1
+exit 0
+
+%preun
+if [ $1 -eq 0 ] ; then
+/sbin/service %{name} stop >/dev/null 2>&1
+/sbin/chkconfig --del %{name} || :
+fi
+
+%postun
+if [ $1 -ge 1 ] ; then
+# Restart the service
+/sbin/service %{name} restart >/dev/null 2>&1 || :
+fi
+
 %files
 %defattr(-,root,root,0755)
 %{_datadir}/%{name}

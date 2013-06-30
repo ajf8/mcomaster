@@ -1,0 +1,40 @@
+# Format:
+# <classname>: false - don't include this class
+# <classname>: true - include and use the defaults
+# <classname>:
+#   <param>: <value> - include and override the default(s)
+#
+# See params.pp in each class for what options are available
+---
+# setup puppetlabs repo (without GPG). but if you're using
+# puppet you might already have this...
+puppetlabs: false
+# this sets up an mcollective server with both sending
+# registration and saving it to redis configured. 
+mcollective_server:
+  stomp_host: 192.168.122.1
+  stomp_port: 61613
+  stomp_user: mcollective
+  stomp_pass: password
+  redis_host: 192.168.122.1
+  redis_port: 6379
+# sets up the mcollective client with redis discovery
+mcollective_client:
+  stomp_host: 192.168.122.1
+  stomp_port: 61613
+  stomp_user: mcollective
+  stomp_pass: password
+  redis_host: 192.168.122.1
+  redis_port: 6379
+# setup mcomaster and an admin user. IMPORTANT: change the password
+mcomaster:
+  mcomaster_port: 3000
+  redis_host: 192.168.122.1
+  redis_port: 6379
+  admin_user: user
+  admin_pass: password
+  admin_email: user@example.com
+# packages needed for building packages
+mcomaster_builder: false
+# for my CI virtual machines, you probably don't want this
+mcomaster_ci: false
