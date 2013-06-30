@@ -21,6 +21,7 @@ MCOMASTER_HOME=${MCOMASTER_HOME:-/usr/share/mcomaster}
 MCOMASTER_ENV=${MCOMASTER_ENV:-production}
 MCOMASTER_USE_PASSENGER=${MCOMASTER_USE_PASSENGER:-0}
 MCOMASTER_USE_THIN=${MCOMASTER_USE_THIN:-0}
+MCOMASTER_THIN_USE_SSL=${MCOMASTER_THIN_USE_SSL:-0}
 
 if [[ -z $MCOMASTER_PID ]]
 then
@@ -42,11 +43,18 @@ start() {
 
     if [[ $MCOMASTER_USE_THIN = 1 ]]
     then
-        /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
+        if [[ "${MCOMASTER_THIN_USE_SSL}" = 1 ]]
+        then
+          /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
             --environment $MCOMASTER_ENV \
             --group ${MCOMASTER_USER} \
-            --config /etc/mcomaster/thin.yml \
-            --rackup "${MCOMASTER_HOME}/config.ru"
+            --rackup "${MCOMASTER_HOME}/config.ru" -d --ssl
+        else
+          /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
+            --environment $MCOMASTER_ENV \
+            --group ${MCOMASTER_USER} \
+            --rackup "${MCOMASTER_HOME}/config.ru" -d
+        fi
     else
         cd ${MCOMASTER_HOME}
         daemon --user ${MCOMASTER_USER} /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/rails s -p ${MCOMASTER_PORT} -e ${MCOMASTER_ENV} -d ${MCOMASTER_EXTRA_ARGS} > /dev/null

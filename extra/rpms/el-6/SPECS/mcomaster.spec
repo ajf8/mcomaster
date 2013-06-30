@@ -28,6 +28,7 @@ BuildRequires: make
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: sqlite-devel
+BuildRequires: openssl-devel
 
 %package release
 Summary:        mcomaster repository files

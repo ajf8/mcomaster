@@ -1,4 +1,8 @@
 class mcomaster_builder {
+  package { 'openssl-devel':
+    ensure => 'present',
+  }
+
   package { 'rpm-build':
     ensure => 'present',
   }

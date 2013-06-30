@@ -19,3 +19,4 @@
 
 # set to 1 if you're using thin as a server
 #MCOMASTER_USE_THIN=0
+#MCOMASTER_THIN_USE_SSL=0
