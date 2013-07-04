@@ -68,8 +68,13 @@ default_discovery_method = redisdiscovery
 direct_addressing = yes
 ```
 
-Install mcomaster from CentOS/RHEL 6 RPM
+Install mcomaster from CentOS/RHEL 6 RPM (if you don't use this, from source instructions follow)
 ---------------
+
+The following yum repositories are available:
+
+  * Automated snapshot x86_64 el6 (recommended) - http://yum.mcomaster.org/snapshots/el6/x86_64/
+  * Latest release (may be old) - http://yum.mcomaster.org/releases/latest/el6/x86_64/
 
 The el6 RPM currently bundles all of its rubygem dependencies, isolated from your system ruby,
 for ease of maintenance and installation. Because el6 ships with Ruby 1.8 which is not
@@ -86,8 +91,13 @@ the stock 1.8.
 
   * Install the mcomaster repository:
 
-``` bash
-# rpm -Uvh http://yum.mcomaster.org/releases/latest/el6/x86_64/mcomaster-release.rpm
+``` cat >/etc/yum.repos.d/mcomaster.repo <<EOF
+[mcomaster]
+name=mcomaster
+baseurl=http://yum.mcomaster.org/snapshots/el6/\$basearch
+enabled=1
+gpgcheck=0
+EOF
 ```
 
   * Install mcomaster packages:
