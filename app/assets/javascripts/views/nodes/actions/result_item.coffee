@@ -28,8 +28,12 @@ MCM.Views.NodeActionResultItem = Backbone.Marionette.ItemView.extend({
     
     if @model.attributes.body.statuscode == 0
       t['icon'] = "node-icon-ok"
+      if @model.attributes.body.statusmsg.length < 8
+        t['badgeClass'] = "success"
     else
       t['icon'] = "node-icon-fail"
+      if @model.attributes.body.statusmsg.length < 8
+        t['badgeClass'] = "important"
       
     return t
       

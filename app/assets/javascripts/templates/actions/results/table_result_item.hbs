@@ -15,7 +15,15 @@
 <td class="idx-cell">{{idx}}</td>
 <td class="node-status-icon {{icon}}"></td>
 <td><strong>{{senderid}}</strong></td>
-<td>{{body.statusmsg}}</td>
+<td>
+{{#if badgeClass}}
+<span class="badge badge-{{badgeClass}}">
+{{/if}}
+{{body.statusmsg}}
+{{#if badgeClass}}
+</span>
+{{/if}}
+</td>
 {{#each rowItems}}
 <td>
 {{#if isComplex}}

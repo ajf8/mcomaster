@@ -18,7 +18,17 @@
 	<tr><th>Output</th><th>Value</th></tr>
 </thead>
 <tbody>
-<tr><td>Status</td><td>{{body.statusmsg}}</td></tr>
+<tr><td>Status</td>
+<td>
+{{#if badgeClass}}
+<span class="badge badge-{{badgeClass}}">
+{{/if}}
+{{body.statusmsg}}
+{{#if badgeClass}}
+</span>
+{{/if}}
+</td>
+</tr>
 {{#each rows}}
 <tr><td>{{kee}}</td><td>
 {{#if isComplex}}
