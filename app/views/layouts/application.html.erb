@@ -24,8 +24,8 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title><%= content_for?(:title) ? yield(:title) : "MCollective" %></title>
-		<meta name="description" content="<%= content_for?(:description) ? yield(:description) : "MCollective" %>">
+		<title><%= content_for?(:title) ? yield(:title) : "mcomaster" %></title>
+		<meta name="description" content="<%= content_for?(:description) ? yield(:description) : "mcomaster" %>">
 		<%= stylesheet_link_tag "application", :media => "all" %>
 		<%= javascript_include_tag :application %>
 		<%= csrf_meta_tags %>
@@ -49,9 +49,9 @@
 						<span class="icon-bar"></span>
 					</button>
 					<% if signed_in? -%>
-					<a class="brand" href="/#/">MCollective</a>
+					<a class="brand" href="/#/">mcomaster</a>
 					<% else -%>
-					<a class="brand" href="/">MCollective</a>
+					<a class="brand" href="/">mcomaster</a>
 					<% end -%>
 					
 					<div id="agentsToolbar"></div>
