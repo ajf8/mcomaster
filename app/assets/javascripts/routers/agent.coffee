@@ -19,7 +19,7 @@ MCM.Routers.Agent = Backbone.Marionette.AppRouter.extend({
   appRoutes: {
     "agent/:id": "showAgent"
   }
-});
+})
 
 MCM.addInitializer ->
   new MCM.Routers.Agent()

@@ -27,4 +27,4 @@ MCM.Views.NodeActionResults = MCM.Views.AbstractActionResults.extend({
     return {
       error : @error
     }
-});
+})

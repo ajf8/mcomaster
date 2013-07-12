@@ -34,4 +34,4 @@ MCM.Collections.ActionResult = Backbone.Collection.extend({
         #  msg.idx = @length + 1
         #  @add(new MCM.Models.ActionResult(msg))
         #  i++
-});
+})

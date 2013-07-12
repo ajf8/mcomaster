@@ -54,8 +54,8 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
   templateHelpers: ->
     return @options
     
-  onShow: -> 
-    $(window).backToTop();
+  onShow: ->
+    $(window).backToTop()
     @request = new @options.requestViewClass(@options)
     @requestRegion.show(@request)
- });
+})

@@ -19,7 +19,7 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
   setDdl: (ddl) ->
     @ddl = ddl.actionDdl
     @validationRules = ddl.validationRules
-    @validationMessages = ddl.validationMessages    
+    @validationMessages = ddl.validationMessages
     @render()
   
   templateHelpers: ->
@@ -42,9 +42,9 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
         $("#actionForm").validate({
           rules : @validationRules
           onkeyup : (element) ->
-            this.element(element);
-        });
+            this.element(element)
+        })
     
   onShow: ->
-    $("#actionForm").fadeIn(200);
-});
+    $("#actionForm").fadeIn(200)
+})

@@ -52,4 +52,4 @@ MCM.Views.ActionResultItem = Backbone.Marionette.ItemView.extend({
         t['badgeClass'] = "important"
     
     return t
-});
+})

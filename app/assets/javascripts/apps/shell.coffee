@@ -3,7 +3,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
   
   ShellApp.ShellAgentRequestView = App.module("Plugins.Shell").AbstractRequestView.extend({
     onReceiveResult: (tx, msg) ->
-      # display coloured hostname and exit code 
+      # display coloured hostname and exit code
       @term.echo(@getHostLine(msg))
       @term.echo("")
       
@@ -20,7 +20,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
     getFilter: ->
       return @options.filter || @filterView.getRequestFilter()
       
-    onCommand: (command, term) ->         
+    onCommand: (command, term) ->
       if command == ""
         return
            
@@ -28,10 +28,10 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
         filter : @getFilter()
         agent : "shell"
         action : "execute"
-        args : { cmd : command, full : true } 
+        args : { cmd : command, full : true }
       }
       return
-  });
+  })
   
   ShellApp.Router = Backbone.Router.extend({
     routes: {
@@ -45,9 +45,9 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
     shellAction: ->
       filterCollection = new MCM.Collections.ActionRequestFilter
       view = new ShellApp.ShellAgentRequestView({ filterCollection : filterCollection, prompt : "# " })
-      MCM.mainRegion.show(view);
+      MCM.mainRegion.show(view)
     
-    # node specific view, so create with filter and prompt  
+    # node specific view, so create with filter and prompt
     shellNodeAction: (node) ->
       filter = {
         identity : [ node ]
@@ -67,7 +67,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
   ShellApp.on "start", ->
     @listenTo MCM.agents, "add", (model) ->
       if model.attributes.id == "shell" and model.attributes.meta.author == "Jeremy Carroll"
-        MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : "terminal24", node_template : "applications/shell_node", node_must_have : "shell" } )) 
+        MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : "terminal24", node_template : "applications/shell_node", node_must_have : "shell" } ))
     
   MCM.addInitializer ->
-    new ShellApp.Router();
+    new ShellApp.Router()

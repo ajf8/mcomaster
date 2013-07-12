@@ -28,7 +28,7 @@ MCM.Views.Paginator = Backbone.Marionette.ItemView.extend({
       @options.collection.setPage(page)
       @render()
       
-    e.preventDefault();
+    e.preventDefault()
     
     return false
   
@@ -62,7 +62,7 @@ MCM.Views.Paginator = Backbone.Marionette.ItemView.extend({
     if collection.page+1 < num_pages
       ctx.hasNextPage = true
       ctx.nextPageIdx = collection.page+1
-      ctx.nextPage = ctx.nextPageIdx+1   
+      ctx.nextPage = ctx.nextPageIdx+1
       
     return ctx
 })

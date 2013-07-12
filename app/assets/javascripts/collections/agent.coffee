@@ -14,6 +14,6 @@
  limitations under the License.
 ###
 MCM.Collections.Agent = Backbone.Collection.extend({
-    model: MCM.Models.Agent
-    url: "/mcagents"
-});
+  model: MCM.Models.Agent
+  url: "/mcagents"
+})

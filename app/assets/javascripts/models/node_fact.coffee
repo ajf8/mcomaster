@@ -14,4 +14,4 @@
  limitations under the License.
 ###
 MCM.Models.NodeFact = Backbone.Model.extend({
-});
+})

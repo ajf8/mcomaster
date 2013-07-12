@@ -14,5 +14,5 @@
  limitations under the License.
 ###
 MCM.Collections.Applications = Backbone.Collection.extend({
-    model: MCM.Models.Application
-});
+  model: MCM.Models.Application
+})

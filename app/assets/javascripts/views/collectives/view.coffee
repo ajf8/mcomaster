@@ -21,4 +21,4 @@ MCM.Views.Collective = Backbone.Marionette.ItemView.extend({
     
   templateHelpers: ->
     return { collectiveSize : _.size(@model.attributes.members) }
-});
+})

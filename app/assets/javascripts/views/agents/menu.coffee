@@ -22,4 +22,4 @@ MCM.Views.AgentsMenu = Backbone.Marionette.CompositeView.extend({
   
   templateHelpers: ->
     return { menuName : "Agents" }
-});
+})

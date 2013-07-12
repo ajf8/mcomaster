@@ -48,8 +48,8 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
       
   filterRemove: (e) ->
     e.preventDefault()
-    id = $(e.currentTarget).data("id");
-    item = @collection.get(id);
+    id = $(e.currentTarget).data("id")
+    item = @collection.get(id)
     @collection.remove(item)
     @render()
     
@@ -60,7 +60,7 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
   newFilter: (filterType) ->
     # needs an ID, just an incrementing counter, for removal
     # filterType chooses where it goes in the top level of
-    # the filter object 
+    # the filter object
     return new MCM.Models.ActionRequestFilter({'id' : "filter"+@idCounter++, 'filterType' : filterType})
     
   addFactFilter: (e) ->
@@ -86,6 +86,6 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
     
   onShow: ->
     $('#requestTabs a').click (e) ->
-      e.preventDefault();
-      $(this).tab('show');
-});
+      e.preventDefault()
+      $(this).tab('show')
+})

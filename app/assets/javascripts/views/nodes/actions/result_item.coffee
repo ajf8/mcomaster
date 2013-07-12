@@ -42,4 +42,4 @@ MCM.Views.NodeActionResultItem = Backbone.Marionette.ItemView.extend({
       k = $(c).data("column")
       v = @model.attributes.body.data[k]
       $(c).renderJSON(v)
-});
+})

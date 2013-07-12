@@ -24,7 +24,7 @@ MCM.Controllers.Action = {
       requestViewClass : MCM.Views.Layouts.ActionRequest,
       cancelUrl : "/#/agent/"+agent
     }
-    MCM.mainRegion.show(view);
+    MCM.mainRegion.show(view)
     
     MCM.Client.requestDdl(agent, id)
 }

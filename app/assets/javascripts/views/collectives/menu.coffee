@@ -22,4 +22,4 @@ MCM.Views.CollectivesMenu = Backbone.Marionette.CompositeView.extend({
   
   templateHelpers: ->
     return { menuName : "Collectives" }
-});
+})

@@ -21,7 +21,7 @@ MCM.Routers.Node = Backbone.Marionette.AppRouter.extend({
     "node/:id" : "showNodeRun"
     "node/:id/action/:agent/:mcaction" : "showNodeAction"
   }
-});
+})
 
 MCM.addInitializer ->
   new MCM.Routers.Node()

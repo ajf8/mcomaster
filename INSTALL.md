@@ -91,7 +91,8 @@ the stock 1.8.
 
   * Install the mcomaster repository:
 
-``` cat >/etc/yum.repos.d/mcomaster.repo <<EOF
+``` bash
+# cat >/etc/yum.repos.d/mcomaster.repo <<EOF
 [mcomaster]
 name=mcomaster
 baseurl=http://yum.mcomaster.org/snapshots/el6/\$basearch
@@ -147,7 +148,7 @@ mcomaster$ RAILS_ENV=production rake db:reset
   * And a first admin user:
 
 ``` bash
-RAILS_ENV=production script/add_user.sh -u username -p password -m 'email@domain.com'
+mcomaster$ RAILS_ENV=production script/add_user.sh -u username -p password -m 'email@domain.com'
 ```
 
   * compile assets
@@ -165,5 +166,5 @@ mcomaster$ rails server -e production
   alternatively, start with SSL
 
 ``` bash
-mcomaster: thin start --ssl
+mcomaster$ thin start --ssl
 ```

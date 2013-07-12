@@ -18,4 +18,4 @@ MCM.Views.NodeActions = Backbone.Marionette.CollectionView.extend({
     
   itemViewOptions: ->
     return @options
-});
+})

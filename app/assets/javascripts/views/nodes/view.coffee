@@ -29,8 +29,8 @@ MCM.Views.Node = Backbone.Marionette.Layout.extend({
     @factsView = new MCM.Views.NodeFacts(model : @model)
 
     $('#nodeTabs a').click (e) ->
-      e.preventDefault();
-      $(this).tab('show');
+      e.preventDefault()
+      $(this).tab('show')
 
     @factsRegion.show(@factsView)
     @runRegion.show(@runView)
@@ -43,4 +43,4 @@ MCM.Views.Node = Backbone.Marionette.Layout.extend({
   setTab: (selector) ->
     @activeTabSelector = selector
     $(@activeTabSelector).tab('show')
-});
+})

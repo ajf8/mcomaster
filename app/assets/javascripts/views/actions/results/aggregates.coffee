@@ -21,4 +21,4 @@ MCM.Views.ActionResultsAggregates = Backbone.Marionette.ItemView.extend({
     
   templateHelpers: ->
     return @options
-});
+})

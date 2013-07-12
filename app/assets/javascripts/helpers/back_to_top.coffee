@@ -33,4 +33,4 @@ $.extend $.fn.backToTop,
     this.backToTop el, opts
   
   backToTop: (el, opts) ->
-    $('body,html').animate({ scrollTop: 0 }, opts.speed);
+    $('body,html').animate({ scrollTop: 0 }, opts.speed)

@@ -18,4 +18,4 @@ MCM.Views.Agent = Backbone.Marionette.ItemView.extend({
   
   initialize: ->
     @listenTo(@model, "change", @render)
-});
+})

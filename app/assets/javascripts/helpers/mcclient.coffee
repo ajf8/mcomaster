@@ -1,18 +1,18 @@
 # An object with functions for interacting with API (rails controllers)
 
-MCM.Client = 
+MCM.Client =
   # transform DDL, so it is easier to template using handlebars.js
   # and create the options for jquery.validation plugin
   # this is called from a successful requestDdl ajax call (below), then
-  # the result sent out as a action:receiveDdl event on App.vent for 
-  # any view to receive  
+  # the result sent out as a action:receiveDdl event on App.vent for
+  # any view to receive
   transformDdl : (ddl, agent, action) ->
     actionDdl = ddl['actions'][action]
     
     if !actionDdl
       return
       
-    validationRules = { };
+    validationRules = { }
 
     for own ddlKey of actionDdl.input
       validationRules[ddlKey] = {
@@ -64,7 +64,7 @@ MCM.Client =
         MCM.vent.trigger("action:receiveDdl", MCM.Client.transformDdl(data.ddl, agent, action))
         
       dataType: "json"
-    });
+    })
   
   # gather the fields from the form and save them
   # into submission.args. convert booleans from strings
@@ -92,20 +92,20 @@ MCM.Client =
   # these are spooled over a redis queue on the server side.
   submitAction: (submission) ->
     that = @
-    data = { 'filter' : submission.filter || {}, 'args' : submission.args || {} };
+    data = { 'filter' : submission.filter || {}, 'args' : submission.args || {} }
     $.ajax({
       type: "POST"
-      url: "/execute/"+submission.agent+"/"+submission.action 
+      url: "/execute/"+submission.agent+"/"+submission.action
       dataType: "json"
       data: JSON.stringify(data)
       success: (data) ->
         that.receiveTxn(data)
-    });
+    })
   
   # helper for doing ajax requests on a transaction.
   # add a counter on the end of the URL to avoid caching
-  # issues (some browsers seem to cache for less than a second with max-age:0?) 
-  txGet: (tx, options) ->      
+  # issues (some browsers seem to cache for less than a second with max-age:0?)
+  txGet: (tx, options) ->
     if !tx.getCount
       tx.getCount = 0
       tx.msgCount = 0
@@ -129,10 +129,10 @@ MCM.Client =
           msg = envelope.value
           # use the presence of a key in the actual message to decide what it is
           # and fire the appropriate event
-          if msg.begin 
-            MCM.vent.trigger("action:beginResults", tx, msg.begin)          
+          if msg.begin
+            MCM.vent.trigger("action:beginResults", tx, msg.begin)
           else if msg.node
-            # use txid:messagenumber as a unique 
+            # use txid:messagenumber as a unique
             msg.node.id = envelope.key
             MCM.vent.trigger("action:receiveResult", tx, msg.node)
           else if msg.error
@@ -148,12 +148,12 @@ MCM.Client =
           if msg.end
             return
         
-        # TODO: make configurable interval 
-        setTimeout =>      
+        # TODO: make configurable interval
+        setTimeout =>
           @receiveTxn(tx)
         , 400
       
-      # probably a 404, meaning that there's more  
+      # probably a 404, meaning that there's more
       # TODO: check status code, generate error event if not 404?
       error: (rdata) =>
         setTimeout =>

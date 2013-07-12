@@ -31,6 +31,6 @@ MCM.Views.AgentsHomeList = Backbone.Marionette.CompositeView.extend({
   templateHelpers: ->
     ctx = _.extend(@options, {
       nodeCount : MCM.nodes.length
-    });
+    })
     return ctx
-});
+})

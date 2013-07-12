@@ -14,5 +14,5 @@
  limitations under the License.
 ###
 MCM.Models.Collective = Backbone.Model.extend({
-    urlRoot:"/collectives"
-});
+  urlRoot:"/collectives"
+})

@@ -15,5 +15,5 @@
 ###
 # collection of filters
 MCM.Collections.ActionRequestFilter = Backbone.Collection.extend({
-    model: MCM.Models.ActionRequestFilter
-});
+  model: MCM.Models.ActionRequestFilter
+})

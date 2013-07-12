@@ -15,7 +15,7 @@
 ###
 
 # A bit more complicated than I'd like, to choose the contents of the
-# first tab depending on the URL state.  
+# first tab depending on the URL state.
 MCM.Controllers.Node = {
   myShowView: (view) ->
     MCM.mainRegion.show(view)

@@ -21,4 +21,4 @@ MCM.Views.NodesMenu = Backbone.Marionette.CompositeView.extend({
   itemView: MCM.Views.NodeMenuItem
   
   templateHelpers: { "menuName" : "Nodes" }
-});
+})

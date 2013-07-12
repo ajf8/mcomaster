@@ -49,7 +49,7 @@ MCM.Views.ActionRequestFilterItem = Backbone.Marionette.ItemView.extend({
         return HandlebarsTemplates['actions/request/filter/str_item'](context)
   
   initialize: ->
-    @modelBinder = new Backbone.ModelBinder();
+    @modelBinder = new Backbone.ModelBinder()
     
   onShow: ->
     @modelBinder.bind(@model, @el)

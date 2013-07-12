@@ -15,9 +15,7 @@
 ###
 MCM.Views.ActionResults = MCM.Views.AbstractActionResults.extend({
   template: HandlebarsTemplates['actions/results/results']
-  
   itemView: MCM.Views.ActionResultItem
-
   itemViewContainer: "tbody"
   
   itemViewOptions: ->
@@ -36,4 +34,4 @@ MCM.Views.ActionResults = MCM.Views.AbstractActionResults.extend({
       resultCount : resultCount,
       hasResults : resultCount > 0
     }
-});
+})

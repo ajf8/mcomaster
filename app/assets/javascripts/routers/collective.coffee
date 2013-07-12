@@ -19,7 +19,7 @@ MCM.Routers.Collective = Backbone.Marionette.AppRouter.extend({
   appRoutes: {
     "collective/:id": "showCollective"
   }
-});
+})
 
 MCM.addInitializer ->
   new MCM.Routers.Collective()

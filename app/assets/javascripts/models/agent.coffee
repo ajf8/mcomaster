@@ -14,5 +14,5 @@
  limitations under the License.
 ###
 MCM.Models.Agent = Backbone.Model.extend({
-    urlRoot:"/mcagents"
-});
+  urlRoot:"/mcagents"
+})

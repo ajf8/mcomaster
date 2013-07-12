@@ -21,7 +21,7 @@ MCM.Routers.Home = Backbone.Router.extend({
   home: ->
     homeView = new MCM.Views.AgentsHomeList(collection : MCM.agents)
     MCM.mainRegion.show(homeView)
-});
+})
 
 MCM.addInitializer ->
-  MCM.homeController = new MCM.Routers.Home()  
+  MCM.homeController = new MCM.Routers.Home()

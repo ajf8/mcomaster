@@ -14,5 +14,5 @@
  limitations under the License.
 ###
 MCM.Collections.NodeFact = Backbone.Collection.extend({
-    model: MCM.Models.NodeFact
-});
+  model: MCM.Models.NodeFact
+})

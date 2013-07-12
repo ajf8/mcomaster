@@ -36,13 +36,13 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     
     $.ajax({
       type: "POST"
-      url: "/discover" 
+      url: "/discover"
       dataType: "json"
       data: JSON.stringify({ filter : filter })
       success: (data) =>
         @results = new MCM.Views.ActionRequestFilterResults(data)
         @resultsRegion.show(@results)
-    });
+    })
 
   onShow: ->
     @form = new MCM.Views.ActionRequestFilterForm(@options)

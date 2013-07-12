@@ -14,6 +14,6 @@
  limitations under the License.
 ###
 MCM.Collections.Node = Backbone.Collection.extend({
-    model: MCM.Models.Node
-    url: "/nodes"
-});
+  model: MCM.Models.Node
+  url: "/nodes"
+})

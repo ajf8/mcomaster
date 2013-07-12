@@ -18,4 +18,4 @@ MCM.Views.NodeApplications = Backbone.Marionette.CollectionView.extend({
     
   itemViewOptions: ->
     return @options
-});
+})

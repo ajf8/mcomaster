@@ -20,7 +20,7 @@ MCM.Routers.Login = Backbone.Router.extend({
 
   login: (id) ->
     MCM.mainRegion.show(new MCM.Views.Layouts.Unauthenticated())
-});
+})
 
 MCM.addInitializer ->
   MCM.loginController = new MCM.Routers.Login()

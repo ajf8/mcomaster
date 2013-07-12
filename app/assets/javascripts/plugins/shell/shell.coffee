@@ -15,7 +15,7 @@
 ###
 MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
   ShellPlugin.AbstractRequestView = Marionette.Layout.extend({
-    regions : { 
+    regions : {
       filterRegion: "#shellFilterRegion"
       termRegion : "#term"
     }
@@ -127,7 +127,7 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
       @usage()
       
     initialize: ->
-      ShellPlugin.AbstractRequestView.prototype.initialize.call(this);
+      ShellPlugin.AbstractRequestView.prototype.initialize.call(this)
       @listenTo MCM.vent, "action:receiveDdl", @receiveDdl
        
     onReceiveResult: (tx, msg) ->
@@ -140,4 +140,4 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
       ShellPlugin.AbstractRequestView.prototype.onShow.call(this)
       @term.echo("Receiving DDL...")
       @term.echo(" ")
-  });
+  })

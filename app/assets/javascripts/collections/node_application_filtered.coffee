@@ -15,7 +15,7 @@
 ###
 
 # Decorate the application collection. If the application model
-# has a "node_must_have" string it will be checked for in the 
+# has a "node_must_have" string it will be checked for in the
 # nodes agents. It can be a function, in which case it should return true
 # when provided the node model for it to display.
 

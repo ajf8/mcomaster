@@ -13,19 +13,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-window.MCM = new Backbone.Marionette.Application();
+window.MCM = new Backbone.Marionette.Application()
 
 # Namespaces
 
-MCM.Views = {};
-MCM.Views.Layouts = {};
-MCM.Models = {};
-MCM.Collections = {};
-MCM.Routers = {};
-MCM.Controllers = {};
-MCM.Helpers = {};
-
-MCM.layouts = {};
+MCM.Views = {}
+MCM.Views.Layouts = {}
+MCM.Models = {}
+MCM.Collections = {}
+MCM.Routers = {}
+MCM.Controllers = {}
+MCM.Helpers = {}
+MCM.layouts = {}
 
 # Visual regions of the application, mapped to CSS selectors
 # eg. used as MCM.mainRegion.show(view)
@@ -40,7 +39,7 @@ MCM.addRegions({
   collectivesToolbarRegion: "#collectivesToolbar"
   applicationsToolbarRegion: "#applicationsToolbar"
   loggedInBarRegion : "#loggedInBar"
-});
+})
 
 # go to home page if an interactive login succeeds
 MCM.vent.on "authentication:interactive_logged_in", (user) ->
@@ -71,9 +70,9 @@ MCM.bind "initialize:after", ->
     , (MCM.remoteConfig.refresh_interval * 1000)
 
   if(MCM.currentUser)
-    MCM.vent.trigger("authentication:logged_in", MCM.currentUser);
+    MCM.vent.trigger("authentication:logged_in", MCM.currentUser)
   else
-    MCM.vent.trigger("authentication:logged_out");
+    MCM.vent.trigger("authentication:logged_out")
   
 MCM.addInitializer ->
   unless MCM.remoteConfig.noNodeMenu
@@ -81,7 +80,7 @@ MCM.addInitializer ->
     nodesView = new MCM.Views.NodesMenu(collection : MCM.nodes)
     MCM.nodesListRegion.show(nodesView)
     
-  MCM.collectives  = new MCM.Collections.Collective 
+  MCM.collectives  = new MCM.Collections.Collective
   collectivesMenuView = new MCM.Views.CollectivesMenu(collection : MCM.collectives)
   collectivesToolbarView = new MCM.Views.CollectivesDropdown(collection : MCM.collectives)
   MCM.collectivesListRegion.show(collectivesMenuView)
@@ -92,19 +91,19 @@ MCM.addInitializer ->
   MCM.agentsListRegion.show(agentsView)
   
   MCM.applications = new MCM.Collections.Applications
-  applicationsMenuView = new MCM.Views.ApplicationsMenu(collection : MCM.applications) 
+  applicationsMenuView = new MCM.Views.ApplicationsMenu(collection : MCM.applications)
   MCM.applicationsListRegion.show(applicationsMenuView)
   applicationsToolbarView = new MCM.Views.ApplicationsDropdown(collection : MCM.applications)
   MCM.applicationsToolbarRegion.show(applicationsToolbarView)
 
-  MCM.vent.on "authentication:logged_in", (user) ->  
+  MCM.vent.on "authentication:logged_in", (user) ->
     MCM.agents.fetch()
     MCM.collectives.fetch()
     MCM.nodes.fetch()
     MCM.agentsToolbarRegion.show(agentsToolbarView)
     MCM.collectivesToolbarRegion.show(collectivesToolbarView)
 
-  # TODO: tidy this up, make a single view class of some sort   
+  # TODO: tidy this up, make a single view class of some sort
   $(document).ajaxError (e, xhr, req) ->
     if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"
       return
@@ -112,7 +111,7 @@ MCM.addInitializer ->
     loginDialogs = $(".logout-notification").length
     if xhr.status == 401 and loginDialogs < 1 and MCM.currentUser != undefined
       if $(".disconnect-notification").length > 0
-         $(".disconnect-notification").modal('hide')
+        $(".disconnect-notification").modal('hide')
 
       bootbox.dialog("You have been logged out.", [{
         "label" : "Login",
@@ -120,7 +119,7 @@ MCM.addInitializer ->
         "callback" : ->
           window.location = "/"
       }], { "classes" : "logout-notification" })
-    if xhr.status != 404 and $(".disconnect-notification").length < 1 and loginDialogs < 1 
+    if xhr.status != 404 and $(".disconnect-notification").length < 1 and loginDialogs < 1
       bootbox.dialog('<div class="reconnect"></div>You seem to have been disconnected.', [{
         "label" : "Reconnect",
         "class" : "btn-primary"

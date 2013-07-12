@@ -24,8 +24,8 @@ MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
     @$el.parent().show()
     
   initialize: ->
-    @listenTo @collection, "add", @onAdd  
+    @listenTo @collection, "add", @onAdd
     
   templateHelpers: ->
     return { menuName : "Applications" }
-});
+})

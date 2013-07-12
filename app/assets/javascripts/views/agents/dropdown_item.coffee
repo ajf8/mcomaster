@@ -22,5 +22,5 @@ MCM.Views.AgentDropdownItem = Backbone.Marionette.ItemView.extend({
     if _.size(@model.attributes.actions) > 0
       return "dropdown-submenu"
     else
-      return "" 
+      return ""
 })

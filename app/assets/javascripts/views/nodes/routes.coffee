@@ -29,4 +29,4 @@ MCM.Views.Layouts.Routes = Backbone.Marionette.Layout.extend({
     @agentsRegion.show(agentsView)
     applicationsView = new MCM.Views.NodeApplications(collection : @options.applicationsCollection, nodemodel : @options.nodemodel)
     @applicationsRegion.show(applicationsView)
-});
+})

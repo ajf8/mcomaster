@@ -26,6 +26,6 @@ MCM.Views.ApplicationsDropdown = Backbone.Marionette.CompositeView.extend({
     @$el.parent().show()
     
   initialize: ->
-    @listenTo @collection, "add", @onAdd  
+    @listenTo @collection, "add", @onAdd
 
-});
+})

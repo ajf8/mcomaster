@@ -13,5 +13,5 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Models.Application = Backbone.Model.extend({ 
-});
+MCM.Models.Application = Backbone.Model.extend({
+})

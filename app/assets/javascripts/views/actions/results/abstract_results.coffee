@@ -20,14 +20,14 @@ MCM.Views.AbstractActionResults = Backbone.Marionette.CompositeView.extend({
   }
 
   # Create a fake link with a data: URL. the download attribute sets the filename
-  # (this can't be done with window.open AFAIK) then synthesise a click event  
+  # (this can't be done with window.open AFAIK) then synthesise a click event
   localDownload: (type, name, content) ->
     link = document.createElement("a")
     link.setAttribute("href", 'data:'+type+';charset=utf-8,'+encodeURIComponent(content))
     link.setAttribute("download", name)
-    theEvent = document.createEvent("MouseEvent");
-    theEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    link.dispatchEvent(theEvent);
+    theEvent = document.createEvent("MouseEvent")
+    theEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+    link.dispatchEvent(theEvent)
     
   csvEscape: (text) ->
     if text == undefined or text == ""
@@ -38,7 +38,7 @@ MCM.Views.AbstractActionResults = Backbone.Marionette.CompositeView.extend({
     needsQuotes = false
     
     if text.indexOf('"') >= 0
-      text = text.replace('"', '""');
+      text = text.replace('"', '""')
       needsQuotes = true
 
     if text.indexOf("\n") >= 0
@@ -85,4 +85,4 @@ MCM.Views.AbstractActionResults = Backbone.Marionette.CompositeView.extend({
   setError: (error) ->
     @error = error
     @render()
-});
+})

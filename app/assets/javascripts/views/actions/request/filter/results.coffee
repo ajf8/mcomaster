@@ -23,4 +23,4 @@ MCM.Views.ActionRequestFilterResults = Backbone.Marionette.ItemView.extend({
       nodeCount : nodeCount
       hasNodes : nodeCount > 0
     }
-});
+})

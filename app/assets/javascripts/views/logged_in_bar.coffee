@@ -20,7 +20,7 @@ MCM.Views.LoggedInBar = Backbone.Marionette.ItemView.extend({
     $("#search").closest("form").submit (event) ->
       event.preventDefault()
     
-    # setup bootstrap typeahead JS on search input. 
+    # setup bootstrap typeahead JS on search input.
     $("#search").typeahead({
       minLength: 2
       updater: (item) ->
@@ -30,9 +30,9 @@ MCM.Views.LoggedInBar = Backbone.Marionette.ItemView.extend({
       
       # do ajax (form) request to get results
       # set the type returned as a property on the result
-      # string, which is used in the template for icon.  
+      # string, which is used in the template for icon.
       source: (query,process) ->
-        $.post('/search', { q: query, limit: 8 }, (data) ->
+        $.post '/search', { q: query, limit: 8 }, (data) ->
           r = []
           for k,v of data
             for x in v
@@ -40,8 +40,7 @@ MCM.Views.LoggedInBar = Backbone.Marionette.ItemView.extend({
               s.searchResultType = k
               r.push(s)
           process(r)
-        );
-        
+
       highlighter: (data) ->
         compiled = HandlebarsTemplates['search_item']({ id : data, type : data.searchResultType })
         return compiled

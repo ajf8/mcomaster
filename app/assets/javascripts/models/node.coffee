@@ -30,4 +30,4 @@ MCM.Models.Node = Backbone.Model.extend({
       @factsCollection.reset(facts)
     
     return data
-});
+})

@@ -28,7 +28,7 @@ MCM.Views.NodeFacts = Backbone.Marionette.CompositeView.extend({
         @render()
   
   events : {
-    "submit #fact-filter" : "preventDefault" 
+    "submit #fact-filter" : "preventDefault"
   }
   
   preventDefault: (e) ->
@@ -39,4 +39,4 @@ MCM.Views.NodeFacts = Backbone.Marionette.CompositeView.extend({
     $("#fact-filter").keyup (event) ->
       if that.collection
         that.collection.where($(@).val())
-});
+})

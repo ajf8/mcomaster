@@ -20,7 +20,7 @@ MCM.Views.NodeRoutesHeader = Backbone.Marionette.ItemView.extend({
     @listenTo @options.nodemodel, "change", @render
     
   templateHelpers: ->
-    ctx = _.extend(@options);
+    ctx = _.extend(@options)
     if @options.nodemodel.attributes.checkin_age
       ctx.lastCheckinFormatted = moment.duration(0-@options.nodemodel.attributes.checkin_age, 'seconds').humanize(true)
     return ctx

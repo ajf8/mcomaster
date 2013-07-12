@@ -15,4 +15,4 @@
 ###
 MCM.HomeView = Backbone.Marionette.Layout.extend({
   template: HandlebarsTemplates['home']
-});
+})

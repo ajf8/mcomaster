@@ -27,4 +27,4 @@ MCM.Views.ActionResultsStats = Backbone.Marionette.ItemView.extend({
         #discoverytime : moment.duration(@model.attributes.discoverytime, 'seconds').format()
       }
     }
-});
+})

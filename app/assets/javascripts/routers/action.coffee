@@ -19,7 +19,7 @@ MCM.Routers.Action = Backbone.Marionette.AppRouter.extend({
   appRoutes: {
     "action/:agent/:id": "showAction"
   }
-});
+})
 
 MCM.addInitializer ->
   new MCM.Routers.Action()

@@ -13,13 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-Handlebars.registerHelper("key_value", (obj, args) ->
-  _results = [];
+Handlebars.registerHelper "key_value", (obj, args) ->
+  _results = []
   for own key of obj
-    _value = obj[key];
+    _value = obj[key]
     _results.push(args.fn({
       key : key
       value : _value
-    }));
+    }))
   return _results.join('')
-);
