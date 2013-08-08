@@ -103,39 +103,6 @@ MCM.addInitializer ->
     MCM.agentsToolbarRegion.show(agentsToolbarView)
     MCM.collectivesToolbarRegion.show(collectivesToolbarView)
 
-  # TODO: tidy this up, make a single view class of some sort
-  $(document).ajaxError (e, xhr, req) ->
-    if MCM.currentUser == undefined or req.url == "/users/sign_in.json" or xhr.statusText == "abort"
-      return
-      
-    loginDialogs = $(".logout-notification").length
-    if xhr.status == 401 and loginDialogs < 1 and MCM.currentUser != undefined
-      if $(".disconnect-notification").length > 0
-        $(".disconnect-notification").modal('hide')
-
-      bootbox.dialog("You have been logged out.", [{
-        "label" : "Login",
-        "class" : "btn-primary"
-        "callback" : ->
-          window.location = "/"
-      }], { "classes" : "logout-notification" })
-    if xhr.status != 404 and $(".disconnect-notification").length < 1 and loginDialogs < 1
-      bootbox.dialog('<div class="reconnect"></div>You seem to have been disconnected.', [{
-        "label" : "Reconnect",
-        "class" : "btn-primary"
-        "callback" : ->
-          $.ajax '/collectives', {
-            success: (rsp, check_status) ->
-              Backbone.history.loadUrl(Backbone.history.fragment)
-              $(".disconnect-notification").modal("hide")
-            complete: (rsp, check_status) ->
-              if check_status == "error"
-                disconnectNotification = HandlebarsTemplates['shared/notifications']( alertType : "error", message : "unable to reconnect", noDismiss : true )
-                $(".disconnect-notification .reconnect").html(disconnectNotification)
-          }
-          return false
-      }], { "classes" : "disconnect-notification" })
-
 $ ->
   MCM.start()
   Backbone.history.start()
