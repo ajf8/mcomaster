@@ -1,6 +1,4 @@
 Mcmaster::Application.configure do
-  config.eager_load = false
-
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -9,7 +7,7 @@ Mcmaster::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  #config.whiny_nils = true
+  config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -36,7 +34,7 @@ Mcmaster::Application.configure do
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
-  #config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Do not compress assets
   config.assets.compress = false
