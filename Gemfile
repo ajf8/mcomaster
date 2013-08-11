@@ -1,18 +1,17 @@
 source 'https://rubygems.org'
-gem 'rails', '3.2.13'
+gem 'protected_attributes'
+gem 'rails', '>= 4.0.0'
 gem 'sqlite3'
 gem 'therubyracer'
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-rails'
-  gem 'jquery-ui-rails'
-  gem 'handlebars_assets'
-  gem "backbone-rails"
-  gem "marionette-rails"
-  gem "momentjs-rails"
-end
+gem 'sass-rails',   '~> 4.0.0'
+gem 'coffee-rails', '>= 4.0.0'
+gem 'uglifier', '>= 1.0.3'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'handlebars_assets'
+gem "backbone-rails"
+gem "marionette-rails"
+gem "momentjs-rails"
 gem 'uuidtools'
 gem "thin", ">= 1.5.0"
 gem "redis"
