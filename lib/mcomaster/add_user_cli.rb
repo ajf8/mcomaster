@@ -19,7 +19,7 @@ def run
 
   puts 'ROLES'
   ['admin', 'user', 'VIP'].each do |role|
-    Role.find_or_create_by_name({ :name => role }, :without_protection => true)
+    Role.where({ :name => role }, :without_protection => true)
     puts 'role: ' << role
   end
   puts 'DEFAULT USERS'

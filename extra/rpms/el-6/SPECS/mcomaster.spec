@@ -51,9 +51,8 @@ scl enable ruby193 "bundle install --deployment --without test development"
 #scl enable ruby193 "bundle package"
 mv config/application.example.yml config/application.yml
 mv config/database.example.yml config/database.yml
-scl enable ruby193 "bundle install --local --binstubs"
-scl enable ruby193 "RAILS_ENV=production rake db:migrate"
-scl enable ruby193 "bundle exec rake assets:precompile"
+scl enable ruby193 "RAILS_ENV=production bin/rake db:migrate"
+scl enable ruby193 "bundle exec bin/rake assets:precompile"
 
 %install
 rm -rf %{buildroot}
