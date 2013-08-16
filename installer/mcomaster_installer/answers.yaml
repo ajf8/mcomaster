@@ -15,7 +15,7 @@ mcollective_server:
   stomp_host: 192.168.122.1
   stomp_port: 61613
   stomp_user: mcollective
-  stomp_pass: password
+  stomp_pass: marionette
   redis_host: 192.168.122.1
   redis_port: 6379
 # sets up the mcollective client with redis discovery
@@ -23,7 +23,7 @@ mcollective_client:
   stomp_host: 192.168.122.1
   stomp_port: 61613
   stomp_user: mcollective
-  stomp_pass: password
+  stomp_pass: marionette
   redis_host: 192.168.122.1
   redis_port: 6379
 # setup mcomaster and an admin user. IMPORTANT: change the password
