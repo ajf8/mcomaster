@@ -13,5 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Models.ActionRequestFilter = Backbone.Model.extend({
+MCM.Models.FilterMember = Backbone.RelationalModel.extend({
+  urlRoot:"/filter_members"
 })

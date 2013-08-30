@@ -10,6 +10,7 @@
 #= require backbone
 #= require backbone.sync.rails
 #= require backbone.marionette
+#= require backbone-relational
 #= require Backbone.ModelBinder
 #= require bootstrap
 #= require handlebars.runtime
@@ -33,6 +34,7 @@
 #= require ./views/agents/table_item
 #= require ./views/actions/results/item
 #= require ./views/actions/request/filter/item
+#= require ./views/actions/request/filter/remote_item
 #= require ./views/menu/empty_menu_item
 #= require ./views/menu/loading_menu_item
 #= require_tree ./views/

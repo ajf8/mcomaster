@@ -13,18 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Controllers.Action = {
-  showAction: (agent, id) ->
-    filterCollection = new MCM.Collections.Filter
-    view = new MCM.Views.Layouts.Action {
-      agent : agent,
-      id : id,
-      filterCollection : filterCollection,
-      resultsViewClass : MCM.Views.Layouts.ActionResults,
-      requestViewClass : MCM.Views.Layouts.ActionRequest,
-      cancelUrl : "/#/agent/"+agent
-    }
-    MCM.mainRegion.show(view)
-    
-    MCM.Client.requestDdl(agent, id)
-}
+MCM.Collections.Filter = Backbone.Collection.extend({
+  model: MCM.Models.Filter
+  url: "/filters"
+})

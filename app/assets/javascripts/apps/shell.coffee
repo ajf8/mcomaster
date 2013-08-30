@@ -43,7 +43,8 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
     # this causes filters to be displayed
     
     shellAction: ->
-      filterCollection = new MCM.Collections.ActionRequestFilter
+      filterCollection = new MCM.Collections.Filter
+      filterCollection.fetch()
       view = new ShellApp.ShellAgentRequestView({ filterCollection : filterCollection, prompt : "# " })
       MCM.mainRegion.show(view)
     

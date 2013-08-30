@@ -13,18 +13,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Controllers.Action = {
-  showAction: (agent, id) ->
-    filterCollection = new MCM.Collections.Filter
-    view = new MCM.Views.Layouts.Action {
-      agent : agent,
-      id : id,
-      filterCollection : filterCollection,
-      resultsViewClass : MCM.Views.Layouts.ActionResults,
-      requestViewClass : MCM.Views.Layouts.ActionRequest,
-      cancelUrl : "/#/agent/"+agent
+MCM.Models.Filter = Backbone.RelationalModel.extend({
+  urlRoot:"/filters"
+  
+  relations: [
+    type: Backbone.HasMany
+    key: 'filter_members'
+    relatedModel: 'MCM.Models.FilterMember'
+    collectionType: 'MCM.Collections.FilterMember'
+    includeInJSON: [ "filtertype", "term_key", "term", "term_operator", "id" ]
+    keyDestination: 'filter_members_attributes'
+    reverseRelation: {
+      key: 'filter_id',
+      includeInJSON: 'id'
     }
-    MCM.mainRegion.show(view)
-    
-    MCM.Client.requestDdl(agent, id)
-}
+  ]
+})

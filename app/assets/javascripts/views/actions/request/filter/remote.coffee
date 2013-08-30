@@ -13,7 +13,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-# collection of filters
-MCM.Collections.ActionRequestFilter = Backbone.Collection.extend({
-  model: MCM.Models.ActionRequestFilter
+# A CompositeView which has buttons for creating new items, and displaying them
+MCM.Views.ActionRequestRemoteFilters = Backbone.Marionette.CompositeView.extend({
+  template: HandlebarsTemplates['actions/request/filter/remote']
+  itemViewContainer: "ul.dropdown-menu"
+
+  itemView: MCM.Views.ActionRequestRemoteFilterItem
+  
+  templateHelpers: ->
+    return {
+      hasRemotes : @collection.size() > 0
+    }
 })

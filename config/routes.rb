@@ -1,6 +1,7 @@
 Mcmaster::Application.routes.draw do
-
-  resources :mcagents, :only => [:show, :index];
+  resources :mcagents, :only => [:show, :index]
+  resources :filters
+  resources :filter_members
   resources :nodes, :only => [:show, :index], :constraints => { :id => /.*/ }
   resources :collectives, :only => [:show, :index]
   

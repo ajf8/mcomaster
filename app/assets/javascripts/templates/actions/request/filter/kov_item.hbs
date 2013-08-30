@@ -13,13 +13,13 @@
 {{! limitations under the License. }} 
 {{! }}
 <label class="filter-type-label">{{filterTypeName}}</label>
-<input type='text' class="filter-key" name="{{filterType}}"></input>
-<select class="filter-operator" style="width:60px;" name="operator">
+<input type='text' class="filter-key" name="term_key"></input>
+<select class="filter-operator" style="width:60px;" name="term_operator">
 <option value="==">==</option>
 <option value="!=">!=</option>
 <option value="=~">=~</option>
 <option value=">">&gt;</option>
 <option value="<">&lt;</option>
 </select>
-<input type='text' class="filter-value" name="value"></input>
-<a href="#"><i class="icon-remove filter-remove-icon" data-id="{{id}}"></i></a>
+<input type='text' class="filter-value" name="term"></input>
+<a href="#" class="filter-member-remove-link" data-id="{{cid}}"><i class="icon-remove filter-remove-icon"></i></a>

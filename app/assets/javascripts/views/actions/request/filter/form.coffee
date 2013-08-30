@@ -16,21 +16,9 @@
 # A CompositeView which has buttons for creating new items, and displaying them
 MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['actions/request/filter/filter']
-  
   itemViewContainer: "#filterContainer"
   itemView: MCM.Views.ActionRequestFilterItem
   
-  events : {
-    "click #addFactFilterBtn" : "addFactFilter"
-    "click #addIdentityFilterBtn" : "addIdentityFilter"
-    "click #addAgentFilterBtn" : "addAgentFilter"
-    "click #addClassFilterBtn" : "addClassFilter"
-    "click .filter-remove-icon" : "filterRemove"
-  }
-  
-  initialize: ->
-    @idCounter = 0
-
   # serialize all the filters into the object the
   # server API expects
   getRequestFilter: ->
@@ -38,52 +26,14 @@ MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
     $.each @children._views, (key, val) ->
       f = val.getRequestFilter()
       if f != undefined
-        filterType = val.model.attributes.filterType
+        filterType = val.model.attributes.filtertype
         if filters[filterType] == undefined
           filters[filterType] = []
       
         filters[filterType].push(f)
         
     return filters
-      
-  filterRemove: (e) ->
-    e.preventDefault()
-    id = $(e.currentTarget).data("id")
-    item = @collection.get(id)
-    @collection.remove(item)
-    @render()
-    
-  addFilter: (item) ->
-    @collection.add(item)
-    @render()
   
-  newFilter: (filterType) ->
-    # needs an ID, just an incrementing counter, for removal
-    # filterType chooses where it goes in the top level of
-    # the filter object
-    return new MCM.Models.ActionRequestFilter({'id' : "filter"+@idCounter++, 'filterType' : filterType})
-    
-  addFactFilter: (e) ->
-    @addFilter(@newFilter('fact'))
-    e.preventDefault()
-    
-  addIdentityFilter: (e) ->
-    e.preventDefault()
-    @addFilter(@newFilter('identity'))
-
-  addClassFilter: (e) ->
-    e.preventDefault()
-    @addFilter(@newFilter('class'))
-
-  addAgentFilter: (e) ->
-    @addFilter(@newFilter('agent'))
-    e.preventDefault()
-    
-  templateHelpers: ->
-    # used in template to display:none the div.well containing
-    # filters, or not
-    { 'hasFilters' : @collection.size() > 0 }
-    
   onShow: ->
     $('#requestTabs a').click (e) ->
       e.preventDefault()

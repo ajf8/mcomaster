@@ -61,7 +61,7 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
 
     onShow: ->
       if @options.filterCollection
-        @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection})
+        @filterView = new MCM.Views.Layouts.ActionRequestFilter({collection : @options.filterCollection })
         @filterRegion.show(@filterView)
 
       @term = $("#term").terminal $.proxy(@onCommand, @), { prompt: @options.prompt, name: 'test', greetings : "" }

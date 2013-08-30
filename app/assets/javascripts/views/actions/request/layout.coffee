@@ -28,7 +28,7 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
     @formRegion.show(@form)
     
     if @options.filterCollection and @options.filter == undefined
-      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, 'includeExecuteButton' : true })
+      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, remoteFilterCollection : @options.remoteFilterCollection, 'includeExecuteButton' : true })
       @filterRegion.show(@filterView)
 
     if MCM.remoteConfig.includeActionShell == true

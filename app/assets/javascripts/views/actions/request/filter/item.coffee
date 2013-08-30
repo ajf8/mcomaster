@@ -15,14 +15,13 @@
 ###
 MCM.Views.ActionRequestFilterItem = Backbone.Marionette.ItemView.extend({
   className: ->
-    return @model.attributes.filterType+"-filter filter-wrapper"
+    return @model.attributes.filtertype+"-filter filter-wrapper"
     
   getRequestFilter: ->
-    filterType = @model.attributes.filterType
+    filterType = @model.attributes.filtertype
     if filterType == "fact"
-      r = { operator : $(@$el).find(".filter-operator").val(), value : @model.attributes.value }
-      r[@model.attributes.filterType] = @model.attributes[@model.attributes.filterType]
-      if r.value == undefined or r[@model.attributes.filterType] == undefined or r.operator == undefined
+      r = { operator : $(@$el).find(".filter-operator").val(), value : @model.attributes.term, fact : @model.attributes.term_key }
+      if r.value == undefined or r.term_key == undefined or r.operator == undefined
         return undefined
       else
         return r
@@ -31,19 +30,19 @@ MCM.Views.ActionRequestFilterItem = Backbone.Marionette.ItemView.extend({
       
   # choose and then curry the template
   template: (oc) ->
-    if oc.filterType == "fact"
+    if oc.filtertype == "fact"
       return (context) ->
         context = _.extend({'filterTypeName' : 'Fact'}, oc)
         return HandlebarsTemplates['actions/request/filter/kov_item'](context)
-    else if oc.filterType == "identity"
+    else if oc.filtertype == "identity"
       return (context) ->
         context = _.extend({'filterTypeName' : 'Identity'}, oc)
         return HandlebarsTemplates['actions/request/filter/str_item'](context)
-    else if oc.filterType == "agent"
+    else if oc.filtertype == "agent"
       return (context) ->
         context = _.extend({'filterTypeName' : 'Agent'}, oc)
         return HandlebarsTemplates['actions/request/filter/str_item'](context)
-    else if oc.filterType == "class"
+    else if oc.filtertype == "class"
       return (context) ->
         context = _.extend({'filterTypeName' : 'Class'}, oc)
         return HandlebarsTemplates['actions/request/filter/str_item'](context)
@@ -53,7 +52,17 @@ MCM.Views.ActionRequestFilterItem = Backbone.Marionette.ItemView.extend({
     
   onShow: ->
     @modelBinder.bind(@model, @el)
+    m = @model
+    that = @
+    $(@$el).find("select option").each ->
+      
+      if (@value == "==") or m.attributes.term_operator == @value
+        $(that.$el).find("select").val(@value)
+        $(that.$el).attr("selected", "selected")
+      else
+        $(that.$el).removeAttr("selected")
+      true
     
   templateHelpers: ->
-    return @options
+    return { cid : @model.attributes.id || @model.cid }
 })
