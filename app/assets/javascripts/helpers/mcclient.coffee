@@ -35,6 +35,7 @@ MCM.Client =
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
+        when "number" then actionDdl.input[ddlKey]['isNumber'] = 1
         
     
     # when displaying result rows, this is used to make sure the columns
@@ -80,6 +81,8 @@ MCM.Client =
           x.value = true
         else if x.value == "false"
           x.value = false
+      else if input_type == "number"
+        x.value = parseInt(x.value) 
           
       submission.args[x.name] = x.value
     )
