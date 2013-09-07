@@ -35,7 +35,7 @@ MCM.Client =
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
-        when "number" then actionDdl.input[ddlKey]['isNumber'] = 1
+        when "integer" then actionDdl.input[ddlKey]['isInteger'] = 1
         
     
     # when displaying result rows, this is used to make sure the columns
@@ -81,7 +81,7 @@ MCM.Client =
           x.value = true
         else if x.value == "false"
           x.value = false
-      else if input_type == "number"
+      else if input_type == "integer"
         x.value = parseInt(x.value) 
           
       submission.args[x.name] = x.value
@@ -89,6 +89,14 @@ MCM.Client =
     
     @submitAction(submission)
 
+  logReplay: (id) ->
+    that = @
+    $.ajax({
+      url: "/actlogs/replay/"+id
+      success: (data) ->
+        that.receiveTxn(data)
+    })
+        
   # submission object needs: args, action, agent
   # the server should immediately return as a "transaction ID" and then
   # background the execution. we use the txid a a handle to poll for new messages.

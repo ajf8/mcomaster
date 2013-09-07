@@ -41,7 +41,7 @@ class DdlsController < ApplicationController
           else
             raise MCollective::DDLValidationError, "expected boolean"
           end
-        elsif ktype == :number
+        elsif ktype == :integer
           v = v.to_i
         end
         ddl.validate_input_argument(interface[:input], ksym, v)

@@ -35,7 +35,6 @@
 #= require ./views/actions/results/item
 #= require ./views/actions/request/filter/item
 #= require ./views/actions/request/filter/remote_item
-#= require ./views/menu/empty_menu_item
 #= require ./views/menu/loading_menu_item
 #= require_tree ./views/
 #= require_tree ./controllers/
