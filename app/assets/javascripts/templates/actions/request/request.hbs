@@ -36,7 +36,12 @@
 		{{/if}}
 	</fieldset>
 	<button type="submit" class="btn btn-primary action-exec-button" form="actionForm">
-	<i class="icon-play icon-white"></i> Execute</button>
+	{{#if isFromLog}}
+	<i class="icon-play icon-white"></i> Re-execute
+	{{else}}
+	<i class="icon-play icon-white"></i> Execute
+	{{/if}}
+	</button>
 	{{#if cancelUrl}}
 	<a href="{{cancelUrl}}" id="actionCancelButton" class="btn btn-inverse">
 	<i class="icon-stop icon-white"></i> Cancel </a>

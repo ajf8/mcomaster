@@ -50,7 +50,7 @@ MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
 
     @listenTo MCM.vent, 'action:receiveDdl', (ddl) =>
       @ddl = ddl
-
+    
   templateHelpers: ->
     return @options
     

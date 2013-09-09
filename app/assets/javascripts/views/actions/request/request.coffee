@@ -27,7 +27,8 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
       id : @options.id,
       agent : @options.agent,
       cancelUrl : @options.cancelUrl,
-      ddl : @ddl
+      ddl : @ddl,
+      isFromLog : @options.isFromLog
     }
     
     if @ddl && _.size(@ddl.input) > 0

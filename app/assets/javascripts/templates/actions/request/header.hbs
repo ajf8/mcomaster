@@ -13,5 +13,10 @@
 {{! limitations under the License. }} 
 {{! }} 
 {{#if ddl}}
-<h3>{{ddl.actionDdl.description}}</h3>
+<h3>
+{{#if isFromLog}}
+Logged:
+{{/if}}
+{{ddl.actionDdl.description}}
+</h3>
 {{/if}}

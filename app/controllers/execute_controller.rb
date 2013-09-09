@@ -35,6 +35,7 @@ class ExecuteController < ApplicationController
     end
 
     txid = rmq_uuid()
+    audit = Actlog.new
     
     logger.info("#{txid} Received a request, parameters: "+request.raw_post)
     
@@ -42,10 +43,17 @@ class ExecuteController < ApplicationController
       filters = convert_filter(json['filter'])
       logger.info("#{txid} Converted filters: "+filters.inspect)
       mc.filter = filters
+      audit.filters = json['filter'].to_json
     else
       logger.info("#{txid} No filters.")
     end
     
+    audit.txid = txid
+    audit.agent = agent
+    audit.args = args.to_json
+    audit.action = action
+    audit.owner = current_user.name
+    audit.save()
     logger.info("#{txid} Sending acknowledgement.")
     
     rmq_send(txid, { :begin => true, :action => action, :agent => agent })
@@ -54,10 +62,29 @@ class ExecuteController < ApplicationController
       begin
         stat = mc.method_missing(action, args) { |noderesponse|
           rmq_send(ttxid, { :node => noderesponse })
+          rl = Responselog.new
+          rl.actlog = audit
+          rl.name = noderesponse[:senderid]
+          rl.status = noderesponse[:body][:statuscode]
+          rl.statusmsg = noderesponse[:body][:statuscode]
+          rl.save()
+          noderesponse[:body][:data].each_pair do |k,v|
+            if v.is_a?(String) or v.is_a?(Fixnum)
+              ri = ReplyItem.new
+              ri.responselog = rl
+              ri.rkey = k
+              ri.rvalue = v
+              ri.save()
+            end
+          end
         }
         rmq_send(ttxid, { :end => 1, :stats => stat })
+        audit.stats = stat.to_json
+        audit.save()
       rescue => ex
         rmq_send(ttxid, { :end => 1, :error => ex.message })
+      ensure
+        ActiveRecord::Base.clear_active_connections!
       end
     }
 

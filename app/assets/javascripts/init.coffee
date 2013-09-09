@@ -25,6 +25,7 @@ MCM.Routers = {}
 MCM.Controllers = {}
 MCM.Helpers = {}
 MCM.layouts = {}
+MCM.Debug = {}
 
 # Visual regions of the application, mapped to CSS selectors
 # eg. used as MCM.mainRegion.show(view)

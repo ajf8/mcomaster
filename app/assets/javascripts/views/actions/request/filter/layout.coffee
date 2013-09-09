@@ -42,25 +42,22 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     
   filterSave: (e) ->
     e.preventDefault()
-    that = @
     if @currentModel.attributes.name == undefined
-      bootbox.prompt "Name for new filter", (result) ->
+      bootbox.prompt "Name for new filter", (result) =>
         if result
-          that.setActiveName(result)
-          that.currentModel.set(name : result)
-          that.collection.add(that.currentModel)
-          that.currentModel.save()
-          #that.collection.fetch()
+          @setActiveName(result)
+          @currentModel.set(name : result)
+          @collection.add(@currentModel)
+          @currentModel.save()
     else
       @currentModel.save()
-      @collection.fetch()   
     
   filterRemove: (e) ->
     if @currentModel != undefined
       @currentModel.destroy()
     @currentModel = new MCM.Models.Filter
     @setForm()
-    
+
   filterMemberRemove: (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data("id")
@@ -71,7 +68,6 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     @currentModel.attributes.filter_members.add(item)
   
   newFilter: (filterType) ->
-    # needs an ID, just an incrementing counter, for removal
     # filterType chooses where it goes in the top level of
     # the filter object
     fm = new MCM.Models.FilterMember(filtertype : filterType )
@@ -105,7 +101,20 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     else
       @setActiveName(@currentModel.attributes.name)
     @decideWellVisibility()
-     
+  
+  setFiltersFromReplay: (filters) ->
+    that = @
+    for own key of filters
+      $.each filters[key], (i, f) ->
+        fm = new MCM.Models.FilterMember(filtertype : key )
+        if key == "fact"
+          fm.set('term_key', f.fact)
+          fm.set('term_operator', f.operator)
+          fm.set('term', f.value)
+        else
+          fm.set('term', f)
+        that.currentModel.attributes.filter_members.add(fm)
+    
   getFilter: (e) ->
     e.preventDefault()
         
@@ -158,7 +167,6 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     @remote = new MCM.Views.ActionRequestRemoteFilters(collection : @collection)
     @remoteRegion.show(@remote)
     @currentModel = new MCM.Models.Filter
-    #@collection.add(@currentModel)
     @setForm()
     @collection.fetch()
 

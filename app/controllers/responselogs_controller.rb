@@ -12,22 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class FilterMembersController < ApplicationController
+class ResponselogsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    render json: FilterMember.all.to_json
+    render json: Responselog.all.to_json(:include => :reply_items)
   end
   
   def show
-    render json: FilterMember.find(params[:id]).to_json
-  end
-  
-  def create
-    render json: FilterMember.create(params.slice(:term, :term_key, :term_operator, :filtertype, :filter_id))
-  end
-  
-  def destroy
-    render json: FilterMember.find(params[:id]).destroy()
+    render json: Responselog.find(params[:id]).to_json(:include => :reply_items)
   end
 end

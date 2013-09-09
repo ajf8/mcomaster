@@ -69,7 +69,7 @@ module Mcomaster
       filters.each{ |filter_type,filter_array|
         if filter_array.is_a?(Array)
           filter_array.each { |filter_item|
-            if (filter_item.is_a?(Hash))
+            if filter_item.is_a?(Hash)
               filter_item.symbolize_keys!
             end
           }

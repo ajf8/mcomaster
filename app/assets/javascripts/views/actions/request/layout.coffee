@@ -24,23 +24,27 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
   }
   
   onShow: ->
-    @form = new MCM.Views.ActionRequest(@options)
+    @form = new MCM.Views.ActionRequest(@templateHelpers())
     @formRegion.show(@form)
     
     if @options.filterCollection and @options.filter == undefined
-      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, remoteFilterCollection : @options.remoteFilterCollection, 'includeExecuteButton' : true })
+      @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, remoteFilterCollection : @options.remoteFilterCollection, isFromLog : @isFromLog, 'includeExecuteButton' : true })
       @filterRegion.show(@filterView)
 
     if MCM.remoteConfig.includeActionShell == true
       @shell = new MCM.Plugins.Shell.GenericRequestView({ agent : @options.agent, id : @options.id, filterView : @filterView })
       @shellRegion.show(@shell)
         
-    @header = new MCM.Views.ActionRequestHeader(@options)
+    @header = new MCM.Views.ActionRequestHeader(@templateHelpers())
     @headerRegion.show(@header)
 
   events : {
     "click .action-exec-button" : "submit"
   }
+  
+  setInputs: (inputs) ->
+    for own key of inputs
+      $("#actionForm [name='"+key+"']").val(inputs[key])
   
   submit: (e) ->
     filter = @options.filter
@@ -59,5 +63,5 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
     e.preventDefault()
     
   templateHelpers: ->
-    return _.extend(@options, { includeShell : MCM.remoteConfig.includeActionShell == true })
+    return _.extend(@options, { includeShell : MCM.remoteConfig.includeActionShell == true, isFromLog : @isFromLog })
 })

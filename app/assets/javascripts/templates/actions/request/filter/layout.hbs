@@ -6,6 +6,10 @@
 </div>
 {{#if includeExecuteButton}}
 <button type="submit" class="btn btn-primary action-exec-button" form="actionForm" style="margin-bottom:10px;">
+	{{#if isFromLog}}
+	<i class="icon-play icon-white"></i> Re-execute
+	{{else}}
 	<i class="icon-play icon-white"></i> Execute
+	{{/if}}
 </button>
 {{/if}}

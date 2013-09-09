@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130816073439) do
+ActiveRecord::Schema.define(version: 20130831210823) do
+
+  create_table "actlogs", force: true do |t|
+    t.text     "args"
+    t.text     "stats"
+    t.text     "filters"
+    t.string   "txid"
+    t.string   "agent"
+    t.string   "action"
+    t.integer  "ok"
+    t.integer  "failed"
+    t.string   "owner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "filter_members", force: true do |t|
     t.string   "term"
@@ -25,6 +39,21 @@ ActiveRecord::Schema.define(version: 20130816073439) do
 
   create_table "filters", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reply_items", force: true do |t|
+    t.integer "responselog_id"
+    t.string  "rkey"
+    t.string  "rvalue"
+  end
+
+  create_table "responselogs", force: true do |t|
+    t.integer  "actlog_id"
+    t.string   "name"
+    t.integer  "status"
+    t.string   "statusmsg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
