@@ -20,11 +20,7 @@ MCM.Views.ActionRequestFilterItem = Backbone.Marionette.ItemView.extend({
   getRequestFilter: ->
     filterType = @model.attributes.filtertype
     if filterType == "fact"
-      r = { operator : $(@$el).find(".filter-operator").val(), value : @model.attributes.term, fact : @model.attributes.term_key }
-      if r.value == undefined or r.term_key == undefined or r.operator == undefined
-        return undefined
-      else
-        return r
+      return { operator : $(@$el).find(".filter-operator").val(), value : @model.attributes.term, fact : @model.attributes.term_key }
     else
       return $(@$el).find(".filter-string").val()
       
