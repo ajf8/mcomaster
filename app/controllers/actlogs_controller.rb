@@ -52,7 +52,7 @@ class ActlogsController < ApplicationController
         unless log.stats.nil?
           stats = JSON.parse(log.stats)
         end
-        rmq_send(txid, { :end => 1, :stats => stats } )
+        rmq_send(txid, { :end => 1, :stats => stats, :error => log.mcerr } )
       rescue
         rmq_send(txid, { :end => 1, :error => ex.message })
       ensure

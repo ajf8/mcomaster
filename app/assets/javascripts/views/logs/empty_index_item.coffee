@@ -13,20 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.LogIndex = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['logs/index']
-  
-  itemViewContainer: "#logActionContainer"
-  
-  itemView: MCM.Views.LogIndexItem
-  emptyView: MCM.Views.LogEmptyIndexItem
-  
-  itemViewOptions: ->
-    return @options
-    
-  templateHelpers: ->
-    ctx = _.extend(@options, {
-      nodeCount : MCM.nodes.length
-    })
-    return ctx
+MCM.Views.LogEmptyIndexItem = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['logs/empty_index_item']
+  tagName: "tr"
 })

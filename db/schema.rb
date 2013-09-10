@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130831210823) do
+ActiveRecord::Schema.define(version: 20130910085041) do
 
   create_table "actlogs", force: true do |t|
     t.text     "args"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20130831210823) do
     t.string   "owner"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "mcerr"
   end
 
   create_table "filter_members", force: true do |t|

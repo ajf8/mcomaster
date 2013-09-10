@@ -66,10 +66,10 @@ class ExecuteController < ApplicationController
           rl.actlog = audit
           rl.name = noderesponse[:senderid]
           rl.status = noderesponse[:body][:statuscode]
-          rl.statusmsg = noderesponse[:body][:statuscode]
+          rl.statusmsg = noderesponse[:body][:statusmsg]
           rl.save()
           noderesponse[:body][:data].each_pair do |k,v|
-            if v.is_a?(String) or v.is_a?(Fixnum)
+            if v.is_a?(String) or v.is_a?(Fixnum) or v.is_a?(Float)
               ri = ReplyItem.new
               ri.responselog = rl
               ri.rkey = k
@@ -83,6 +83,8 @@ class ExecuteController < ApplicationController
         audit.save()
       rescue => ex
         rmq_send(ttxid, { :end => 1, :error => ex.message })
+        audit.mcerr = ex.message
+        audit.save()
       ensure
         ActiveRecord::Base.clear_active_connections!
       end

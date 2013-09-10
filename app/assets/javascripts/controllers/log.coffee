@@ -22,7 +22,7 @@ MCM.Controllers.Log = {
     MCM.mainRegion.show(view)
 
   replay: (agent, action, id) ->
-    filterCollection = MCM.Debug.filterCollection = new MCM.Collections.Filter
+    filterCollection = new MCM.Collections.Filter
     view = new MCM.Views.Layouts.Action {
       agent : agent,
       id : action,
