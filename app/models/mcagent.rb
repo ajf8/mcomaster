@@ -33,7 +33,9 @@ class Mcagent
         agents.push(Mcagent.new(:id => e))
       rescue => ex
         # some agents like discovery don't have DDLs, so discard exceptions
-        #Rails.logger.debug(ex.message+"\n"+ex.backtrace.join("\n"))
+        unless ex.message =~ /Can't find DDL for agent plugin/
+          Rails.logger.debug(ex.message+"\n"+ex.backtrace.join("\n"))
+        end
       end
     end
     return agents.sort
