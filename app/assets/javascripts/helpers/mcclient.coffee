@@ -35,9 +35,10 @@ MCM.Client =
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
-        when "integer" then actionDdl.input[ddlKey]['isInteger'] = 1
-        
-    
+        when "integer", "number" then
+          actionDdl.input[ddlKey]['isInteger'] = 1
+          validationRules[ddlKey]['dataType'] = "number"
+
     # when displaying result rows, this is used to make sure the columns
     # align properly (we don't have to rely on the same fields and order)
     columns = []
@@ -81,7 +82,7 @@ MCM.Client =
           x.value = true
         else if x.value == "false"
           x.value = false
-      else if input_type == "integer"
+      else if input_type in [ "integer", "number" ]
         x.value = parseInt(x.value) 
           
       submission.args[x.name] = x.value
