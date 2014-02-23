@@ -35,7 +35,7 @@ MCM.Client =
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
-        when "integer", "number" then
+        when "integer", "number"
           actionDdl.input[ddlKey]['isInteger'] = 1
           validationRules[ddlKey]['dataType'] = "number"
 
@@ -76,6 +76,9 @@ MCM.Client =
     that = @
     submission.args = submission.args || {}
     _.each(submission.form.serializeArray(), (x) ->
+      if submission.ddl.input[x.name].optional == true and x.value == ""
+        return
+
       input_type = submission.ddl.input[x.name].type
       if input_type == "boolean"
         if x.value == "true"
