@@ -23,7 +23,7 @@ MCM.Client =
         }
       }
       
-      if actionDdl.input[ddlKey]['optional']
+      if actionDdl.input[ddlKey]['optional']?
         validationRules[ddlKey]['required'] = !(actionDdl.input[ddlKey]['optional'])
       
       if actionDdl.input[ddlKey]['maxlength']
