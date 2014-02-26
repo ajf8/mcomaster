@@ -30,14 +30,14 @@ MCM.Client =
         validationRules[ddlKey]['maxlength'] = actionDdl.input[ddlKey]['maxlength']
           
       if actionDdl.input[ddlKey]['minlength']
-        validationRules[ddlKey]['minlength'] = actionDdl.input[ddlKey]['maxlength']
+        validationRules[ddlKey]['minlength'] = actionDdl.input[ddlKey]['minlength']
 
       switch actionDdl.input[ddlKey].type
         when "string" then actionDdl.input[ddlKey]['isString'] = 1
         when "boolean" then actionDdl.input[ddlKey]['isBool'] = 1
         when "integer", "number"
           actionDdl.input[ddlKey]['isInteger'] = 1
-          validationRules[ddlKey]['dataType'] = "number"
+          validationRules[ddlKey]['remote']['dataType'] = "number"
 
     # when displaying result rows, this is used to make sure the columns
     # align properly (we don't have to rely on the same fields and order)
