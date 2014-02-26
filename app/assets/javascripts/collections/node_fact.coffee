@@ -15,4 +15,7 @@
 ###
 MCM.Collections.NodeFact = Backbone.Collection.extend({
   model: MCM.Models.NodeFact
+  
+  comparator: (a) ->
+    a.get("id")
 })
