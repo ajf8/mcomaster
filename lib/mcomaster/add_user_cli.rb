@@ -24,8 +24,14 @@ def run
   end
   puts 'DEFAULT USERS'
   user = User.find_or_create_by_email :name => $user, :email => $email, :password => $password, :password_confirmation => $password
-  puts 'user: ' << user.name
-  user.add_role :admin
+
+  if user.valid?
+    puts 'user: ' << user.name
+    user.add_role :admin
+  else
+    puts "Failed to add user: %s" % user.errors.messages
+    exit 1
+  end
 end
 
 end
