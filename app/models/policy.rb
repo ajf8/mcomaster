@@ -12,14 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class McagentsController < ApplicationController
-  before_filter :authenticate_user!
-  
-  def index
-    render json: Mcagent.all(current_user).jsonize
-  end
 
-  def show
-    render json: Mcagent.find(params[:id], current_user)
-  end
+class Policy < ActiveRecord::Base
+  attr_accessible :policy, :callerid, :agent, :action
 end

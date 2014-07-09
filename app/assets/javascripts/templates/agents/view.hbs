@@ -46,7 +46,12 @@
 <tbody>
 	{{#key_value ddl.actions}}
 	<tr>
-		<td><a href="/#/action/{{../id}}/{{key}}">{{key}}</a></td><td>{{value.description}}</td>
+		<td>
+			{{#unless value.permission}}
+			<i class="icon-lock action-disallowed"></i>
+			{{/unless}}
+			<a href="/#/action/{{../id}}/{{key}}">{{key}}</a></td><td>{{value.description}}
+		</td>
 	</tr>
 	{{/key_value}}
 </tbody>

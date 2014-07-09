@@ -14,15 +14,16 @@
 #
 class Mcagent
   require 'mcomaster/mcclient'
+  require 'mcomaster/actionpolicy'
   
   include Mcomaster::McClient
   extend Mcomaster::McClient
   
   include Comparable
   
-  attr_accessor :id, :actions, :ddl, :meta
+  attr_accessor :id, :actions, :ddl, :meta, :permissioned
   
-  def self.all
+  def self.all(user)
     agents = Array.new
     results = $redis.keys("mcollective::agent::*")
     for e in results
@@ -30,7 +31,7 @@ class Mcagent
       e.gsub!(/^mcollective\:\:agent\:\:/, "")
       begin
         # without :verbose => true, put minimal information in
-        agents.push(Mcagent.new(:id => e))
+        agents.push(Mcagent.new(:id => e, :user => user))
       rescue => ex
         # some agents like discovery don't have DDLs, so discard exceptions
         unless ex.message =~ /Can't find DDL for agent plugin/
@@ -45,28 +46,40 @@ class Mcagent
     @id <=> other.id
   end
   
-  def self.find(id)
+  def self.find(id, user)
     if $redis.exists("mcollective::agent::#{id}")
-      return Mcagent.new(:id => id, :verbose => true)
+      return Mcagent.new(:id => id, :user => user)
     end
     nil
   end
   
   def initialize(args)
     @id = args[:id]
-    ddl = get_ddl(@id)
-    if args[:verbose] == true
-      @ddl = ddl
-    else
-      @actions = Hash.new
+    username = args[:user].name if args[:user]
+    
+    @ddl = get_ddl(@id)
+    @ddl[:actions].each_pair{ |k,v|
+      if Mcomaster::ActionPolicy.is_enabled?
+        begin
+          v[:permission] = Mcomaster::ActionPolicy.authorize(Mcomaster::Request.new(@id, username, k))
+        rescue => ex
+          #warn ex
+          v[:permission] = false
+        end
+      else
+        v[:permission] = true
+      end
+    }
+
+##    if args[:verbose] == true
+#      @ddl = ddl
+#    else
+#      @actions = Hash.new
       # added metadata so it's available to applications deciding
       # if they show or not
-      @meta = ddl[:meta]
+#      @meta = ddl[:meta]
       # already have this in 'id'
-      @meta.delete("name")
-      ddl[:actions].each_pair{ |k,v|
-        @actions[k] = v[:description]
-      }
-    end
+#      @meta.delete("name")
+#    end
   end
 end

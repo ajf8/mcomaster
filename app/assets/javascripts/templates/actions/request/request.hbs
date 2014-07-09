@@ -13,6 +13,13 @@
 {{! limitations under the License. }} 
 {{! }} 
 {{#if ddl}}
+{{#unless ddl.permission}}
+<div class="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Warning!</strong> You don't have access to run this action.
+</div>
+{{/unless}}
+
 <form id="actionForm" action=""> 
 	<fieldset>
 		{{#if hasInputs}}

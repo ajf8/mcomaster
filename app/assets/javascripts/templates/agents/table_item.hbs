@@ -12,23 +12,25 @@
 {{! See the License for the specific language governing permissions and }} 
 {{! limitations under the License. }} 
 {{! }} 
-{{#if actions}}
 <h3>
 	{{id}}
 </h3>
 <table class="table">
 	<tbody>
-{{#key_value actions}}
+{{#key_value ddl.actions}}
 	<tr>
-{{#if ../nodeid}}
-		<td><a href="/#/node/{{../../nodeid}}/action/{{../../id}}/{{key}}" tabindex="-1">{{key}}</a></td>
+		<td>
+{{#if value.permission}}
 {{else}}
-		<td><a href="/#/action/{{../../id}}/{{key}}" tabindex="-1">{{key}}</a></td>
+<i class="icon-lock action-disallowed"></i>
 {{/if}}
-		<td>{{value}}</td>
+{{#if ../nodeid}}
+		<a href="/#/node/{{../../nodeid}}/action/{{../../id}}/{{key}}" tabindex="-1">{{key}}</a></td>
+{{else}}
+		<a href="/#/action/{{../../id}}/{{key}}" tabindex="-1">{{key}}</a></td>
+{{/if}}
+		<td>{{value/description}}</td>
 	</tr>
 {{/key_value}}
 	</tbody>
 </table>
-
-{{/if}}

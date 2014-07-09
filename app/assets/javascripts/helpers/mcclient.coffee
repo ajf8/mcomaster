@@ -146,13 +146,16 @@ MCM.Client =
           # and fire the appropriate event
           if msg.begin
             MCM.vent.trigger("action:beginResults", tx, msg.begin)
-          else if msg.node
+          
+          if msg.node
             # use txid:messagenumber as a unique
             msg.node.id = envelope.key
             MCM.vent.trigger("action:receiveResult", tx, msg.node)
-          else if msg.error
+            
+          if msg.error
             MCM.vent.trigger("action:receiveError", tx, msg.error)
-          else if msg.stats
+            
+          if msg.stats
             MCM.vent.trigger("action:receiveStats", tx, msg.stats)
           
           tx.msgCount++

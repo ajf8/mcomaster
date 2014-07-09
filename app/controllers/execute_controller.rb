@@ -15,11 +15,13 @@
 class ExecuteController < ApplicationController
   require 'mcomaster/mcclient'
   require 'mcomaster/restmqclient'
+  require 'mcomaster/actionpolicy'
   
   include Mcomaster::McClient
   include Mcomaster::RestMQ
   
   before_filter :authenticate_user!
+  skip_before_filter :verify_authenticity_token
   
   def execute
     agent = params[:agent]
@@ -55,6 +57,19 @@ class ExecuteController < ApplicationController
     audit.owner = current_user.name
     audit.save()
     logger.info("#{txid} Sending acknowledgement.")
+
+    if Mcomaster::ActionPolicy.is_enabled?
+      begin
+        reqobj = Mcomaster::Request.new(agent, current_user.name, action)  
+        Mcomaster::ActionPolicy.authorize(reqobj)
+      rescue => ex
+        rmq_send(txid, { :begin => true, :end => 1, :error => ex.message })
+        audit.mcerr = ex.message
+        audit.save()
+        render json: { :txid => txid, :error => ex.message }.jsonize
+        return
+      end
+    end
     
     rmq_send(txid, { :begin => true, :action => action, :agent => agent })
     
