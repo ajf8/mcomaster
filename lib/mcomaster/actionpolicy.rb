@@ -60,7 +60,7 @@ module Mcomaster
         end
         
         if config_fetch('enable_default', 'n') =~ /^1|y/i
-          default_policy = PolicyDefault.where(:name => config_fetch('default_name', 'default'))
+          default_policy = PolicyDefault.where(:name => 'default')
           if default_policy.length == 1 and default_policy[0].policy == "allow"
             return true
           else
