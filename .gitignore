@@ -81,3 +81,4 @@ pickle-email-*.html
 /tools/puppet/external-modules
 #exclude vagrant files.
 .vagrant
+Gemfile.lock
