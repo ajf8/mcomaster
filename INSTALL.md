@@ -8,6 +8,7 @@ Prerequisites
  * This guide assumes that you already have mcollective working, and it probably helps to be familiar with it.
  * Redis database (a standalone process) is running and accessible. No setup is needed (at least in Fedora and Debian), just install the package and start the service.
  * Bundler (to install dependencies).
+ * Mcollective version must be >= 2.4 .
 
 Setup mcollective
 -----------------
