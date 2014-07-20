@@ -12,6 +12,7 @@ mod 'richardc/datacat'
 mod 'garethr/erlang'
 mod 'puppetlabs/rabbitmq'
 mod 'puppetlabs/java_ks'
+mod 'puppetlabs/firewall'
 # A module from the Puppet Forge
 # mod 'puppetlabs/stdlib'
 
