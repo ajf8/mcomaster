@@ -13,6 +13,9 @@ mod 'garethr/erlang'
 mod 'puppetlabs/rabbitmq'
 mod 'puppetlabs/java_ks'
 mod 'puppetlabs/firewall'
+mod 'thomasvandoren/redis'
+mod 'maestrodev/wget'
+mod 'puppetlabs/gcc'
 # A module from the Puppet Forge
 # mod 'puppetlabs/stdlib'
 
