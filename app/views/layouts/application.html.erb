@@ -33,7 +33,7 @@
 		<script type="text/javascript">
 			MCM.remoteConfig = <%= !APP_CONFIG['client'].nil? ? APP_CONFIG['client'].to_json.html_safe : "{ }" %>;
 			<% if signed_in? -%>
-			MCM.currentUser = new MCM.Models.User(<%= current_user.to_json.html_safe %>);
+			MCM.currentUser = new MCM.Models.User(<%= current_user.to_json(:methods => [:is_admin]).html_safe %>);
 			<% else -%>
 			MCM.currentUser = null;
 			<% end -%>
@@ -58,6 +58,7 @@
 					<div id="collectivesToolbar"></div>
 					<div id="applicationsToolbar" style="display:none;"></div>
 					<ul class="nav"><li><a href="/#/log/">Logs</a></li></ul>
+                                        <div id="adminToolbar"></div>
 					<div id="loggedInBar"></div>
 				</div>
 			</div>

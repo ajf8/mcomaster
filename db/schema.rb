@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701214905) do
+ActiveRecord::Schema.define(version: 20140713173339) do
 
   create_table "actlogs", force: true do |t|
     t.text     "args"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20140701214905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "mcerr"
+  end
+
+  create_table "app_settings", force: true do |t|
+    t.string "set_key"
+    t.string "set_val"
   end
 
   create_table "filter_members", force: true do |t|

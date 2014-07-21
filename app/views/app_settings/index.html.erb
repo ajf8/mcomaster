@@ -1,0 +1,29 @@
+<h1>Listing app_settings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Set key</th>
+      <th>Set val</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @app_settings.each do |app_setting| %>
+      <tr>
+        <td><%= app_setting.set_key %></td>
+        <td><%= app_setting.set_val %></td>
+        <td><%= link_to 'Show', app_setting %></td>
+        <td><%= link_to 'Edit', edit_app_setting_path(app_setting) %></td>
+        <td><%= link_to 'Destroy', app_setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New App setting', new_app_setting_path %>

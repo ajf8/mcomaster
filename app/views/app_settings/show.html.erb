@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Set key:</strong>
+  <%= @app_setting.set_key %>
+</p>
+
+<p>
+  <strong>Set val:</strong>
+  <%= @app_setting.set_val %>
+</p>
+
+<%= link_to 'Edit', edit_app_setting_path(@app_setting) %> |
+<%= link_to 'Back', app_settings_path %>

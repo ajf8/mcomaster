@@ -1,4 +1,6 @@
 Mcmaster::Application.routes.draw do
+  resources :policies
+  resources :app_settings
   resources :mcagents, :only => [:show, :index]
   resources :filters
   resources :filter_members
@@ -18,6 +20,9 @@ Mcmaster::Application.routes.draw do
   match '/mq/:queue' => 'restmq#get', :via => [:GET]
   match '/mq/:queue/:id' => 'restmq#get', :via => [:GET]
   match '/mq/:queue' => 'restmq#post', :via => [:POST]
+  
+  match '/policy_default' => 'policy_defaults#get', :via => [:GET]
+  match '/policy_default/set/:policy' => 'policy_defaults#set', :via => [:GET]
 
   devise_for :users
   resources :users

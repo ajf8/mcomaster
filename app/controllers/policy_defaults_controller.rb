@@ -12,21 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class User < ActiveRecord::Base
-  rolify
-  include CanCan::Ability
+class PolicyDefaultsController < ApplicationController
+  before_filter :authenticate_user!
+  authorize_resource
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable
+  def get 
+    render json: PolicyDefault.where(:name => 'default')
+  end
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :role_ids, :as => :admin
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :is_admin
-  
-  def is_admin
-    has_role? :admin
+  def set
+    result = PolicyDefault.find_or_create_by_name(:name => 'default')
+    result.policy = params[:policy]
+    result.save
+    render json: result
   end
 end

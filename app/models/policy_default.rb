@@ -14,4 +14,5 @@
 #
 class PolicyDefault < ActiveRecord::Base
   attr_accessible :name, :policy
+  self.primary_key = :name
 end

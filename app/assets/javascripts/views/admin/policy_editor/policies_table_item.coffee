@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.HomeView = Backbone.Marionette.Layout.extend({
-  template: HandlebarsTemplates['home']
+MCM.Views.PoliciesTableItem = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['admin/policy_editor/policies_table_item']
+  tagName: "tr",
 })

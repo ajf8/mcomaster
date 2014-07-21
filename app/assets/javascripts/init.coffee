@@ -39,6 +39,7 @@ MCM.addRegions({
   collectivesListRegion: "#collectivesList"
   collectivesToolbarRegion: "#collectivesToolbar"
   applicationsToolbarRegion: "#applicationsToolbar"
+  adminToolbarRegion: "#adminToolbar"
   loggedInBarRegion : "#loggedInBar"
 })
 
@@ -56,6 +57,7 @@ MCM.vent.on "authentication:logged_in", (user) ->
 
 MCM.vent.on "authentication:logged_out", ->
   MCM.loggedInBarRegion.close()
+  MCM.adminToolbarRegion.close()
   
   if Backbone.history.fragment != "login"
     window.location = "/#/login"
@@ -97,12 +99,19 @@ MCM.addInitializer ->
   applicationsToolbarView = new MCM.Views.ApplicationsDropdown(collection : MCM.applications)
   MCM.applicationsToolbarRegion.show(applicationsToolbarView)
 
+  adminToolbarView = new MCM.Views.AdminDropdown
+
+  MCM.app_settings = new MCM.Collections.AppSettings
+
   MCM.vent.on "authentication:logged_in", (user) ->
     MCM.agents.fetch()
     MCM.collectives.fetch()
     MCM.nodes.fetch()
     MCM.agentsToolbarRegion.show(agentsToolbarView)
     MCM.collectivesToolbarRegion.show(collectivesToolbarView)
+
+    if (user.attributes.is_admin == true)
+      MCM.adminToolbarRegion.show(adminToolbarView)
 
 $ ->
   MCM.start()

@@ -9,6 +9,7 @@ def run
     o.on('-u USERNAME') { |b| $user = b }
     o.on('-p PASSWORD') { |b| $password = b }
     o.on('-m EMAIL') { |b| $email = b }
+    o.on('--not-admin') { $not_admin = true }
     o.on('-h') { puts o; exit }
     o.parse!
   end
@@ -27,7 +28,11 @@ def run
 
   if user.valid?
     puts 'user: ' << user.name
-    user.add_role :admin
+    if $not_admin == true
+      user.add_role :user
+    else
+      user.add_role :admin
+    end
   else
     puts "Failed to add user: %s" % user.errors.messages
     exit 1
