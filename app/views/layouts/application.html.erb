@@ -33,7 +33,7 @@
 		<script type="text/javascript">
 			MCM.remoteConfig = <%= !APP_CONFIG['client'].nil? ? APP_CONFIG['client'].to_json.html_safe : "{ }" %>;
 			<% if signed_in? -%>
-			MCM.currentUser = new MCM.Models.User(<%= current_user.to_json(:methods => [:is_admin]).html_safe %>);
+			MCM.currentUser = new MCM.Models.User(<%= current_user.to_json.html_safe %>);
 			<% else -%>
 			MCM.currentUser = null;
 			<% end -%>

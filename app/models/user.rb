@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
   def is_admin
     has_role? :admin
   end
+
+  def to_json(options={})
+    super(options.merge(:methods => [ :is_admin ]))
+  end
 end
