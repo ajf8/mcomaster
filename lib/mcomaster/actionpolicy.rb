@@ -1,6 +1,6 @@
 module Mcomaster
   class ActionPolicy
-    attr_accessor :config, :allow_unconfigured, :configdir, :caller, :action
+    attr_accessor :config, :configdir, :caller, :action
     def self.authorize(request)
       ActionPolicy.new(request).authorize_request
     end
@@ -13,12 +13,11 @@ module Mcomaster
       @agent = request.agent
       @caller = request.caller
       @action = request.action
-      @allow_unconfigured = AppSetting.get_setting("allow_unconfigured", false)
       @configdir = Rails.root
     end
 
     def authorize_request
-      Policy.where(:agent => @agent).each do |policy|
+      Policy.where(:agent => @agent).order("id").each do |policy|
         if check_policy(policy.callerid, policy.action)
           if policy.policy == "allow"
             return true
@@ -27,18 +26,27 @@ module Mcomaster
           end
         end
       end
+      
+      agent_default = PolicyDefault.find_by_name(@agent)
+      unless agent_default.nil?
+        if agent_default.policy == "allow"
+          return true
+        else
+          deny("deny from agents default policy")
+        end
+      end
 
-      enable_default = AppSetting.get_setting('enable_default', false)
+      enable_default = AppSetting.get_setting('defaults_enabled', false)
       if enable_default
-        default_policy = PolicyDefault.find('default')
-        if default_policy.length == 1 and default_policy[0].policy == "allow"
+        default_policy = PolicyDefault.find_by_name('default')
+        if default_policy and default_policy.policy == "allow"
           return true
         else
           deny("denied by default policy")
         end
       end
 
-      if @allow_unconfigured
+      if AppSetting.get_setting("allow_unconfigured", false)
         return true
       else
         deny('Could not load any valid policy files. Denying based on allow_unconfigured: %s' % @allow_unconfigured)
@@ -50,13 +58,13 @@ module Mcomaster
       # If we have a wildcard caller or the caller matches our policy line
       # then continue else skip this policy line\
       if (rpccaller != '*') && (rpccaller != @caller)
-      return false
+        return false
       end
 
       # If we have a wildcard actions list or the request action is in the list
       # of actions in the policy line continue, else skip this policy line
       if (actions != '*') && !(actions.split.include?(@action))
-      return false
+        return false
       end
 
       true
@@ -64,7 +72,6 @@ module Mcomaster
 
     def deny(logline)
       #puts(logline)
-
       raise('You are not authorized to call this agent or action.')
     end
   end

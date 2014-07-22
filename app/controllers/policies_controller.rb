@@ -17,7 +17,7 @@ class PoliciesController < ApplicationController
   authorize_resource
   
   def index
-    render json: Policy.all
+    render json: Policy.all.order("agent")
   end
 
   def show
