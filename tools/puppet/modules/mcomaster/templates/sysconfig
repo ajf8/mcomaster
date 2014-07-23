@@ -6,13 +6,13 @@
 
 # the port which mcomaster web server is running at
 # note that if the mcomaster user is not root, it has to be a > 1024
-MCOMASTER_PORT=<%= mcomaster_port %>
+MCOMASTER_PORT=<%= @mcomaster_port %>
 
 # the user which runs the web interface
 #MCOMASTER_USER=mcomaster
 
 # the rails environment in which mcomaster runs
-MCOMASTER_ENV=<%= mcomaster_env %>
+MCOMASTER_ENV=<%= @mcomaster_env %>
 
 # if we're using passenger or not
 # if set to 1, init script will do a railsrestart on 'restart' and will refuse
@@ -21,5 +21,5 @@ MCOMASTER_ENV=<%= mcomaster_env %>
 #MCOMASTER_USE_PASSENGER=0
 
 # set to 1 if you're using thin as a server
-MCOMASTER_USE_THIN=<%= mcomaster_use_thin %>
-MCOMASTER_THIN_USE_SSL=<%= mcomaster_thin_use_ssl %>
+MCOMASTER_USE_THIN=<%= @mcomaster_use_thin %>
+MCOMASTER_THIN_USE_SSL=<%= @mcomaster_thin_use_ssl %>
