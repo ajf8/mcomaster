@@ -14,7 +14,30 @@ host{'mcserver02':
   ip => "192.168.231.22"
 }
 }
+#class to configure all mcollective plugins
+class mcollective_plugins { 
 
+mcollective::plugin {'service': 
+package => true
+}
+mcollective::plugin {'puppet':
+package => true
+}
+mcollective::plugin {'package':
+package => true
+}
+mcollective::plugin {'nettest':
+package => true
+}
+
+mcollective::plugin {'nrpe':
+package => true
+}
+mcollective::plugin {'iptables':
+package => true
+}
+
+}
 
 node /middleware/ {
   #config package repository
@@ -25,6 +48,8 @@ node /middleware/ {
   include custom_firewall
   include custom_firewall::middleware
   include custom_firewall::redis
+  #config mcollective default plugins
+  include mcollective_plugins
   #config redis
   class { '::redis': 
     version => '2.8.13', 
@@ -45,6 +70,13 @@ node /mcomaster/ {
   include puppetlabs
   #config /etc/hosts
   include hosts_vagrant
+  #config firewall 
+  include custom_firewall
+  class {'custom_firewall::mcomaster': 
+    ports => [8080]
+  }
+  #config mcollective default plugins
+  include mcollective_plugins
   class { '::mcollective':
     client            => true,
     middleware_hosts => [ 'middleware' ],
@@ -60,7 +92,7 @@ node /mcomaster/ {
     mcomaster_port => 8080, 
     admin_user     => "vagrant", 
     admin_email    => "vagrant@example.com", 
-    admin_pass     => "vagrant"
+    admin_pass     => "vagrant123"  #should be at least 8 caracters. 
   }
 }
 
@@ -71,6 +103,8 @@ notify {'mcserver':}
   include puppetlabs
   #Configure hosts 
   include hosts_vagrant
+  #config mcollective default plugins
+  include mcollective_plugins
   #Call custom class
   class { '::mcollective':
     middleware_hosts => [ 'middleware' ],
@@ -78,7 +112,4 @@ notify {'mcserver':}
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
   } 
-  class {'::mcomaster::config::mcollective::client':
-    redis_host => "middleware"
-  }
 }

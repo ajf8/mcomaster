@@ -1,5 +1,8 @@
 Vagrant.configure("2") do |config|
-  SERVERS=1
+  #HOW MANY MCOLLECTIVE SERVERS DO YOU WANT ?
+  SERVERS=2
+  #WHAT IS THE DOMAIN ?
+  DOMAIN=".example.com"
   ##################
   # Middleware     #
   ##################
@@ -13,24 +16,26 @@ Vagrant.configure("2") do |config|
       puppet.manifests_path = "deploy"
       puppet.manifest_file = "site.pp"
     end
-    v.vm.hostname = "middleware"
+    v.vm.hostname = "middleware"+DOMAIN
     v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
   end
   ######################
   # mcollective servers#
   ######################
-  config.vm.define "mcserver" do |v|
-    v.vm.box = "centos-64-x64-vbox4210"
-    v.vm.provider "virtualbox" do |vbox|
-      vbox.memory = 300
+  SERVERS.times.each do |i|
+    config.vm.define "mcserver#{i+1}" do |v|
+      v.vm.box = "centos-64-x64-vbox4210"
+      v.vm.provider "virtualbox" do |vbox|
+        vbox.memory = 300
+      end
+      v.vm.network "private_network", ip: "192.168.231.1#{i+1}"
+      v.vm.provision :puppet, :options => ["--pluginsync"], :module_path => ["deploy/modules", "deploy/external-modules"] do |puppet|
+        puppet.manifests_path = "deploy"
+        puppet.manifest_file = "site.pp"
+      end
+      v.vm.hostname = "mcserver#{i+1}"+DOMAIN
+      v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
     end
-    v.vm.network "private_network", ip: "192.168.231.11"
-    v.vm.provision :puppet, :options => ["--pluginsync"], :module_path => ["deploy/modules", "deploy/external-modules"] do |puppet|
-      puppet.manifests_path = "deploy"
-      puppet.manifest_file = "site.pp"
-    end
-    v.vm.hostname = "mcserver"
-    v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
   end
   ######################
   # mcollective client #
@@ -48,7 +53,7 @@ Vagrant.configure("2") do |config|
       puppet.manifests_path = "deploy"
       puppet.manifest_file = "site.pp"
     end
-    v.vm.hostname = "mcomaster"
+    v.vm.hostname = "mcomaster"+DOMAIN
     v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
   end
 end

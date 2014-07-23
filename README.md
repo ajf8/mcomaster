@@ -27,6 +27,11 @@ Install
 
 See the INSTALL.md file.
 
+Testing without Installation
+==========================
+
+See the VAGRANT.md file.
+
 License
 ========================
 
