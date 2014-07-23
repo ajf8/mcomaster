@@ -1,6 +1,6 @@
-class custom_firewall::redis ($redis_ports = [6379]) {
+class custom_firewall::redis ($ports = [6379]) {
   firewall { '500 allow redis ports':
-    port   => $redis_port,
+    port   => $ports,
     proto  => tcp,
     action => accept,
   }
