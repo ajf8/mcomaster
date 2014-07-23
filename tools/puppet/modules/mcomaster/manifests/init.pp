@@ -1,4 +1,4 @@
-class mcomaster ($redis_host='192.168.122.1', $redis_port='6379', $mcomaster_port='3000', $admin_user, $admin_pass, $admin_email) {
+class mcomaster ($redis_host='192.168.122.1', $redis_port=6379, $mcomaster_port=3000, $admin_user, $admin_pass, $admin_email, $mcomaster_env='production', $mcomaster_use_thin=0, $mcomaster_thin_use_ssl=0 ) {
   file { '/etc/sysconfig/mcomaster':
     owner    => 'root',
     group    => 'mcomaster',
