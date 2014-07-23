@@ -27,7 +27,7 @@ if [[ -z $MCOMASTER_PID ]]
 then
     if [[ $MCOMASTER_USE_THIN = 1 ]]
     then
-        MCOMASTER_PID=${MCOMASTER_HOME}/tmp/pids/thin.*.pid
+        MCOMASTER_PID=${MCOMASTER_HOME}/tmp/pids/thin.pid
     else
         MCOMASTER_PID=${MCOMASTER_HOME}/tmp/pids/server.pid
     fi
@@ -48,11 +48,15 @@ start() {
           /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
             --environment $MCOMASTER_ENV \
             --group ${MCOMASTER_USER} \
+            --port ${MCOMASTER_PORT}  \
+            --pid ${MCOMASTER_PID}  \
             --rackup "${MCOMASTER_HOME}/config.ru" -d --ssl
         else
           /usr/bin/ruby193-ruby ${MCOMASTER_HOME}/bin/thin start --user ${MCOMASTER_USER} \
             --environment $MCOMASTER_ENV \
             --group ${MCOMASTER_USER} \
+            --port ${MCOMASTER_PORT}  \
+            --pid ${MCOMASTER_PID}  \
             --rackup "${MCOMASTER_HOME}/config.ru" -d
         fi
     else
