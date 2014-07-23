@@ -55,4 +55,12 @@ class mcomaster ($redis_host='192.168.122.1', $redis_port=6379, $mcomaster_port=
       password => $admin_pass,
     }
   }
+
+  $mcomaster_files = ['/etc/sysconfig/mcomaster', '/etc/mcomaster/application.yml' ]
+  service {'mcomaster':
+    enable  => true,
+    ensure  => running,
+    require => [ Package['mcomaster'], File[$mcomaster_files] ]
+  }
+
 }
