@@ -49,7 +49,9 @@ node /middleware/ {
   include custom_firewall::middleware
   include custom_firewall::redis
   #config mcollective default plugins
-  include mcollective_plugins
+  class {'mcollective_plugins':
+    require => Class['puppetlabs']
+  }
   #config redis
   class { '::redis': 
     version => '2.8.13', 
@@ -76,7 +78,9 @@ node /mcomaster/ {
     ports => [8080]
   }
   #config mcollective default plugins
-  include mcollective_plugins
+  class {'mcollective_plugins':
+    require => Class['puppetlabs']
+  }
   class { '::mcollective':
     client            => true,
     middleware_hosts => [ 'middleware' ],
@@ -104,7 +108,9 @@ notify {'mcserver':}
   #Configure hosts 
   include hosts_vagrant
   #config mcollective default plugins
-  include mcollective_plugins
+  class {'mcollective_plugins':
+    require => Class['puppetlabs']
+  }
   #Call custom class
   class { '::mcollective':
     middleware_hosts => [ 'middleware' ],
