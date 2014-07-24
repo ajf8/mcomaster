@@ -15,5 +15,4 @@
 ###
 MCM.Collections.Policies = Backbone.Collection.extend({
   model: MCM.Models.Policy
-  url: "/policies"
 })

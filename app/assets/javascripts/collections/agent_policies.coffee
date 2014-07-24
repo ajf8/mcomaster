@@ -13,21 +13,20 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+MCM.Collections.AgentPolicies = Backbone.Collection.extend({
+  model: MCM.Models.AgentPolicy
+  url: "/policies"
+  parse: (data) ->
+    agents = {}
+    agentsArr = []
+    for item in data
+      if !agents.hasOwnProperty(item.agent)
+        agents[item.agent] = { id : item.agent, policies : [] }
+      agents[item.agent].policies.push item
 
-MCM.Controllers.Admin = {
-  policyEditor: ->
-    collection = new MCM.Collections.AgentPolicies
-    
-    view = new MCM.Views.Layouts.PolicyEditor({
-      collection : collection
-    })
+    for key,val of agents
+      if agents.hasOwnProperty(key)
+        agentsArr.push val
 
-    MCM.app_settings.fetch({
-      success: ->
-        view.showAppSettings()
-    })
-    
-    collection.fetch()
-    
-    MCM.mainRegion.show(view)
-}
+    return agentsArr
+})

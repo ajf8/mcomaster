@@ -18,5 +18,8 @@ MCM.Views.PoliciesTable = Backbone.Marionette.CompositeView.extend({
   
   itemView: MCM.Views.PoliciesTableItem
   
-  itemViewContainer: ".policies-container",
+  itemViewContainer: ".policies-container"
+
+  initialize: (options) ->
+    this.collection = options.model.policies
 })

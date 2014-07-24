@@ -18,14 +18,14 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.Layout.extend({
   
   regions: {
     policiesEnabledRegion: "#policiesEnabled"
-    policiesTableRegion: "#policiesTable"
+    agentPoliciesRegion: "#agentPolicies"
     allowUnconfiguredRegion: "#allowUnconfigured"
     defaultPolicyEnabledRegion: "#defaultPolicyEnabled"
   }
     
   onShow: ->
-    view = new MCM.Views.PoliciesTable({ collection : this.collection })
-    @policiesTableRegion.show(view)
+    view = new MCM.Views.AgentPolicies({ collection : this.collection })
+    @agentPoliciesRegion.show(view)
 
   showAppSettings: ->
     setting = MCM.app_settings.getSetting("policies_enabled", false)

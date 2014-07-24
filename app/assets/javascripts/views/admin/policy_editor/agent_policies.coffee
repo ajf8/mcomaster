@@ -13,21 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-
-MCM.Controllers.Admin = {
-  policyEditor: ->
-    collection = new MCM.Collections.AgentPolicies
-    
-    view = new MCM.Views.Layouts.PolicyEditor({
-      collection : collection
-    })
-
-    MCM.app_settings.fetch({
-      success: ->
-        view.showAppSettings()
-    })
-    
-    collection.fetch()
-    
-    MCM.mainRegion.show(view)
-}
+MCM.Views.AgentPolicies = Backbone.Marionette.CompositeView.extend({
+  template: HandlebarsTemplates['admin/policy_editor/agent_policies']
+  
+  itemView: MCM.Views.PoliciesTable
+  
+  itemViewContainer: ".agent-policies-container",
+})
