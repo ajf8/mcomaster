@@ -12,10 +12,4 @@
 {{! See the License for the specific language governing permissions and }} 
 {{! limitations under the License. }} 
 {{! }}
-<a href="/#/app/{{id}}" tabindex="-1">
-{{#if icon}}
-<img src="/assets/{{icon}}.png"/>
-{{else}}
-<img src="/assets/agent.png"/>
-{{/if}}
-{{name}}</a>
+<p><img src="<%= asset_path("terminal24.png")%>" style="padding-right:20px;"/><a href="/#/app/{{id}}/node/{{nodeid}}">Shell application</a> - a terminal to execute commands through the <a href="https://github.com/phobos182/mcollective-plugins/tree/master/agent/shell">mcollective shell plugin</a></p>

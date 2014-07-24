@@ -14,29 +14,14 @@
 {{! }} 
 {{#if error}}
 <div class="well" style="overflow:hidden;">
-	<div style="float:left;padding-right:20px;clear:both;display:block;"><img src="/assets/fail48.png"/></div>
+	<div style="float:left;padding-right:20px;clear:both;display:block;"><img src="<%= asset_path("fail48.png")%>"/></div>
 	<p style="font-weight:bold;font-size:20px;">Error</p>
 	<p>{{error}}</p>
 </div>
 {{/if}}
-<div>
-<table class="table table-striped table-bordered">
-	<thead>
-		<tr>
-			<th class="node-status-icon"></th>
-			<th></th>
-			<th>Node</th>
-			<th>Status</th>
-			{{#each columns}}
-				<th>{{display_as}}</th>
-			{{/each}}
-		</tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
-<div class="paginator">{{{paginator}}}</div>
+<div class="result-container">
+	
+</div>
 <div style="float:right;">
 <a href="#" class="export-csv">Export CSV</a> | <a href="#" class="export-json">Export JSON</a>
-</div>
 </div>
