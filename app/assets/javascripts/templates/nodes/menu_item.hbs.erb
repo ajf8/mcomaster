@@ -11,14 +11,5 @@
 {{! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. }} 
 {{! See the License for the specific language governing permissions and }} 
 {{! limitations under the License. }} 
-{{! }}
-<li>
-	<a href="/#/agent/{{id}}" tabindex="-1"><img src="/assets/agent.png"/>{{id}}</a>
-</li>
-{{#if showActions}}
-{{#key_value actions}}
-<li>
-	<a href="/#/action/{{../id}}/{{key}}" style="padding-left:30px;" tabindex="-1"><img src="/assets/action.png"/>{{key}}</a>
-</li>
-{{/key_value}}
-{{/if}}
+{{! }} 
+<a href="/#/node/{{id}}" tabindex="-1"><img src="<%= asset_path("node.png")%>"/> {{id}}</a>

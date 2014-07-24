@@ -11,17 +11,11 @@
 {{! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. }} 
 {{! See the License for the specific language governing permissions and }} 
 {{! limitations under the License. }} 
-{{! }} 
-{{#if error}}
-<div class="well" style="overflow:hidden;">
-	<div style="float:left;padding-right:20px;clear:both;display:block;"><img src="/assets/fail48.png"/></div>
-	<p style="font-weight:bold;font-size:20px;">Error</p>
-	<p>{{error}}</p>
-</div>
+{{! }}
+<a href="/#/app/{{id}}" tabindex="-1">
+{{#if icon}}
+<img src="/assets/{{icon}}.png"/>
+{{else}}
+<img src="<%= asset_path("agent.png")%>"/>
 {{/if}}
-<div class="result-container">
-	
-</div>
-<div style="float:right;">
-<a href="#" class="export-csv">Export CSV</a> | <a href="#" class="export-json">Export JSON</a>
-</div>
+{{name}}</a>
