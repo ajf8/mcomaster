@@ -34,15 +34,16 @@ MCM.Views.LoggedInBar = Backbone.Marionette.ItemView.extend({
       source: (query,process) ->
         $.post '/search', { q: query, limit: 8 }, (data) ->
           r = []
-          for k,v of data
+          for k,v of data.results
             for x in v
               s = new String(k+":"+x)
               s.searchResultType = k
+              s.searchResultTypeImage = data.images[k]
               r.push(s)
           process(r)
 
       highlighter: (data) ->
-        compiled = HandlebarsTemplates['search_item']({ id : data, type : data.searchResultType })
+        compiled = HandlebarsTemplates['search_item']({ id : data, type : data.searchResultType, image : data.searchResultTypeImage })
         return compiled
     })
 })

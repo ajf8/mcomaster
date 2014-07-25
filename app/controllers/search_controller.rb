@@ -26,8 +26,12 @@ class SearchController < ApplicationController
     agents.map { |a| a.gsub!(/mcollective\:\:agent\:\:/, "") }
     collectives.map { |a| a.gsub!(/mcollective\:\:collective\:\:/, "") }
     
-    result = { :node => nodes.sort, :agent => agents.sort, :collective => collectives.sort }
+    results = { :node => nodes.sort, :agent => agents.sort, :collective => collectives.sort }
+    images = {}
+    results.keys.each do |result_type|
+      images[result_type] = ActionController::Base.helpers.asset_path("#{result_type.to_s}.png")
+    end
     
-    render json: result
+    render json: { :results => results, :images => images }
   end
 end
