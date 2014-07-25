@@ -1,0 +1,59 @@
+Vagrant.configure("2") do |config|
+  #HOW MANY MCOLLECTIVE SERVERS DO YOU WANT ?
+  SERVERS=2
+  #WHAT IS THE DOMAIN ?
+  DOMAIN=".example.com"
+  ##################
+  # Middleware     #
+  ##################
+  config.vm.define "middleware" do |v|
+    v.vm.box = "centos-64-x64-vbox4210"
+    v.vm.provider "virtualbox" do |vbox|
+      vbox.memory = 400
+    end
+    v.vm.network "private_network", ip: "192.168.231.10"
+    v.vm.provision :puppet, :options => ["--pluginsync"], :module_path => ["deploy/modules", "deploy/external-modules"] do |puppet|
+      puppet.manifests_path = "deploy"
+      puppet.manifest_file = "site.pp"
+    end
+    v.vm.hostname = "middleware"+DOMAIN
+    v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+  end
+  ######################
+  # mcollective servers#
+  ######################
+  SERVERS.times.each do |i|
+    config.vm.define "mcserver#{i+1}" do |v|
+      v.vm.box = "centos-64-x64-vbox4210"
+      v.vm.provider "virtualbox" do |vbox|
+        vbox.memory = 300
+      end
+      v.vm.network "private_network", ip: "192.168.231.1#{i+1}"
+      v.vm.provision :puppet, :options => ["--pluginsync"], :module_path => ["deploy/modules", "deploy/external-modules"] do |puppet|
+        puppet.manifests_path = "deploy"
+        puppet.manifest_file = "site.pp"
+      end
+      v.vm.hostname = "mcserver#{i+1}"+DOMAIN
+      v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+    end
+  end
+  ######################
+  # mcollective client #
+  # the machine with:  #
+  #     MCOMASTER      #
+  ######################
+  config.vm.define "mcomaster" do |v|
+    v.vm.box = "centos-64-x64-vbox4210"
+    v.vm.provider "virtualbox" do |vbox|
+      vbox.memory = 600
+    end
+    v.vm.network "forwarded_port", guest: 8080, host: 8080
+    v.vm.network "private_network", ip: "192.168.231.20"
+    v.vm.provision :puppet, :options => ["--pluginsync"], :module_path => ["deploy/modules", "deploy/external-modules"] do |puppet|
+      puppet.manifests_path = "deploy"
+      puppet.manifest_file = "site.pp"
+    end
+    v.vm.hostname = "mcomaster"+DOMAIN
+    v.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+  end
+end
