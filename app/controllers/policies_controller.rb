@@ -15,6 +15,11 @@
 class PoliciesController < ApplicationController
   before_filter :authenticate_user!
   authorize_resource
+
+  def destroy
+    Policy.find(params[:id]).destroy()
+    render text: "OK"
+  end
   
   def index
     render json: Policy.all.order("agent")

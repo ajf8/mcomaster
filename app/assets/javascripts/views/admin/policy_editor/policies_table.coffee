@@ -20,6 +20,16 @@ MCM.Views.PoliciesTable = Backbone.Marionette.CompositeView.extend({
   
   itemViewContainer: ".policies-container"
 
+  removePolicy: (e) ->
+    id = $(e.target).data("id")
+    model = this.collection.get(id)
+    model.destroy()
+    e.preventDefault()
+
+  events: {
+    "click a.remove-policy-link" : "removePolicy"
+  }
+
   initialize: (options) ->
     this.collection = options.model.policies
 })
