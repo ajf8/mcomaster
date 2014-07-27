@@ -39,7 +39,9 @@ package => true
 
 }
 
+
 node /middleware/ {
+  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   #config package repository
   include puppetlabs
   #config /etc/hosts
@@ -68,6 +70,7 @@ node /middleware/ {
 
 }
 node /mcomaster/ {
+  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   #config package repository
   include puppetlabs
   #config /etc/hosts
@@ -101,7 +104,7 @@ node /mcomaster/ {
 }
 
 node /mcserver/ {
-notify {'mcserver':}
+  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   include custom_firewall
   #include puppetlabs repo
   include puppetlabs

@@ -4,18 +4,17 @@
 forge "https://forgeapi.puppetlabs.com"
 
 # use dependencies defined in Modulefile
-
-mod 'puppetlabs/mcollective'
-mod 'puppetlabs/stdlib'
-mod 'puppetlabs/activemq'
-mod 'richardc/datacat'
-mod 'garethr/erlang'
-mod 'puppetlabs/rabbitmq'
-mod 'puppetlabs/java_ks'
-mod 'puppetlabs/firewall'
-mod 'thomasvandoren/redis'
-mod 'maestrodev/wget'
-mod 'puppetlabs/gcc'
+mod 'puppetlabs/mcollective', '1.1.6'
+mod 'puppetlabs/stdlib', '4.3.2'
+mod 'puppetlabs/activemq', '0.3.1'
+mod 'richardc/datacat', '0.6.0'
+mod 'garethr/erlang', '0.3.0'
+mod 'puppetlabs/rabbitmq', '4.0.0'
+mod 'puppetlabs/java_ks', '1.2.5'
+mod 'puppetlabs/firewall', '1.1.3'
+mod 'thomasvandoren/redis', '0.10.0'
+mod 'maestrodev/wget', '1.4.4'
+mod 'puppetlabs/gcc', '0.2.0'
 # A module from the Puppet Forge
 # mod 'puppetlabs/stdlib'
 
