@@ -68,6 +68,8 @@ install -Dp -m0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/yum.repos.d
 install -pm 644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/yum.repos.d
 
+rm -rf ./vendor/bundle/ruby/1.9.1/gems/puppet-*/ext/*
+
 cp -p -r bin app config config.ru extra Gemfile Gemfile.lock lib Rakefile script mcollective vendor %{buildroot}%{_datadir}/%{name}
 
 # Move config files to %{_sysconfdir}
