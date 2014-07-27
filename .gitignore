@@ -19,7 +19,6 @@
 db/*.sqlite3
 /log/*
 /tmp/*
-
 # various artifacts
 .project
 **.war
@@ -77,3 +76,9 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+.tmp/
+#exclude external modules from repository
+/tools/puppet/external-modules
+#exclude vagrant files.
+.vagrant
+Gemfile.lock
