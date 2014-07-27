@@ -66,7 +66,7 @@ class ExecuteController < ApplicationController
         rmq_send(txid, { :begin => true, :end => 1, :error => ex.message })
         audit.mcerr = ex.message
         audit.save()
-        render json: { :txid => txid, :error => ex.message }.jsonize
+        render json: { :txid => txid, :error => ex.message }.to_json
         return
       end
     end
@@ -105,6 +105,6 @@ class ExecuteController < ApplicationController
       end
     }
 
-    render json: { :txid => txid }.jsonize
+    render json: { :txid => txid }.to_json
   end
 end

@@ -56,8 +56,8 @@ MCM.vent.on "authentication:logged_in", (user) ->
     menu.slideDown()
 
 MCM.vent.on "authentication:logged_out", ->
-  MCM.loggedInBarRegion.destroy()
-  MCM.adminToolbarRegion.destroy()
+  MCM.loggedInBarRegion.reset()
+  MCM.adminToolbarRegion.reset()
   
   if Backbone.history.fragment != "login"
     window.location = "/#/login"

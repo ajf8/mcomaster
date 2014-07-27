@@ -16,7 +16,7 @@ class CollectivesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    render json: Collective.all.jsonize
+    render json: Collective.all.to_json
   end
 
   def show

@@ -16,7 +16,7 @@ class McagentsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    render json: Mcagent.all(current_user).jsonize
+    render json: Mcagent.all(current_user).to_json
   end
 
   def show

@@ -36,6 +36,6 @@ class DiscoverController < ApplicationController
     discover_result = mc.discover()
     rest_result = { :nodes => discover_result }
 
-    render json: rest_result.jsonize
+    render json: rest_result.to_json
   end
 end

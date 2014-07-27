@@ -136,7 +136,7 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.LayoutView.extend({
     filter = @form.getRequestFilter()
     e.preventDefault()
     
-    @resultsRegion.destroy()
+    @resultsRegion.reset()
     
     $.ajax({
       type: "POST"

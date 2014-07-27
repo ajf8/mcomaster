@@ -41,7 +41,7 @@ class RestmqController < ApplicationController
     
     #b.map! do |q| q = '/mq/'+q end
   
-    #render json: b.jsonize
+    #render json: b.to_json
     return []
   end
     
@@ -74,7 +74,7 @@ class RestmqController < ApplicationController
       return
     end
     
-    render json: response.jsonize
+    render json: response.to_json
   end
   
   def post

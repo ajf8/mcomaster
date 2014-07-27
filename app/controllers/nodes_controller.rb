@@ -16,11 +16,11 @@ class NodesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    render json: Node.all.jsonize
+    render json: Node.all.to_json
   end
 
   def show
     result = Node.find(params[:id])
-    render json: result.nil? ? {} : result.jsonize
+    render json: result.nil? ? {} : result.to_json
   end
 end
