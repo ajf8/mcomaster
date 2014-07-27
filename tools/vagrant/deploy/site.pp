@@ -52,17 +52,19 @@ node /middleware/ {
   include custom_firewall::redis
   #config mcollective default plugins
   class {'mcollective_plugins':
-    require => Class['puppetlabs']
+    require => [ Class['puppetlabs'], Class['custom_firewall::pre'] ]
   }
   #config redis
   class { '::redis': 
     version => '2.8.13', 
-    redis_max_memory => '100mb'
+    redis_max_memory => '100mb',
+    require => Class['custom_firewall::pre'],
   }
   #config mcollective
   class { '::mcollective':
     middleware       => true,
     middleware_hosts => [ 'middleware' ],
+    require => Class['custom_firewall::pre'],
   }
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
@@ -82,11 +84,12 @@ node /mcomaster/ {
   }
   #config mcollective default plugins
   class {'mcollective_plugins':
-    require => Class['puppetlabs']
+    require => [ Class['puppetlabs'], Class['custom_firewall::pre'] ]
   }
   class { '::mcollective':
     client            => true,
     middleware_hosts => [ 'middleware' ],
+    require          => Class['custom_firewall::pre'],
   }
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
@@ -99,7 +102,8 @@ node /mcomaster/ {
     mcomaster_port => 8080, 
     admin_user     => "vagrant", 
     admin_email    => "vagrant@example.com", 
-    admin_pass     => "vagrant123"  #should be at least 8 caracters. 
+    admin_pass     => "vagrant123",  #should be at least 8 caracters. 
+#    require        => Class['custom_firewall::pre'],
   }
 }
 
@@ -112,13 +116,15 @@ node /mcserver/ {
   include hosts_vagrant
   #config mcollective default plugins
   class {'mcollective_plugins':
-    require => Class['puppetlabs']
+    require => [ Class['puppetlabs'], Class['custom_firewall::pre'] ]
   }
   #Call custom class
   class { '::mcollective':
     middleware_hosts => [ 'middleware' ],
+    require          => Class['custom_firewall::pre'],
   }
   class {'::mcomaster::config::mcollective::server': 
-    redis_host => "middleware"
+    redis_host => "middleware",
+    require    => Class['custom_firewall::pre'],
   } 
 }
