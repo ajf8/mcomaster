@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.Layouts.Unauthenticated = Backbone.Marionette.Layout.extend(
+MCM.Views.Layouts.Unauthenticated = Backbone.Marionette.LayoutView.extend(
   template: HandlebarsTemplates["unauthenticated"]
   
   regions:

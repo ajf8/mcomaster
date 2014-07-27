@@ -16,9 +16,9 @@
 MCM.Views.ApplicationsMenu = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['menu/generic']
   
-  itemView: MCM.Views.ApplicationMenuItem
+  childView: MCM.Views.ApplicationMenuItem
   
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
   
   onAdd: ->
     @$el.parent().show()

@@ -16,9 +16,9 @@
 MCM.Views.ApplicationsDropdown = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['dropdown/generic']
   
-  itemView: MCM.Views.ApplicationDropdownItem
+  childView: MCM.Views.ApplicationDropdownItem
   
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
   
   templateHelpers: { "dropdownName" : "Applications" }
   

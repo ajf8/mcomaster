@@ -16,9 +16,9 @@
 # A CompositeView which has buttons for creating new items, and displaying them
 MCM.Views.ActionRequestRemoteFilters = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['actions/request/filter/remote']
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
 
-  itemView: MCM.Views.ActionRequestRemoteFilterItem
+  childView: MCM.Views.ActionRequestRemoteFilterItem
   
   templateHelpers: ->
     return {

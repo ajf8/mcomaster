@@ -160,7 +160,7 @@ MCM.Client =
           
           tx.msgCount++
           
-          # server says this transaction is now closed, by replying with
+          # server says this transaction is now destroy, by replying with
           # an "end" key. eg. { end: 1 }
           # so stop polling
           if msg.end

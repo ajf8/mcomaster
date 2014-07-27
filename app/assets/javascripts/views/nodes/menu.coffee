@@ -16,9 +16,9 @@
 MCM.Views.NodesMenu = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['menu/generic']
   
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
   
-  itemView: MCM.Views.NodeMenuItem
+  childView: MCM.Views.NodeMenuItem
   
   templateHelpers: { "menuName" : "Nodes" }
 })

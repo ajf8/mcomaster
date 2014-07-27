@@ -16,9 +16,9 @@
 MCM.Views.PoliciesTable = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['admin/policy_editor/policies_table']
   
-  itemView: MCM.Views.PoliciesTableItem
+  childView: MCM.Views.PoliciesTableItem
   
-  itemViewContainer: ".policies-container"
+  childViewContainer: ".policies-container"
 
   removePolicy: (e) ->
     id = $(e.target).data("id")

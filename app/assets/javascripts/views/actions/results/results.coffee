@@ -15,10 +15,10 @@
 ###
 MCM.Views.ActionResults = MCM.Views.AbstractActionResults.extend({
   template: HandlebarsTemplates['actions/results/results']
-  itemView: MCM.Views.ActionResultItem
-  itemViewContainer: "tbody"
+  childView: MCM.Views.ActionResultItem
+  childViewContainer: "tbody"
   
-  itemViewOptions: ->
+  childViewOptions: ->
     return {
       columns : @options.ddl.columns
     }

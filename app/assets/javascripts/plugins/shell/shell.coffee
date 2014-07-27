@@ -14,7 +14,7 @@
  limitations under the License.
 ###
 MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
-  ShellPlugin.AbstractRequestView = Marionette.Layout.extend({
+  ShellPlugin.AbstractRequestView = Marionette.LayoutView.extend({
     regions : {
       filterRegion: "#shellFilterRegion"
       termRegion : "#term"

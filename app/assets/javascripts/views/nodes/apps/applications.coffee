@@ -14,8 +14,8 @@
  limitations under the License.
 ###
 MCM.Views.NodeApplications = Backbone.Marionette.CollectionView.extend({
-  itemView: MCM.Views.NodeApplicationItem
+  childView: MCM.Views.NodeApplicationItem
     
-  itemViewOptions: ->
+  childViewOptions: ->
     return @options
 })

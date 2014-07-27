@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
+MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['actions/request/filter/layout']
   
   regions: {
@@ -136,7 +136,7 @@ MCM.Views.Layouts.ActionRequestFilter = Backbone.Marionette.Layout.extend({
     filter = @form.getRequestFilter()
     e.preventDefault()
     
-    @resultsRegion.close()
+    @resultsRegion.destroy()
     
     $.ajax({
       type: "POST"

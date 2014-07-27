@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.Layouts.ActionRequest = Backbone.Marionette.Layout.extend({
+MCM.Views.Layouts.ActionRequest = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['actions/request/layout']
   
   regions: {

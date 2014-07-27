@@ -16,9 +16,9 @@
 MCM.Views.NodeFacts = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['nodes/facts/list']
   
-  itemViewContainer: "tbody"
+  childViewContainer: "tbody"
   
-  itemView: MCM.Views.NodeFactItem
+  childView: MCM.Views.NodeFactItem
   
   initialize: ->
     @listenTo @model, "change", =>

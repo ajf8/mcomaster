@@ -16,11 +16,11 @@
 MCM.Views.NodeActionResults = MCM.Views.AbstractActionResults.extend({
   template: HandlebarsTemplates['nodes/actions/results']
   
-  itemView: MCM.Views.NodeActionResultItem
+  childView: MCM.Views.NodeActionResultItem
 
-  itemViewContainer: ".result-container"
+  childViewContainer: ".result-container"
 
-  itemViewOptions: ->
+  childViewOptions: ->
     return @options
     
   templateHelpers: ->

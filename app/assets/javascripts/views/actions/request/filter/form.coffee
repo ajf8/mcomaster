@@ -16,8 +16,8 @@
 # A CompositeView which has buttons for creating new items, and displaying them
 MCM.Views.ActionRequestFilterForm = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['actions/request/filter/filter']
-  itemViewContainer: "#filterContainer"
-  itemView: MCM.Views.ActionRequestFilterItem
+  childViewContainer: "#filterContainer"
+  childView: MCM.Views.ActionRequestFilterItem
   
   # serialize all the filters into the object the
   # server API expects

@@ -16,11 +16,11 @@
 MCM.Views.LogAction = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['logs/action']
   
-  itemViewContainer: "#logActionItemContainer"
+  childViewContainer: "#logActionItemContainer"
   
-  itemView: MCM.Views.LogActionItem
+  childView: MCM.Views.LogActionItem
   
-  itemViewOptions: ->
+  childViewOptions: ->
     return {
       actionId : @model.get("id")
     }

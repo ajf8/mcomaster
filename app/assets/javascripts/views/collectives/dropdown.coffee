@@ -16,9 +16,9 @@
 MCM.Views.CollectivesDropdown = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['dropdown/generic']
   
-  itemView: MCM.Views.CollectiveDropdownItem
+  childView: MCM.Views.CollectiveDropdownItem
   
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
   
   templateHelpers: { "dropdownName" : "Collectives" }
 })

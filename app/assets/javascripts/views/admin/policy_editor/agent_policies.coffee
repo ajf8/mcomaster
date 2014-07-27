@@ -16,7 +16,7 @@
 MCM.Views.AgentPolicies = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['admin/policy_editor/agent_policies']
   
-  itemView: MCM.Views.PoliciesTable
+  childView: MCM.Views.PoliciesTable
   
-  itemViewContainer: ".agent-policies-container",
+  childViewContainer: ".agent-policies-container",
 })

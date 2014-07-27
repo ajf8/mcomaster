@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.Layout.extend({
+MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['admin/policy_editor/layout']
   
   regions: {

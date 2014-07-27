@@ -56,13 +56,13 @@ MCM.vent.on "authentication:logged_in", (user) ->
     menu.slideDown()
 
 MCM.vent.on "authentication:logged_out", ->
-  MCM.loggedInBarRegion.close()
-  MCM.adminToolbarRegion.close()
+  MCM.loggedInBarRegion.destroy()
+  MCM.adminToolbarRegion.destroy()
   
   if Backbone.history.fragment != "login"
     window.location = "/#/login"
   
-MCM.bind "initialize:after", ->
+MCM.bind "start", ->
   MCM.remoteConfig = MCM.remoteConfig || {}
   if MCM.remoteConfig.refresh_interval and MCM.remoteConfig.refresh_interval > 0
     setInterval ->

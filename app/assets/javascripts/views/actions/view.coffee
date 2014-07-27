@@ -21,7 +21,7 @@
 # To allow for the result attributes to be shown in columns (many results)
 # or rows (single result).
 
-MCM.Views.Layouts.Action = Backbone.Marionette.Layout.extend({
+MCM.Views.Layouts.Action = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['actions/view']
 
   regions: {

@@ -16,9 +16,9 @@
 MCM.Views.AgentsDropdown = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['dropdown/generic']
   
-  itemView: MCM.Views.AgentDropdownItem
+  childView: MCM.Views.AgentDropdownItem
   
-  itemViewContainer: "ul.dropdown-menu"
+  childViewContainer: "ul.dropdown-menu"
   
   templateHelpers: { "dropdownName" : "Agents" }
 })

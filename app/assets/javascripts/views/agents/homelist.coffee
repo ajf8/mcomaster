@@ -16,16 +16,16 @@
 MCM.Views.AgentsHomeList = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['agents/home_list']
   
-  itemViewContainer: "#agentsHomeListContainer"
+  childViewContainer: "#agentsHomeListContainer"
   
-  itemView: MCM.Views.AgentTableItem
+  childView: MCM.Views.AgentTableItem
     
   initialize: ->
     @listenTo MCM.nodes, "add", @render
     @listenTo MCM.nodes, "remove", @render
     @listenTo MCM.nodes, "reset", @render
     
-  itemViewOptions: ->
+  childViewOptions: ->
     return @options
     
   templateHelpers: ->
