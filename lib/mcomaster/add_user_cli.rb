@@ -24,7 +24,7 @@ def run
     puts 'role: ' << role
   end
   puts 'DEFAULT USERS'
-  user = User.find_or_create_by_email :name => $user, :email => $email, :password => $password, :password_confirmation => $password
+  user = User.create! :name => $user, :email => $email, :password => $password, :password_confirmation => $password
 
   if user.valid?
     puts 'user: ' << user.name
