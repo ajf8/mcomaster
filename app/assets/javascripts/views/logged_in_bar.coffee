@@ -32,15 +32,19 @@ MCM.Views.LoggedInBar = Backbone.Marionette.ItemView.extend({
       # set the type returned as a property on the result
       # string, which is used in the template for icon.
       source: (query,process) ->
-        $.post '/search', { q: query, limit: 8 }, (data) ->
-          r = []
-          for k,v of data.results
-            for x in v
-              s = new String(k+":"+x)
-              s.searchResultType = k
-              s.searchResultTypeImage = data.images[k]
-              r.push(s)
-          process(r)
+        $.ajax
+          url: '/search',
+          dataType: "json",
+          data: { q: query, limit: 8 },
+          success: (data) ->
+            r = []
+            for k,v of data.results
+              for x in v
+                s = new String(k+":"+x)
+                s.searchResultType = k
+                s.searchResultTypeImage = data.images[k]
+                r.push(s)
+            process(r)
 
       highlighter: (data) ->
         compiled = HandlebarsTemplates['search_item']({ id : data, type : data.searchResultType, image : data.searchResultTypeImage })
