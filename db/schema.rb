@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140713173339) do
+ActiveRecord::Schema.define(version: 20140803154948) do
 
   create_table "actlogs", force: true do |t|
     t.text     "args"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140713173339) do
     t.string "policy"
     t.string "agent"
     t.string "callerid"
-    t.string "action"
+    t.string "action_name"
   end
 
   create_table "policy_defaults", force: true do |t|
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 20140713173339) do
     t.string   "name"
     t.integer  "resource_id"
     t.string   "resource_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 20140713173339) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "name"
   end
 

@@ -29,4 +29,16 @@ class PoliciesController < ApplicationController
     result = Policy.find(params[:id])
     render json: result.nil? ? {} : result
   end
+
+  def create
+    policy = Policy.new(policy_params)
+    policy.save
+    render json: policy
+  end
+
+  private
+
+  def policy_params
+    params.permit(:agent, :action_name, :callerid, :policy)
+  end
 end

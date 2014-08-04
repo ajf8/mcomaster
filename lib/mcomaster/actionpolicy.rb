@@ -1,6 +1,7 @@
 module Mcomaster
   class ActionPolicy
     attr_accessor :config, :configdir, :caller, :action
+
     def self.authorize(request)
       ActionPolicy.new(request).authorize_request
     end
@@ -18,7 +19,7 @@ module Mcomaster
 
     def authorize_request
       Policy.where(:agent => @agent).order("id").each do |policy|
-        if check_policy(policy.callerid, policy.action)
+        if check_policy(policy.callerid, policy.action_name)
           if policy.policy == "allow"
             return true
           else

@@ -1,0 +1,51 @@
+<div class="modal agent-policy-modal">
+  <div class="modal-header">
+    <h2>Create new agent policy</h2>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="agent-dropdown-container">
+      </div>
+      <div class="action-dropdown-container">
+        <label>Action</label>
+        <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle" type="button" id="{{dropdownId}}" data-toggle="dropdown">
+            <span class="selection">
+            Select agent first
+            </span>
+            <span class="caret"></span>
+          </button>
+        </div>
+      </div>
+      <div class="users-dropdown-container">
+      </div>
+      <div class="policy-dropdown-container">
+        <label>Policy</label>
+        <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="selection">
+              allow
+            </span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a role="menuitem" tabindex="-1" href="#" data-id="allow">
+                allow
+              </a>
+            </li>
+            <li>
+              <a role="menuitem" tabindex="-1" href="#" data-id="deny">
+                deny
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary policy-submit-button" disabled="disabled">OK</button>
+    <button class="btn btn-inverse policy-cancel-button">Cancel</button>
+  </div>
+</div>

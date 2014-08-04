@@ -22,7 +22,19 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
     allowUnconfiguredRegion: "#allowUnconfigured"
     defaultPolicyEnabledRegion: "#defaultPolicyEnabled"
   }
-    
+
+  createAgentPolicy: (e) ->
+    view = new MCM.Views.NewAgentPolicy({ collection : this.collection })
+    view.render()
+    modalContainer = $("#modal")
+    modalContainer.html(view.el)
+    modalContainer.find(".modal").modal()
+    e.preventDefault()
+
+  events : {
+    "click a.create-agent-policy-link" : "createAgentPolicy"
+  }
+
   onShow: ->
     view = new MCM.Views.AgentPolicies({ collection : this.collection })
     @agentPoliciesRegion.show(view)

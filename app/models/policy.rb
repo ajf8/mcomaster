@@ -14,5 +14,5 @@
 #
 
 class Policy < ActiveRecord::Base
-  attr_accessible :policy, :callerid, :agent, :action
+  attr_accessible :policy, :callerid, :agent, :action_name
 end

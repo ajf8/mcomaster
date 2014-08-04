@@ -13,23 +13,17 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+MCM.Views.DropdownItem = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['admin/policy_editor/dropdown_item']
+  tagName: "li"
 
-MCM.Controllers.Admin = {
-  policyEditor: ->
-    collection = new MCM.Collections.AgentPolicies
-    
-    view = new MCM.Views.Layouts.PolicyEditor({
-      collection : collection
-    })
-
-    MCM.users.fetch()
-
-    MCM.app_settings.fetch({
-      success: ->
-        view.showAppSettings()
-    })
-    
-    collection.fetch()
-    
-    MCM.mainRegion.show(view)
-}
+  initialize: (options) ->
+  	@idColumn = options.idColumn || "id"
+  	@displayColumn = options.displayColumn || "id"
+  
+  templateHelpers: ->
+  	return {
+  		dropdownId : @model.attributes[@idColumn],
+  		dropdownDisplay : @model.attributes[@displayColumn]
+  	}
+})

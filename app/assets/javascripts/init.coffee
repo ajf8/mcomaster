@@ -55,6 +55,10 @@ MCM.vent.on "authentication:logged_in", (user) ->
     $("#mainContent").removeClass("span12").addClass("span9")
     menu.slideDown()
 
+#$(document).ajaxSend (e, xhr, options) ->
+#  token = $("meta[name='csrf-token']").attr("content");
+#  xhr.setRequestHeader("X-CSRF-Token", token);
+
 MCM.vent.on "authentication:logged_out", ->
   MCM.loggedInBarRegion.reset()
   MCM.adminToolbarRegion.reset()
@@ -98,6 +102,8 @@ MCM.addInitializer ->
   MCM.applicationsListRegion.show(applicationsMenuView)
   applicationsToolbarView = new MCM.Views.ApplicationsDropdown(collection : MCM.applications)
   MCM.applicationsToolbarRegion.show(applicationsToolbarView)
+
+  MCM.users = new MCM.Collections.User
 
   adminToolbarView = new MCM.Views.AdminDropdown
 

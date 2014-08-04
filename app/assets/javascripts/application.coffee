@@ -40,6 +40,7 @@
 #= require ./views/logs/empty_index_item
 #= require ./views/admin/policy_editor/policies_table_item
 #= require ./views/admin/policy_editor/policies_table
+#= require ./views/admin/policy_editor/dropdown_item
 #= require_tree ./views/
 #= require_tree ./controllers/
 #= require_tree ./routers/

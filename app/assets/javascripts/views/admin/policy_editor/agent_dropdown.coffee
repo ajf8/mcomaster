@@ -13,23 +13,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
+MCM.Views.AgentDropdown = Backbone.Marionette.CompositeView.extend({
+  template: HandlebarsTemplates['admin/policy_editor/dropdown']
+  childView: MCM.Views.DropdownItem
+  
+  childViewContainer: "ul"
 
-MCM.Controllers.Admin = {
-  policyEditor: ->
-    collection = new MCM.Collections.AgentPolicies
-    
-    view = new MCM.Views.Layouts.PolicyEditor({
-      collection : collection
-    })
-
-    MCM.users.fetch()
-
-    MCM.app_settings.fetch({
-      success: ->
-        view.showAppSettings()
-    })
-    
-    collection.fetch()
-    
-    MCM.mainRegion.show(view)
-}
+  templateHelpers: {
+    title : "Agent"
+    dropdownId : "agentDropdown"
+  }
+})

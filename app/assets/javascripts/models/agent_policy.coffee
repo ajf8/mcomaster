@@ -2,16 +2,19 @@ MCM.Models.AgentPolicy = Backbone.Model.extend({
   url: "/dummy"
 
   onPolicyDestroy: ->
-    if this.policies.models.length == 0
-      this.destroy()
+    if @policies.models.length == 0
+      @destroy()
 
   sync: ->
     0
 
+  constructor: (attributes, options) ->
+    @policies = new MCM.Collections.Policies
+    @listenTo @policies, "destroy", @onPolicyDestroy
+    Backbone.Model.prototype.constructor.call(this, attributes, options)
+
   parse: (data) ->
-    this.policies = new MCM.Collections.Policies
-    this.listenTo this.policies, "destroy", this.onPolicyDestroy
-    this.policies.reset(data.policies)
+    @policies.reset(data.policies)
     data.policies = undefined
     return data
 })
