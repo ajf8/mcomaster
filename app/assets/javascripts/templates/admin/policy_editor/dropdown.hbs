@@ -1,12 +1,12 @@
-<label>{{title}}</label>
+{{#if label}}
+  <label>{{label}}</label>
+{{/if}}
 <div class="btn-group">
-<button class="btn btn-default dropdown-toggle" type="button" id="{{dropdownId}}" data-toggle="dropdown">
-  <span class="selection">
-  {{title}}
-  </span>
-  <span class="caret"></span>
-</button>
-
-<ul class="dropdown-menu" role="menu" aria-labelledby="{{dropdownId}}">
-</ul>
+  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+    <span class="selection">
+    </span>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+  </ul>
 </div>

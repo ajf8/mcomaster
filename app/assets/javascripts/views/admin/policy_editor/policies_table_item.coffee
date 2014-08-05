@@ -13,7 +13,41 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.PoliciesTableItem = Backbone.Marionette.ItemView.extend({
+MCM.Views.PoliciesTableItem = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['admin/policy_editor/policies_table_item']
-  tagName: "tr",
+  tagName: "tr"
+
+  regions: {
+    "usersDropdownRegion" : ".user-dropdown-container"
+    "actionDropdownRegion" : ".action-dropdown-container"
+    "policyDropdownRegion" : ".policy-dropdown-container"
+  }
+
+  userChanged: (value) ->
+    @model.save({ callerid : value })
+
+  actionChanged: (value) ->
+    @model.save({ action_name : value })
+
+  policyChanged: (value) ->
+    @model.save({ policy : value })
+
+  onRender: ->
+    view = new MCM.Views.AdminDropdown({ collection : MCM.users, idColumn : "name", displayColumn : "name", initialValue : @model.attributes.callerid })
+    @listenTo(view, "changed", @userChanged)
+    @usersDropdownRegion.show(view)
+
+    agentModel = MCM.agents.get(@model.attributes.agent)
+    actionCollection = agentModel.getActionCollection()
+
+    view = new MCM.Views.AdminDropdown({ collection : actionCollection, initialValue : @model.attributes.action_name })
+    @listenTo(view, "changed", @actionChanged)
+    @actionDropdownRegion.show(view)
+
+    policyCollection = new MCM.Collections.Transient
+    policyCollection.add(new MCM.Models.Transient({ id : "allow" }))
+    policyCollection.add(new MCM.Models.Transient({ id : "deny" }))
+    view  = new MCM.Views.AdminDropdown({ collection : policyCollection, initialValue : @model.attributes.policy })
+    @listenTo(view, "changed", @policyChanged)
+    @policyDropdownRegion.show(view)
 })

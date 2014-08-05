@@ -105,7 +105,7 @@ MCM.addInitializer ->
 
   MCM.users = new MCM.Collections.User
 
-  adminToolbarView = new MCM.Views.AdminDropdown
+  adminToolbarView = new MCM.Views.AdminToolbarDropdown
 
   MCM.app_settings = new MCM.Collections.AppSettings
 

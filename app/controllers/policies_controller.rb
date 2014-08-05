@@ -20,7 +20,7 @@ class PoliciesController < ApplicationController
     Policy.find(params[:id]).destroy()
     render text: "OK"
   end
-  
+
   def index
     render json: Policy.all.order("agent")
   end
@@ -33,6 +33,13 @@ class PoliciesController < ApplicationController
   def create
     policy = Policy.new(policy_params)
     policy.save
+    render json: policy
+  end
+
+  def update
+    policy = Policy.find(params[:id])
+    policy.update(policy_params)
+    policy.save()
     render json: policy
   end
 

@@ -15,4 +15,15 @@
 ###
 MCM.Models.Agent = Backbone.Model.extend({
   urlRoot:"/mcagents"
+
+  getActionCollection : ->
+    actionCollection = new MCM.Collections.Transient
+    actionCollection.add(new MCM.Models.Transient({ id : "*" }))
+
+    for action_name, action of @attributes.ddl.actions
+      actionData = _.extend({ id : action_name }, action)
+      actionModel = new MCM.Models.Transient(actionData)
+      actionCollection.add(actionModel)
+
+    return actionCollection
 })

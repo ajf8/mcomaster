@@ -13,14 +13,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Views.PolicyDropdown = Backbone.Marionette.CompositeView.extend({
-  template: HandlebarsTemplates['admin/policy_editor/dropdown']
-  childView: MCM.Views.DropdownItem
-  
-  childViewContainer: "ul"
-
-  templateHelpers: {
-    title : "allow"
-    dropdownId : "policyDropdown"
-  }
+MCM.Views.AdminToolbarDropdown = Backbone.Marionette.ItemView.extend({
+  template: HandlebarsTemplates['admin/dropdown_menu']
 })
