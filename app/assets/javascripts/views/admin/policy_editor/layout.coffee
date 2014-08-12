@@ -31,7 +31,7 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
     modalContainer.find(".modal").modal()
 
   createAgentPolicyLink: (e) ->
-    @createAgentPolicy({ collection : @collection })
+    @createAgentPolicy({ collection : @collection, agent : $(e.target).closest("a").data("id") })
     e.preventDefault()
 
   events : {
@@ -44,7 +44,7 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
 
   defaultsEnabledChanged: (value) ->
     if value and !@collection.get("default")
-      @createAgentPolicy({ isDefault : true, collection : @collection })
+      @createAgentPolicy({ agent : "default", collection : @collection })
 
   showAppSettings: ->
     setting = MCM.app_settings.getSetting("policies_enabled", false)

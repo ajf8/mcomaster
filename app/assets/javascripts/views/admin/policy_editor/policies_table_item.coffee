@@ -23,8 +23,18 @@ MCM.Views.PoliciesTableItem = Backbone.Marionette.LayoutView.extend({
     "policyDropdownRegion" : ".policy-dropdown-container"
   }
 
+  actionInputChanged: (e) ->
+    if e.keyCode == 13
+      @savePolicy()
+    else
+      @model.set({ action_name : e.target.value })
+
+  savePolicy: ->
+    @model.save()
+
   events : {
-    "keyup .action-input-container input" : "actionChanged"
+    "click .action-input-container button" : "savePolicy"
+    "keyup .action-input-container input" : "actionInputChanged"
   }
 
   initialize: (options) ->

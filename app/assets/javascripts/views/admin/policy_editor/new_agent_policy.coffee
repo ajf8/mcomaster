@@ -38,9 +38,9 @@ MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
     @title = options.title
     @model = new MCM.Models.Policy
     @model.set('policy', 'allow')
+    @model.set('agent', options.agent)
 
-    if (options.isDefault == true)
-      @model.set('agent', 'default')
+    if (options.agent == "default")
       @model.set('action_name', '*')
       @isDefault = true
 
@@ -112,6 +112,9 @@ MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
       view = new MCM.Views.AdminDropdown({ collection : MCM.agents, label : "Agent", initialValue : @model.get('agent') || "Select an agent" })
       @listenTo(view, "changed", @agentSelected)
       @agentDropdownRegion.show(view)
+
+      if @model.attributes.agent
+        @agentSelected(@model.attributes.agent)
 
     policyCollection = new MCM.Collections.Transient
     policyCollection.add(new MCM.Models.Transient({ id : "allow" }))
