@@ -17,8 +17,8 @@ module Mcomaster
       @configdir = Rails.root
     end
 
-    def authorize_request
-      Policy.where(:agent => @agent).order("id").each do |policy|
+    def check_agent(name)
+      Policy.where(:agent => name).order("id").each do |policy|
         if check_policy(policy.callerid, policy.action_name)
           if policy.policy == "allow"
             return true
@@ -27,8 +27,8 @@ module Mcomaster
           end
         end
       end
-      
-      agent_default = PolicyDefault.find_by_name(@agent)
+
+      agent_default = PolicyDefault.find_by_name(name)
       unless agent_default.nil?
         if agent_default.policy == "allow"
           return true
@@ -37,14 +37,17 @@ module Mcomaster
         end
       end
 
+      return false
+    end
+
+    def authorize_request
+      if check_agent(@agent)
+        return true
+      end
+
       enable_default = AppSetting.get_setting('defaults_enabled', false)
-      if enable_default
-        default_policy = PolicyDefault.find_by_name('default')
-        if default_policy and default_policy.policy == "allow"
-          return true
-        else
-          deny("denied by default policy")
-        end
+      if enable_default and check_agent("default")
+        return true
       end
 
       if AppSetting.get_setting("allow_unconfigured", false)

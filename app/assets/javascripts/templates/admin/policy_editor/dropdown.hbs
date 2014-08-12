@@ -8,5 +8,12 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
+{{#if extraItem}}
+  <li>
+    <a role="menuitem" tabindex="-1" href="#" data-id="{{extraItem}}">
+      {{extraItem}}
+    </a>
+  </li>
+{{/if}}
   </ul>
 </div>

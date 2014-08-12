@@ -15,7 +15,7 @@
 ###
 MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
   template: HandlebarsTemplates['admin/policy_editor/layout']
-  
+
   regions: {
     policiesEnabledRegion: "#policiesEnabled"
     agentPoliciesRegion: "#agentPolicies"
@@ -23,21 +23,28 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
     defaultPolicyEnabledRegion: "#defaultPolicyEnabled"
   }
 
-  createAgentPolicy: (e) ->
-    view = new MCM.Views.NewAgentPolicy({ collection : this.collection })
+  createAgentPolicy: (options) ->
+    view = new MCM.Views.NewAgentPolicy(options)
     view.render()
     modalContainer = $("#modal")
     modalContainer.html(view.el)
     modalContainer.find(".modal").modal()
+
+  createAgentPolicyLink: (e) ->
+    @createAgentPolicy({ collection : @collection })
     e.preventDefault()
 
   events : {
-    "click a.create-agent-policy-link" : "createAgentPolicy"
+    "click a.create-agent-policy-link" : "createAgentPolicyLink"
   }
 
   onShow: ->
-    view = new MCM.Views.AgentPolicies({ collection : this.collection })
+    view = new MCM.Views.AgentPolicies({ collection : @collection })
     @agentPoliciesRegion.show(view)
+
+  defaultsEnabledChanged: (value) ->
+    if value and !@collection.get("default")
+      @createAgentPolicy({ isDefault : true, collection : @collection })
 
   showAppSettings: ->
     setting = MCM.app_settings.getSetting("policies_enabled", false)
@@ -46,8 +53,9 @@ MCM.Views.Layouts.PolicyEditor = Backbone.Marionette.LayoutView.extend({
 
     setting = MCM.app_settings.getSetting("defaults_enabled", false)
     view = new MCM.Views.AppSettingCheckbox({ model : setting, description : "Enable a default policy." })
+    @listenTo(view, "changed", @defaultsEnabledChanged)
     @defaultPolicyEnabledRegion.show(view)
-    
+
     setting = MCM.app_settings.getSetting("allow_unconfigured", true)
     view = new MCM.Views.AppSettingCheckbox({ model : setting, description : "Allow requests for which the agent has no policies." })
     @allowUnconfiguredRegion.show(view)

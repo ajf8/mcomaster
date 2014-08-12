@@ -15,13 +15,16 @@
 ###
 MCM.Views.AppSettingCheckbox = Backbone.Marionette.ItemView.extend({
   template: HandlebarsTemplates['admin/policy_editor/checkbox'],
-  
-  onShow: ->
-    model = @model
-    $(this.el).find('input:checkbox').change ->
-      model.set('set_val', this.checked.toString())
-      model.save()
-      
+
+  events : {
+    "change input:checkbox" : "checkboxChanged"
+  }
+
+  checkboxChanged: (e) ->
+    checked = e.target.checked
+    @trigger("changed", checked)
+    @model.save({ set_val : checked.toString() })
+
   templateHelpers: ->
     return {
       description: this.options.description

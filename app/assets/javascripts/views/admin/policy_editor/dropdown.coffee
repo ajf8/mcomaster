@@ -22,7 +22,8 @@ MCM.Views.AdminDropdown = Backbone.Marionette.CompositeView.extend({
 
   templateHelpers: ->
     return {
-      label : @label
+      label : @label,
+      extraItem : @extraItem
     }
 
   setDropdownValue: (value) ->
@@ -44,6 +45,7 @@ MCM.Views.AdminDropdown = Backbone.Marionette.CompositeView.extend({
     @initialValue = options.initialValue
     @idColumn = options.idColumn || "id"
     @displayColumn = options.displayColumn || "id"
+    @extraItem = options.extraItem
 
   childViewOptions: ->
     return {

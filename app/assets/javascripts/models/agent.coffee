@@ -18,7 +18,7 @@ MCM.Models.Agent = Backbone.Model.extend({
 
   getActionCollection : ->
     actionCollection = new MCM.Collections.Transient
-    actionCollection.add(new MCM.Models.Transient({ id : "*" }))
+    #actionCollection.add(new MCM.Models.Transient({ id : "*" }))
 
     for action_name, action of @attributes.ddl.actions
       actionData = _.extend({ id : action_name }, action)

@@ -15,9 +15,9 @@
 ###
 MCM.Views.PoliciesTable = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['admin/policy_editor/policies_table']
-  
+
   childView: MCM.Views.PoliciesTableItem
-  
+
   childViewContainer: ".policies-container"
 
   removePolicy: (e) ->
@@ -29,6 +29,11 @@ MCM.Views.PoliciesTable = Backbone.Marionette.CompositeView.extend({
   events: {
     "click a.remove-policy-link" : "removePolicy"
   }
+
+  childViewOptions: ->
+    return {
+      isDefault : @model.get("id") == "default"
+    }
 
   initialize: (options) ->
     this.collection = options.model.policies

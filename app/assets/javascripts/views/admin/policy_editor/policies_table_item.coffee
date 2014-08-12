@@ -23,6 +23,18 @@ MCM.Views.PoliciesTableItem = Backbone.Marionette.LayoutView.extend({
     "policyDropdownRegion" : ".policy-dropdown-container"
   }
 
+  events : {
+    "keyup .action-input-container input" : "actionChanged"
+  }
+
+  initialize: (options) ->
+    @isDefault = options.isDefault
+
+  templateHelpers: ->
+    return {
+      isDefault : @isDefault
+    }
+
   userChanged: (value) ->
     @model.save({ callerid : value })
 
@@ -33,16 +45,21 @@ MCM.Views.PoliciesTableItem = Backbone.Marionette.LayoutView.extend({
     @model.save({ policy : value })
 
   onRender: ->
-    view = new MCM.Views.AdminDropdown({ collection : MCM.users, idColumn : "name", displayColumn : "name", initialValue : @model.attributes.callerid })
+    view = new MCM.Views.AdminDropdown({ collection : MCM.users, idColumn : "name", displayColumn : "name", initialValue : @model.attributes.callerid, extraItem : "*" })
     @listenTo(view, "changed", @userChanged)
     @usersDropdownRegion.show(view)
 
     agentModel = MCM.agents.get(@model.attributes.agent)
-    actionCollection = agentModel.getActionCollection()
 
-    view = new MCM.Views.AdminDropdown({ collection : actionCollection, initialValue : @model.attributes.action_name })
-    @listenTo(view, "changed", @actionChanged)
-    @actionDropdownRegion.show(view)
+    if agentModel
+      actionCollection = agentModel.getActionCollection()
+    else
+      actionCollection = new MCM.Collections.Transient
+
+    unless @isDefault
+      view = new MCM.Views.AdminDropdown({ collection : actionCollection, initialValue : @model.attributes.action_name, extraItem : "*" })
+      @listenTo(view, "changed", @actionChanged)
+      @actionDropdownRegion.show(view)
 
     policyCollection = new MCM.Collections.Transient
     policyCollection.add(new MCM.Models.Transient({ id : "allow" }))

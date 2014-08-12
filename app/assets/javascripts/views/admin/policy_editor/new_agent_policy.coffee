@@ -14,7 +14,11 @@
  limitations under the License.
 ###
 MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
-  template: HandlebarsTemplates['admin/policy_editor/new_agent_policy']
+  template: (data) ->
+    if data.isDefault
+      return HandlebarsTemplates['admin/policy_editor/new_default_policy']
+    else
+      return HandlebarsTemplates['admin/policy_editor/new_agent_policy']
 
   regions : {
     policyDropdownRegion : ".policy-dropdown-container"
@@ -23,15 +27,31 @@ MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
     usersDropdownRegion : ".users-dropdown-container"
   }
 
+  templateHelpers: ->
+    return {
+      title : @title
+      isDefault : @isDefault
+    }
+
   initialize: (options) ->
     @collection = options.collection
+    @title = options.title
     @model = new MCM.Models.Policy
     @model.set('policy', 'allow')
 
+    if (options.isDefault == true)
+      @model.set('agent', 'default')
+      @model.set('action_name', '*')
+      @isDefault = true
+
+  actionChanged: (e) ->
+    @model.set('action_name', e.target.value)
+    @validateSubmit()
+
   events : {
-    "click .policy-dropdown-container ul.dropdown-menu a" : "policySelected"
     "click .policy-submit-button" : "submitPolicy"
     "click .policy-cancel-button" : "cancelPolicy"
+    "keyup .action-input-container input" : "actionChanged"
   }
 
   cancelPolicy: (e) ->
@@ -42,7 +62,7 @@ MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
     model = @model
     collection = @collection
 
-    model.save model.attributes,
+    model.save {},
       success: ->
         agentPolicy = collection.get(model.attributes.agent)
 
@@ -79,18 +99,19 @@ MCM.Views.NewAgentPolicy = Backbone.Marionette.LayoutView.extend({
 
     actionCollection = agentModel.getActionCollection()
 
-    view = new MCM.Views.AdminDropdown({ collection : actionCollection, label : "Action", initialValue : "Select an action" })
+    view = new MCM.Views.AdminDropdown({ collection : actionCollection, label : "Action", initialValue : "Select an action", extraItem : "*" })
     @listenTo(view, "changed", @actionSelected)
     @actionDropdownRegion.show(view)
 
   onRender: ->
-    view = new MCM.Views.AdminDropdown({ collection : MCM.agents, label : "Agent", initialValue : "Select an agent" })
-    @listenTo(view, "changed", @agentSelected)
-    @agentDropdownRegion.show(view)
-
-    view = new MCM.Views.AdminDropdown({ collection : MCM.users, label : "Users", initialValue : "Select a user", idColumn : "name", displayColumn : "name" })
+    view = new MCM.Views.AdminDropdown({ collection : MCM.users, label : "Users", initialValue : "Select a user", idColumn : "name", displayColumn : "name", extraItem : "*" })
     @listenTo(view, "changed", @userSelected)
     @usersDropdownRegion.show(view)
+
+    unless @isDefault
+      view = new MCM.Views.AdminDropdown({ collection : MCM.agents, label : "Agent", initialValue : @model.get('agent') || "Select an agent" })
+      @listenTo(view, "changed", @agentSelected)
+      @agentDropdownRegion.show(view)
 
     policyCollection = new MCM.Collections.Transient
     policyCollection.add(new MCM.Models.Transient({ id : "allow" }))
