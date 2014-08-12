@@ -12,7 +12,6 @@
 #= require backbone.marionette
 #= require backbone-relational
 #= require Backbone.ModelBinder
-#= require backbone.memento
 #= require bootstrap
 #= require handlebars.runtime
 #= require jquery.mousewheel-min
