@@ -17,9 +17,10 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
   template: HandlebarsTemplates['actions/request/request']
   
   setDdl: (ddl) ->
-    @ddl = ddl.actionDdl
-    @validationRules = ddl.validationRules
-    @validationMessages = ddl.validationMessages
+#    @ddl = ddl.actionDdl
+#    @validationRules = ddl.validationRules
+#    @validationMessages = ddl.validationMessages
+    @ddl = ddl
     @render()
   
   templateHelpers: ->
@@ -31,7 +32,7 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
       isFromLog : @options.isFromLog
     }
     
-    if @ddl && _.size(@ddl.input) > 0
+    if @ddl && @ddl.actionDdl && _.size(@ddl.actionDdl.input) > 0
       ctx.hasInputs = true
       
     return ctx
@@ -41,7 +42,7 @@ MCM.Views.ActionRequest = Backbone.Marionette.ItemView.extend({
       @setDdl(ddl)
       if @ddl
         $("#actionForm").validate({
-          rules : @validationRules
+          rules : @ddl.validationRules
           onkeyup : (element) ->
             this.element(element)
         })

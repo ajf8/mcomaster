@@ -30,32 +30,32 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
 
     getFilter: ->
       return @options.filter || {}
-      
+
     onReceiveError: (tx, msg) ->
       @term.echo "[1;31m *** Error: "+msg+"[0m"
       @term.echo " "
-      
+
     onReceiveStats: (tx, msg) ->
       @term.echo "[1;33m *** Ran on "+msg.responses+" hosts in "+msg.totaltime.toFixed(3)+" seconds[0m .. [1;32m"+msg.okcount+" OK[0m, [1;31m"+msg.failcount+" Failed[0m\n"
-      
+
     onBeginResults: (tx, msg) ->
       @term.echo "Command acknowledged by mcomaster .. "+tx.txid+"\n"
-      
+
     getStatusColor: (msg) ->
       if msg.body.statuscode == 0
         return "[1;32m"
       else
         return "[1;31m"
-        
+
      getHostLine: (msg) ->
       statusColor = @getStatusColor(msg)
       statusMsg = "Exit code = "+msg.body.statuscode
-        
+
       if msg.body.statuscode == 0 and msg.body.statusmsg != ""
         statusMsg = statusMsg + " (" + msg.body.statusmsg+")"
-      
+
       return "[1;34m"+msg.senderid+"[0m  ##  "+statusColor+statusMsg+"[0m"
-                         
+
     onCommand: (command, term) ->
       console.log("implement me...")
 
@@ -66,13 +66,13 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
 
       @term = $("#term").terminal $.proxy(@onCommand, @), { prompt: @options.prompt, name: 'test', greetings : "" }
       $("#termWrapper").resizable()
-      
+
     templateHelpers: ->
       _.extend @options, {
         includeFilters : @options.filterCollection != undefined
       }
   })
-  
+
   ShellPlugin.GenericRequestView = ShellPlugin.AbstractRequestView.extend({
     usage: ->
       @term.echo("[1;31mThis shell will only execute the "+@options.id+" action of the "+@options.agent+" agent. To execute another action, navigate to it.")
@@ -92,19 +92,19 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
         return @options.filterView.getRequestFilter()
       else
         return {}
-      
+
     onCommand: (command, term) ->
       if command == ""
         return
-        
+
       args = command.match(/('[^']+'|"[^"]+"|[^ ]+)/g)
       if args.length < 1
         return
-      
+
       if args[0] != @options.id
         @usage()
         return
-      
+
       agentArgs = {}
       i = 1
       while i < args.length
@@ -112,30 +112,31 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
         if matches = args[i].match(/^(.+?)=(.+)/)
           agentArgs[matches[1]] = matches[2]
         i++
-           
+
       MCM.Client.submitAction {
         filter : @getFilter()
         args : agentArgs
         agent : @options.agent
         action : args[0]
+        ddl : @ddl
       }
-        
+
       return
-      
+
     receiveDdl: (ddl) ->
       @ddl = ddl
       @usage()
-      
+
     initialize: ->
       ShellPlugin.AbstractRequestView.prototype.initialize.call(this)
       @listenTo MCM.vent, "action:receiveDdl", @receiveDdl
-       
+
     onReceiveResult: (tx, msg) ->
       @term.echo(@getHostLine(msg))
       for o in @ddl.columns
         @term.echo("  "+o.display_as+": "+msg.body.data[o.key])
       @term.echo(" ")
-      
+
     onShow: ->
       ShellPlugin.AbstractRequestView.prototype.onShow.call(this)
       @term.echo("Receiving DDL...")

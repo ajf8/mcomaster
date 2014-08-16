@@ -16,19 +16,19 @@ class ExecuteController < ApplicationController
   require 'mcomaster/mcclient'
   require 'mcomaster/restmqclient'
   require 'mcomaster/actionpolicy'
-  
+
   include Mcomaster::McClient
   include Mcomaster::RestMQ
-  
+
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
-  
+
   def execute
     agent = params[:agent]
     action = params[:mcaction]
     mc = mcm_rpcclient(agent)
     json = request.raw_post.empty? ? {} : JSON.parse(request.raw_post)
-    
+
     args = {}
     if json.has_key?('args')
       json['args'].each do |key, value|
@@ -38,9 +38,9 @@ class ExecuteController < ApplicationController
 
     txid = rmq_uuid()
     audit = Actlog.new
-    
+
     logger.info("#{txid} Received a request, parameters: "+request.raw_post)
-    
+
     if json.has_key?('filter') && json['filter'].is_a?(Hash)
       filters = convert_filter(json['filter'])
       logger.info("#{txid} Converted filters: "+filters.inspect)
@@ -49,7 +49,7 @@ class ExecuteController < ApplicationController
     else
       logger.info("#{txid} No filters.")
     end
-    
+
     audit.txid = txid
     audit.agent = agent
     audit.args = args.to_json
@@ -60,7 +60,7 @@ class ExecuteController < ApplicationController
 
     if Mcomaster::ActionPolicy.is_enabled?
       begin
-        reqobj = Mcomaster::Request.new(agent, current_user.name, action)  
+        reqobj = Mcomaster::Request.new(agent, current_user.name, action)
         Mcomaster::ActionPolicy.authorize(reqobj)
       rescue => ex
         rmq_send(txid, { :begin => true, :end => 1, :error => ex.message })
@@ -70,9 +70,9 @@ class ExecuteController < ApplicationController
         return
       end
     end
-    
+
     rmq_send(txid, { :begin => true, :action => action, :agent => agent })
-    
+
     t = Thread.new(txid) { |ttxid|
       begin
         stat = mc.method_missing(action, args) { |noderesponse|
@@ -93,7 +93,7 @@ class ExecuteController < ApplicationController
             end
           end
         }
-        rmq_send(ttxid, { :end => 1, :stats => stat })
+        rmq_send(ttxid, { :end => 1, :stats => stat.to_hash })
         audit.stats = stat.to_json
         audit.save()
       rescue => ex
