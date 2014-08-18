@@ -28,6 +28,7 @@ discovery_ttl: 320 # this should be the same (a little bit more?) as the registr
 # the hash below is sent to the client as JSON.
 client:
   refresh_interval: 30 # how long between refreshes of agents, nodes, collectives?
+  action_shell: true # include a shell like interface to run commands
 
 # this gets merged in to the default mcollective options hash
 mcollective:

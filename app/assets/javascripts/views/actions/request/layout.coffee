@@ -31,7 +31,7 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.LayoutView.extend({
       @filterView = new MCM.Views.Layouts.ActionRequestFilter({'collection' : @options.filterCollection, remoteFilterCollection : @options.remoteFilterCollection, isFromLog : @isFromLog, 'includeExecuteButton' : true })
       @filterRegion.show(@filterView)
 
-    if MCM.remoteConfig.includeActionShell == true
+    unless MCM.remoteConfig.action_shell == false
       @shell = new MCM.Plugins.Shell.GenericRequestView({ agent : @options.agent, id : @options.id, filterView : @filterView })
       @shellRegion.show(@shell)
         
@@ -63,5 +63,5 @@ MCM.Views.Layouts.ActionRequest = Backbone.Marionette.LayoutView.extend({
     e.preventDefault()
     
   templateHelpers: ->
-    return _.extend(@options, { includeShell : MCM.remoteConfig.includeActionShell == true, isFromLog : @isFromLog })
+    return _.extend(@options, { includeShell : MCM.remoteConfig.action_shell != false, isFromLog : @isFromLog })
 })
