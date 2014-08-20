@@ -16,7 +16,7 @@
 
 # This collection decorates the results collection
 
-MCM.Collections.Paginator = Backbone.Collection.extend({
+MCM.Collections.LocalPaginator = Backbone.Collection.extend({
   initialize: (models, options) ->
     @original = options.original
     @perPage = options.perPage || 50
@@ -26,19 +26,19 @@ MCM.Collections.Paginator = Backbone.Collection.extend({
       if @length < @perPage
         @add(model)
       else if @page == 0 and @original.length == @perPage+1
-        @trigger("resultsPaginator:needsControls")
+        @trigger("paginator:needsControls")
       else if @original.length % @perPage == 0 && @original.length != 0
-        @trigger("resultsPaginator:newPage", (@original.length/@perPage)-1)
-    
+        @trigger("paginator:newPage", (@original.length/@perPage)-1)
+
   getPages: ->
     return Math.ceil(@original.length / @perPage)
-  
+
   fullLength: ->
     return @original.length
-    
+
   setPage: (page) ->
     items = undefined
-    
+
     if @perPage
       items = []
       i = 0
@@ -50,10 +50,10 @@ MCM.Collections.Paginator = Backbone.Collection.extend({
         i++
     else
       items = @original.models
-    
+
     @page = page
-    
+
     @reset items
-    
-    @trigger("resultsPaginator:changePage", @page)
+
+    @trigger("paginator:changePage", @page)
 })

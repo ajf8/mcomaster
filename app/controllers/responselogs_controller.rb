@@ -14,11 +14,11 @@
 #
 class ResponselogsController < ApplicationController
   before_filter :authenticate_user!
-  
+
   def index
     render json: Responselog.all.to_json(:include => :reply_items)
   end
-  
+
   def show
     render json: Responselog.find(params[:id]).to_json(:include => :reply_items)
   end

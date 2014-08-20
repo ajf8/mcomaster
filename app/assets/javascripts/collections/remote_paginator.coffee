@@ -13,8 +13,28 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Collections.Actlog = MCM.Collections.RemotePaginator.extend({
-  model: MCM.Models.Actlog
-  unpaginatedUrl: ->
-    "/actlogs"
+
+# This collection decorates the results collection
+
+MCM.Collections.RemotePaginator = Backbone.Collection.extend({
+  url: ->
+    return @unpaginatedUrl() + "/page/" + (@page + 1)
+
+  initialize: (models, options) ->
+    options = options || {}
+    @perPage = options.perPage || 50
+    @page = 0
+
+  getPages: ->
+    return Math.ceil(@x_total / @perPage)
+
+  fullLength: ->
+    return @x_total
+
+  setPage: (page) ->
+    @page = page
+    that = @
+    @fetch
+      success: ->
+        that.trigger("paginator:changePage", @page)
 })

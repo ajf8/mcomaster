@@ -17,8 +17,8 @@ MCM.Controllers.Log = {
   index: ->
     collection = new MCM.Collections.Actlog
     collection.fetch()
-    
-    view = new MCM.Views.LogIndex(collection : collection)
+
+    view = new MCM.Views.LogLayout(collection : collection)
     MCM.mainRegion.show(view)
 
   replay: (agent, action, id) ->
@@ -33,20 +33,20 @@ MCM.Controllers.Log = {
       cancelUrl : "/#/log/"
     }
     MCM.mainRegion.show(view)
-    
+
     MCM.Client.requestDdl(agent, action).done ->
       MCM.Client.logReplay(id).done (data) ->
         view.request.setInputs(data.args)
         view.request.filterView.setFiltersFromReplay(data.filters)
-        
+
   show: (id) ->
     collection = new MCM.Collections.Actlog
-    model = new MCM.Models.Actlog({ id : id })    
+    model = new MCM.Models.Actlog({ id : id })
     view = new MCM.Views.Layouts.LogAction({ model : model, collection : collection })
     MCM.mainRegion.show(view)
     model.fetch()
     collection.fetch()
-    
+
   showResponse: (aid, id) ->
     model = new MCM.Models.Responselog(id : id)
     view = new MCM.Views.Layouts.LogResponse({ model : model })

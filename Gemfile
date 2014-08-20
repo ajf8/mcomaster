@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'kaminari'
 gem 'protected_attributes'
 gem 'rails', '>= 4.0.0'
 gem 'sqlite3'

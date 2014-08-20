@@ -86,6 +86,15 @@
       if (complete) complete(jqXHR, textStatus);
     };
 
+    var success = options.success;
+    params.success = function(data, status, xhr) {
+      if (xhr) {
+         model.x_total = xhr.getResponseHeader("X-Total");
+         model.x_total_pages = xhr.getResponseHeader("X-Total-Pages");
+       }
+       if (success) success(data, status, xhr);
+    };
+
     // Make the request.
     return $.ajax(params);
   }

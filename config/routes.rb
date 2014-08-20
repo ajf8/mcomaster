@@ -4,15 +4,17 @@ Mcmaster::Application.routes.draw do
   resources :mcagents, :only => [:show, :index]
   resources :filters
   resources :filter_members
-  resources :actlogs, :only => [:show, :index]
+  resources :actlogs, :only => [:show, :index] do
+    get 'page/:page', :action => :index, :on => :collection
+  end
   resources :nodes, :only => [:show, :index], :constraints => { :id => /.*/ }
   resources :collectives, :only => [:show, :index]
   resources :responselogs, :only => [:show, :index]
-  
+
   resources :ddls do
     match '/validate/:mcaction' => 'ddls#validate', :via => [:GET, :POST]
   end
-  
+
   match '/actlogs/replay/:id' => 'actlogs#replay', :via => [:GET]
   match '/discover' => 'discover#discover', :via => [:GET, :POST]
   match '/search' => 'search#search', :via => [:GET, :POST]
@@ -20,7 +22,7 @@ Mcmaster::Application.routes.draw do
   match '/mq/:queue' => 'restmq#get', :via => [:GET]
   match '/mq/:queue/:id' => 'restmq#get', :via => [:GET]
   match '/mq/:queue' => 'restmq#post', :via => [:POST]
-  
+
   match '/policy_default' => 'policy_defaults#get', :via => [:GET]
   match '/policy_default/set/:policy' => 'policy_defaults#set', :via => [:GET]
 

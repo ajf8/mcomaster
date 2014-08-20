@@ -13,8 +13,24 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 ###
-MCM.Collections.Actlog = MCM.Collections.RemotePaginator.extend({
-  model: MCM.Models.Actlog
-  unpaginatedUrl: ->
-    "/actlogs"
+MCM.Views.LogLayout = Backbone.Marionette.LayoutView.extend({
+  template: HandlebarsTemplates['logs/layout']
+
+  regions : {
+    "indexRegion" : ".index"
+    "paginatorRegion" : ".paginator"
+  }
+
+  initialize: ->
+    @paginatorView = new MCM.Views.Paginator(@options)
+
+    @listenTo @options.collection, "sync", ->
+      @paginatorView.render()
+
+  onRender: ->
+    view = new MCM.Views.LogIndex(@options)
+    @indexRegion.show(view)
+
+
+    @paginatorRegion.show(@paginatorView)
 })

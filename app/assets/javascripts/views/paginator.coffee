@@ -16,53 +16,64 @@
 MCM.Views.Paginator = Backbone.Marionette.ItemView.extend({
   template: HandlebarsTemplates['pagination']
   className: "pagination"
-  
+
   events : {
     "click a" : "pageSelected"
   }
-  
+
   pageSelected: (e) ->
     page = $(e.target).data("page")
-    
+
     if page != undefined
       @options.collection.setPage(page)
       @render()
-      
+
     e.preventDefault()
-    
+
     return false
-  
+
   newPage: (idx) ->
     @pages.push({ idx : idx, display : idx+1, isCurrent : idx == @options.collection.page })
     @render()
-  
+
   changePage: (idx) ->
     for p in @pages
       p.isCurrent = p.idx == idx
     @render()
-    
+
+  onSync: ->
+    @pages = []
+    n_pages = @options.collection.getPages()
+    i = 0
+    while (i < n_pages)
+      @newPage(i++)
+    @render()
+
   initialize: ->
     @pages = []
     @newPage(0)
-    @listenTo @options.collection, "resultsPaginator:newPage", @newPage
-    @listenTo @options.collection, "resultsPaginator:changePage", @changePage
-    
+    @listenTo @options.collection, "paginator:newPage", ->
+      @newPage()
+      @render()
+    @listenTo @options.collection, "paginator:changePage", @changePage
+    @listenTo @options.collection, "sync", @onSync
+
   templateHelpers: ->
     ctx = { pages : @pages }
     collection = @options.collection
     i = 0
-    
+
     num_pages = collection.getPages()
-          
+
     if collection.page > 0
       ctx.hasPrevPage = true
       ctx.prevPage = collection.page
       ctx.prevPageIdx = collection.page-1
-      
+
     if collection.page+1 < num_pages
       ctx.hasNextPage = true
       ctx.nextPageIdx = collection.page+1
       ctx.nextPage = ctx.nextPageIdx+1
-      
+
     return ctx
 })

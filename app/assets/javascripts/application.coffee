@@ -20,6 +20,7 @@
 #= require_tree ./helpers/
 #= require_tree ./templates/
 #= require_tree ./models/
+#= require ./collections/remote_paginator
 #= require_tree ./collections/
 #= require ./views/applications/menu_item
 #= require ./views/applications/dropdown_item

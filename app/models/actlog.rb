@@ -14,4 +14,5 @@
 #
 class Actlog < ActiveRecord::Base
   has_many :responselogs
+  paginates_per 50
 end

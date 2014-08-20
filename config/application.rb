@@ -10,6 +10,7 @@ end
 
 module Mcmaster
   class Application < Rails::Application
+    #config.middleware.delete "Rack::Lock"
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|

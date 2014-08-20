@@ -40,7 +40,7 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.LayoutView.extend({
     
   initialize: ->
     @listenTo MCM.vent, "action:receiveStats", @receiveStats
-    @listenTo @options.collection, "resultsPaginator:needsControls", @addPaginatorControls
+    @listenTo @options.collection, "paginator:needsControls", @addPaginatorControls
 
   onShow: ->
     @results = new MCM.Views.ActionResults(@options)

@@ -103,6 +103,9 @@ GEM
       railties (>= 3.2.16)
     json (1.8.1)
     json_pure (1.8.1)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
     libv8 (3.16.14.3)
@@ -245,6 +248,7 @@ DEPENDENCIES
   handlebars_assets
   jquery-rails
   jquery-ui-rails
+  kaminari
   marionette-rails
   mcollective-client (>= 2.4.0)
   momentjs-rails

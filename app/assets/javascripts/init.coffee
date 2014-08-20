@@ -62,10 +62,10 @@ MCM.vent.on "authentication:logged_in", (user) ->
 MCM.vent.on "authentication:logged_out", ->
   MCM.loggedInBarRegion.reset()
   MCM.adminToolbarRegion.reset()
-  
+
   if Backbone.history.fragment != "login"
     window.location = "/#/login"
-  
+
 MCM.bind "start", ->
   MCM.remoteConfig = MCM.remoteConfig || {}
   if MCM.remoteConfig.refresh_interval and MCM.remoteConfig.refresh_interval > 0
@@ -80,23 +80,23 @@ MCM.bind "start", ->
     MCM.vent.trigger("authentication:logged_in", MCM.currentUser)
   else
     MCM.vent.trigger("authentication:logged_out")
-  
+
 MCM.addInitializer ->
   unless MCM.remoteConfig.noNodeMenu
     MCM.nodes = new MCM.Collections.Node
     nodesView = new MCM.Views.NodesMenu(collection : MCM.nodes)
     MCM.nodesListRegion.show(nodesView)
-    
+
   MCM.collectives  = new MCM.Collections.Collective
   collectivesMenuView = new MCM.Views.CollectivesMenu(collection : MCM.collectives)
   collectivesToolbarView = new MCM.Views.CollectivesDropdown(collection : MCM.collectives)
   MCM.collectivesListRegion.show(collectivesMenuView)
-    
+
   MCM.agents = new MCM.Collections.Agent
   agentsView = new MCM.Views.AgentsMenu(collection : MCM.agents)
   agentsToolbarView = new MCM.Views.AgentsDropdown(collection : MCM.agents)
   MCM.agentsListRegion.show(agentsView)
-  
+
   MCM.applications = new MCM.Collections.Applications
   applicationsMenuView = new MCM.Views.ApplicationsMenu(collection : MCM.applications)
   MCM.applicationsListRegion.show(applicationsMenuView)

@@ -14,26 +14,29 @@
 #
 class ActlogsController < ApplicationController
   before_filter :authenticate_user!
-  
+
   require 'mcomaster/restmqclient'
   include Mcomaster::RestMQ
-    
+
   def index
-    render json: Actlog.all.to_json()
+    count = Actlog.count
+    headers['X-Total'] = [ count ]
+    headers['X-Total-Pages'] = [ (count / 50.0).ceil ]
+    render json: Actlog.order(:created_at).page(params[:page])
   end
-  
+
   def show
     render json: Actlog.find(params[:id]).to_json(:include => :responselogs)
   end
-  
+
   def replay
     id = params[:id]
-    txid = rmq_uuid() 
-    
+    txid = rmq_uuid()
+
     log = Actlog.find(id)
-    
+
     rmq_send(txid, { :begin => true, :action => log.action, :agent => log.agent })
-    
+
     Thread.new(txid) {
       begin
         log.responselogs.each do |r|
@@ -59,7 +62,7 @@ class ActlogsController < ApplicationController
         ActiveRecord::Base.clear_active_connections!
       end
     }
-    
+
     response = { :txid => txid, :args => JSON.parse(log.args) }
     unless log.filters.nil?
       response[:filters] = JSON.parse(log.filters)

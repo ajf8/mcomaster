@@ -15,18 +15,21 @@
 ###
 MCM.Views.LogIndex = Backbone.Marionette.CompositeView.extend({
   template: HandlebarsTemplates['logs/index']
-  
+
   childViewContainer: "#logActionContainer"
-  
+
   childView: MCM.Views.LogIndexItem
   emptyView: MCM.Views.LogEmptyIndexItem
   
   childViewOptions: ->
     return @options
-    
+
   templateHelpers: ->
     ctx = _.extend(@options, {
       nodeCount : MCM.nodes.length
     })
     return ctx
+
+  onRender: ->
+
 })
