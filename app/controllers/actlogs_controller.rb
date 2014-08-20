@@ -22,7 +22,7 @@ class ActlogsController < ApplicationController
     count = Actlog.count
     headers['X-Total'] = [ count ]
     headers['X-Total-Pages'] = [ (count / 50.0).ceil ]
-    render json: Actlog.order(:created_at).page(params[:page])
+    render json: Actlog.order('created_at DESC').page(params[:page])
   end
 
   def show
