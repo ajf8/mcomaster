@@ -140,8 +140,6 @@ MCM.Client =
 
     tx.getCount++
 
-  # TODO: make this a receive any kind of event? add infinite loop protection
-
   # each get can contain multiple messages
   # the top level of the response is an array of them
 

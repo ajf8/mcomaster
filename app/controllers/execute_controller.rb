@@ -97,7 +97,7 @@ class ExecuteController < ApplicationController
         audit.stats = stat.to_json
         audit.save()
       rescue => ex
-        rmq_send(ttxid, { :end => 1, :error => ex.message })
+        rmq_send(ttxid, { :end => 1, :error => ex.message, :backtrace => ex.backtrace })
         audit.mcerr = ex.message
         audit.save()
       ensure

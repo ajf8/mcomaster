@@ -29,6 +29,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
         agent : "shell"
         action : "execute"
         args : { cmd : command, full : true }
+        ddl : ShellApp.ddl
       }
       return
   })
@@ -68,6 +69,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
   ShellApp.on "start", ->
     @listenTo MCM.agents, "add", (model) ->
       if model.attributes.id == "shell" and model.attributes.ddl.meta.author == "Jeremy Carroll"
+        @ddl = model.attributes.ddl
         MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : "terminal24", node_template : "applications/shell_node", node_must_have : "shell" } ))
     
   MCM.addInitializer ->
