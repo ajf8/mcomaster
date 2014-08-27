@@ -68,6 +68,18 @@ MCM.Client =
       dataType: "json"
     })
 
+  transformStringArgument: (ddl, key, val) ->
+    input_type = ddl.actionDdl.input[key].type
+    if input_type == "boolean"
+      if val == "true"
+        val = true
+      else if val == "false"
+        val = false
+    else if input_type in [ "integer", "number" ]
+      val = parseInt(val)
+
+    val
+
   # gather the fields from the form and save them
   # into submission.args. convert booleans from strings
   # if the DDL says the field is a bool.
@@ -80,16 +92,7 @@ MCM.Client =
       if actionDdl.input[x.name].optional == true and x.value == ""
         return
 
-      input_type = actionDdl.input[x.name].type
-      if input_type == "boolean"
-        if x.value == "true"
-          x.value = true
-        else if x.value == "false"
-          x.value = false
-      else if input_type in [ "integer", "number" ]
-        x.value = parseInt(x.value)
-
-      submission.args[x.name] = x.value
+      submission.args[x.name] = that.transformStringArgument(submission.ddl, x.name, x.value)
     )
 
     @submitAction(submission)

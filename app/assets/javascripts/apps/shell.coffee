@@ -27,8 +27,8 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
       MCM.Client.submitAction {
         filter : @getFilter()
         agent : "shell"
-        action : "execute"
-        args : { cmd : command, full : true }
+        action : "run"
+        args : { command : command }
         ddl : ShellApp.ddl
       }
       return
@@ -68,7 +68,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
   # check for the agent this application will interact with
   ShellApp.on "start", ->
     @listenTo MCM.agents, "add", (model) ->
-      if model.attributes.id == "shell" and model.attributes.ddl.meta.author == "Jeremy Carroll"
+      if model.attributes.id == "shell" and model.attributes.ddl.meta.author == "Puppet Labs"
         @ddl = model.attributes.ddl
         MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : "terminal24", node_template : "applications/shell_node", node_must_have : "shell" } ))
     

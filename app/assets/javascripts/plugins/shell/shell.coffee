@@ -109,8 +109,11 @@ MCM.module "Plugins.Shell", (ShellPlugin, App, Backbone, Marionette, $, _) ->
       i = 1
       while i < args.length
         args[i] = args[i].replace(/^"/, "").replace(/"$/, "")
+        actionDdl = @ddl.actionDdl
         if matches = args[i].match(/^(.+?)=(.+)/)
-          agentArgs[matches[1]] = matches[2]
+          key = matches[1]
+          val = matches[2]
+          agentArgs[key] = MCM.Client.transformStringArgument(@ddl, key, val)
         i++
 
       MCM.Client.submitAction {

@@ -23,8 +23,12 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.LayoutView.extend({
     aggregatesRegion: "#actionAggregates"
   }
 
+  removeSpinner: ->
+    $(@$el).find(".results-spinner").activity(false)
+
   setError: (err) ->
     @results.setError(err)
+    @removeSpinner()
   
   receiveStats: (tx, msg) ->
     if tx.txid == @options.tx.txid
@@ -33,6 +37,7 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.LayoutView.extend({
       @statsRegion.show(@stats)
       @aggregates = new MCM.Views.ActionResultsAggregates(_.extend(@options, model : statsModel))
       @aggregatesRegion.show(@aggregates)
+      @removeSpinner()
     
   addPaginatorControls: (tx) ->
     paginatorView = new MCM.Views.Paginator(collection : @options.collection )
@@ -45,4 +50,5 @@ MCM.Views.Layouts.ActionResults = Backbone.Marionette.LayoutView.extend({
   onShow: ->
     @results = new MCM.Views.ActionResults(@options)
     @resultsRegion.show(@results)
+    $(@$el).find(".results-spinner").activity({ align : "left" })
 })

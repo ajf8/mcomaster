@@ -16,6 +16,7 @@
 #= require handlebars.runtime
 #= require jquery.mousewheel-min
 #= require jquery.terminal-0.6.3
+#= require jquery.activity-indicator-1.0.0
 #= require init
 #= require_tree ./helpers/
 #= require_tree ./templates/
