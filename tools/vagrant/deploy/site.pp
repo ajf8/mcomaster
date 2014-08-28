@@ -29,16 +29,13 @@ package => true
 mcollective::plugin {'nettest':
 package => true
 }
-mcollective::plugin {'shell':
-package => true
-}
-
 mcollective::plugin {'nrpe':
 package => true
 }
 mcollective::plugin {'iptables':
 package => true
 }
+include mcollective_shell_agent
 
 }
 
