@@ -6,7 +6,7 @@ class mcollective_server($redis_host='192.168.122.1',
                          $stomp_pass='password'
 ) {
   package { 'mcollective':
-    ensure => 'latest',
+    ensure => '2.5.3-1.el6',
   }
   
   class { 'mcollective_server::facts':

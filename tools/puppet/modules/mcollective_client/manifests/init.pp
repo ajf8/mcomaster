@@ -6,7 +6,7 @@ class mcollective_client($redis_host='192.168.122.1',
                          $stomp_pass='password'
 ) {
   package { 'mcollective-client':
-    ensure  => 'latest',
+    ensure  => '2.5.3-1.el6',
   }
 
   file { '/usr/libexec/mcollective/mcollective/discovery/redisdiscovery.rb':
