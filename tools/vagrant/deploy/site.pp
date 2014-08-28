@@ -29,6 +29,9 @@ package => true
 mcollective::plugin {'nettest':
 package => true
 }
+mcollective::plugin {'shell':
+package => true
+}
 
 mcollective::plugin {'nrpe':
 package => true
