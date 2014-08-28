@@ -68,7 +68,9 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
   # check for the agent this application will interact with
   ShellApp.on "start", ->
     @listenTo MCM.agents, "add", (model) ->
-      if model.attributes.id == "shell" and model.attributes.ddl.meta.author == "Puppet Labs"
+      agentId = model.attributes.id
+      agentAuthor = model.attributes.ddl.meta.author
+      if model.attributes.id == "shell" and (agentAuthor == "Puppet Labs" || (agentAuthor == "Jeremy Carrol" && model.attributes.version == "1.0-mcomaster"))
         @ddl = model.attributes.ddl
         MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : MCM.assetTable["terminal24.png"], node_template : "applications/shell_node", node_must_have : "shell" } ))
     
