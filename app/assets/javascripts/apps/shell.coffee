@@ -70,7 +70,7 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
     @listenTo MCM.agents, "add", (model) ->
       if model.attributes.id == "shell" and model.attributes.ddl.meta.author == "Puppet Labs"
         @ddl = model.attributes.ddl
-        MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : "terminal24", node_template : "applications/shell_node", node_must_have : "shell" } ))
+        MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : MCM.assetTable["terminal24.png"], node_template : "applications/shell_node", node_must_have : "shell" } ))
     
   MCM.addInitializer ->
     new ShellApp.Router()

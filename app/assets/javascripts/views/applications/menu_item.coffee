@@ -14,6 +14,7 @@
  limitations under the License.
 ###
 MCM.Views.ApplicationMenuItem = Backbone.Marionette.ItemView.extend({
-  template: HandlebarsTemplates['applications/menu_item']
+  template: (data) ->
+  	return HandlebarsTemplates[data.menu_item_template || 'applications/menu_item'](data)
   tagName : "li"
 })

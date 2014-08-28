@@ -13,4 +13,11 @@
 # limitations under the License.
 #
 module ApplicationHelper
+	def createAssetTable
+		table = {}
+		["terminal24.png"].each do |asset|
+		  table[asset] = ActionController::Base.helpers.asset_path(asset)
+		end
+		return table
+	end
 end
