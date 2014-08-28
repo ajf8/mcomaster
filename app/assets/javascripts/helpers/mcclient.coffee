@@ -102,6 +102,8 @@ MCM.Client =
     $.ajax({
       url: "/actlogs/replay/"+id
       success: (data) ->
+        MCM.lastExecution = data.txid
+        data.location = window.location.href
         that.receiveTxn(data)
     })
 
@@ -186,7 +188,7 @@ MCM.Client =
             return
 
           elapsed = (new Date().getTime() / 1000) - tx.started
-          if elapsed > tx.ddl.meta.timeout + 5
+          if tx.ddl and elapsed > tx.ddl.meta.timeout + 5
             MCM.vent.trigger("action:receiveError", tx, "request timed out")
             return
 
