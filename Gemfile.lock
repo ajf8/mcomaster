@@ -250,7 +250,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   marionette-rails
-  mcollective-client (>= 2.4.0)
+  mcollective-client (~> 2.5.0)
   momentjs-rails
   protected_attributes
   puppet
