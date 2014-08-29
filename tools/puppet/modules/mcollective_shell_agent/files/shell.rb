@@ -3,14 +3,14 @@ module MCollective
   class Shell < RPC::Agent
 
     action "run" do
-      validate :cmd, String
+      validate :command, String
       validate :full, :boolean
 
       out = []
       err = ""
 
       begin
-        status = run("#{request[:cmd]}", :stdout => out, :stderr => :stderr, :chomp => false)
+        status = run("#{request[:command]}", :stdout => out, :stderr => :stderr, :chomp => false)
 
         reply[:exitcode] = status
         # If status set to true, then return all output
