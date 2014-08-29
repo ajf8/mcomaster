@@ -70,7 +70,8 @@ MCM.module "Apps.Shell", (ShellApp, App, Backbone, Marionette, $, _) ->
     @listenTo MCM.agents, "add", (model) ->
       agentId = model.attributes.id
       agentAuthor = model.attributes.ddl.meta.author
-      if model.attributes.id == "shell" and (agentAuthor == "Puppet Labs" || (agentAuthor == "Jeremy Carrol" && model.attributes.version == "1.0-mcomaster"))
+      agentVersion = model.attributes.ddl.meta.version
+      if model.attributes.id == "shell" and (agentAuthor == "Puppet Labs" || (agentAuthor == "Jeremy Carroll" && agentVersion == "1.0-mcomaster"))
         @ddl = model.attributes.ddl
         MCM.applications.add(new MCM.Models.Application( { id : "shell", name : "Shell", icon : MCM.assetTable["terminal24.png"], node_template : "applications/shell_node", node_must_have : "shell" } ))
     

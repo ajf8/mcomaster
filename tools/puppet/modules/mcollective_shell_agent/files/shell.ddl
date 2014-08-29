@@ -1,12 +1,12 @@
 metadata :name        => "Shell Command",
          :description => "Remote execution of bash commands",
-         :author      => "Jeremy Carrol",
+         :author      => "Jeremy Carroll",
          :license     => "Apache v.2",
          :version     => "1.0-mcomaster",
          :url         => "http://github.com/phobos182/mcollective-plugins",
          :timeout     => 300
 
-["execute"].each do |act|
+["run"].each do |act|
   action act, :description => "#{act.capitalize} a command" do
     display :always
 

@@ -2,7 +2,7 @@ module MCollective
  module Agent
   class Shell < RPC::Agent
 
-    action "execute" do
+    action "run" do
       validate :cmd, String
       validate :full, :boolean
 

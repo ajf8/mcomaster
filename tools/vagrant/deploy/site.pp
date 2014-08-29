@@ -35,7 +35,9 @@ package => true
 mcollective::plugin {'iptables':
 package => true
 }
-include mcollective_shell_agent
+class { 'mcollective_shell_agent':
+require => Package['mcollective'],
+}
 
 }
 
