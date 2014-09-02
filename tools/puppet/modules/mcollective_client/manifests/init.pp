@@ -7,6 +7,7 @@ class mcollective_client($redis_host='192.168.122.1',
 ) {
   package { 'mcollective-client':
     ensure  => '2.5.3-1.el6',
+    require => Class['puppetlabs'],
   }
 
   file { '/usr/libexec/mcollective/mcollective/discovery/redisdiscovery.rb':

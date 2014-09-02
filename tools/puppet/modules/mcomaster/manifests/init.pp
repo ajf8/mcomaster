@@ -27,6 +27,7 @@ class mcomaster ($redis_host='192.168.122.1', $redis_port=6379, $mcomaster_port=
     baseurl  => 'http://yum.mcomaster.org/snapshots/el6/$basearch',
     enabled  => 1,
     gpgcheck => 0,
+#    require  => [ Yumrepo['mcomaster'], Yumrepo['ruby_scl'] ],
   }
 
   exec { 'clear_mcomaster_yum':

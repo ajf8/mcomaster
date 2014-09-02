@@ -43,7 +43,6 @@ require => Package['mcollective'],
 
 
 node /middleware/ {
-  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   #config package repository
   include puppetlabs
   #config /etc/hosts
@@ -74,7 +73,6 @@ node /middleware/ {
 
 }
 node /mcomaster/ {
-  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   #config package repository
   include puppetlabs
   #config /etc/hosts
@@ -105,12 +103,11 @@ node /mcomaster/ {
     admin_user     => "vagrant", 
     admin_email    => "vagrant@example.com", 
     admin_pass     => "vagrant123",  #should be at least 8 caracters. 
-#    require        => Class['custom_firewall::pre'],
+    require        => Class['custom_firewall::pre'],
   }
 }
 
 node /mcserver/ {
-  Yumrepo <| |> -> Package <| provider != 'rpm' |>
   include custom_firewall
   #include puppetlabs repo
   include puppetlabs

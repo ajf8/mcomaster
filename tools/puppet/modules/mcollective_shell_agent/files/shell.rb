@@ -4,7 +4,6 @@ module MCollective
 
     action "run" do
       validate :command, String
-      validate :full, :boolean
 
       out = []
       err = ""
@@ -14,11 +13,7 @@ module MCollective
 
         reply[:exitcode] = status
         # If status set to true, then return all output
-        if request[:full]
-          reply[:stdout] = out
-        else
-          reply[:stdout] = out[0..76] + " ..."
-        end
+        reply[:stdout] = out
         reply.fail err if status != 0
       rescue Exception => e
         reply.fail e.to_s

@@ -10,7 +10,6 @@ class mcomaster::config::mcollective::redis_gem($version = "latest") {
     exec { 'gem_install_redis':
       command => '/usr/bin/gem install --include-dependencies --no-rdoc --no-ri redis',
       unless  => '/usr/bin/gem list --local | /bin/egrep -q ^redis',
-      require  => Class['custom_firewall::pre'],
     }
   }
 }
