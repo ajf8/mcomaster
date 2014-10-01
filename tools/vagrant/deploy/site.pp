@@ -88,8 +88,9 @@ node /mcomaster/ {
   }
   class { '::mcollective':
     client            => true,
-    middleware_hosts => [ 'middleware' ],
-    require          => Class['custom_firewall::pre'],
+    middleware_hosts  => [ 'middleware' ],
+    require           => Class['custom_firewall::pre'],
+    version           => '2.5.3-1.el6',
   }
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
