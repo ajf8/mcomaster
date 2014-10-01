@@ -115,7 +115,7 @@ GEM
       treetop (~> 1.4.8)
     marionette-rails (2.0.0)
       railties (>= 3.1)
-    mcollective-client (2.5.3)
+    mcollective-client (2.6.0)
       json
       stomp
       systemu
@@ -204,7 +204,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.9)
-    stomp (1.3.2)
+    stomp (1.3.3)
     systemu (2.5.2)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -250,7 +250,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   marionette-rails
-  mcollective-client (~> 2.5.0)
+  mcollective-client (~> 2.6.0)
   momentjs-rails
   protected_attributes
   puppet
