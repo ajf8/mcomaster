@@ -50,6 +50,9 @@ class ExecuteController < ApplicationController
       logger.info("#{txid} No filters.")
     end
 
+    # It doesn't make sense to execute actions on servers without the agent
+    mc.agent_filter(agent)
+
     audit.txid = txid
     audit.agent = agent
     audit.args = args.to_json
