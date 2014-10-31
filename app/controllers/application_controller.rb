@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format.json? }
 
   rescue_from CanCan::AccessDenied do |exception|
     #redirect_to root_path, :alert => exception.message
