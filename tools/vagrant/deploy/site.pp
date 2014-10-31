@@ -64,8 +64,16 @@ node /middleware/ {
   #config mcollective
   class { '::mcollective':
     middleware       => true,
+    version           => '2.6.1-1.el6',
     middleware_hosts => [ 'middleware' ],
-    require => Class['custom_firewall::pre'],
+   require => [Class['custom_firewall::pre'], Package['tanukiwrapper'], Class['java']],
+  }
+  class  { 'java':
+    distribution => 'jdk',
+    version      => 'latest',
+  }
+  package {'tanukiwrapper':
+    ensure => present
   }
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
@@ -90,7 +98,7 @@ node /mcomaster/ {
     client            => true,
     middleware_hosts  => [ 'middleware' ],
     require           => Class['custom_firewall::pre'],
-    version           => '2.5.3-1.el6',
+    version           => '2.6.1-1.el6',
   }
   class {'::mcomaster::config::mcollective::server': 
     redis_host => "middleware"
@@ -120,6 +128,7 @@ node /mcserver/ {
   }
   #Call custom class
   class { '::mcollective':
+    version           => '2.6.1-1.el6',
     middleware_hosts => [ 'middleware' ],
     require          => Class['custom_firewall::pre'],
   }
