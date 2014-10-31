@@ -15,6 +15,7 @@ mod 'puppetlabs/firewall', '1.1.3'
 mod 'thomasvandoren/redis', '0.10.0'
 mod 'maestrodev/wget', '1.4.4'
 mod 'puppetlabs/gcc', '0.2.0'
+mod 'puppetlabs/java', '1.1.2'
 # A module from the Puppet Forge
 # mod 'puppetlabs/stdlib'
 
